@@ -174,5 +174,4 @@ venv.bak/
 # Project-specific ignores
 token*.txt
 users.json
-bot_engine/rule_handlers.py
-
+gramhopper/rule_handlers.py
