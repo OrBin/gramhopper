@@ -1,5 +1,7 @@
 import logging
+from pathlib import Path
 from telegram.ext import Updater
+from gramhopper.configuration import configuration_dir
 from gramhopper.rule_handlers import rule_handlers
 from gramhopper.handlers.combined_handlers import CombinedConversationHandler
 
@@ -14,7 +16,7 @@ def handle_error(bot, update, error):
 
 
 def main():
-    with open('../token.txt', 'r') as token_file:
+    with open(Path(configuration_dir(), 'token.txt'), 'r') as token_file:
         bot_token = token_file.read().strip()
 
     conversation_handler = CombinedConversationHandler(rule_handlers)
