@@ -6,8 +6,8 @@ from .response_helper import ResponseHelper
 
 
 class _PresetTextResponse(BaseResponse):
-    def __init__(self, preset_responses: Union[str, List[str]]):
-        self.preset_responses = preset_responses
+    def __init__(self, preset_response: Union[str, List[str]]):
+        self.preset_responses = preset_response
 
     def get_response_text(self):
         if isinstance(self.preset_responses, str):
