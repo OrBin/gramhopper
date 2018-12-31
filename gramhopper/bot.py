@@ -5,7 +5,7 @@ from gramhopper.configuration import configuration_dir
 from gramhopper.rule_handlers import rule_handlers
 from gramhopper.handlers.combined_handlers import CombinedConversationHandler
 from gramhopper.configuration import configuration_dir
-from gramhopper.configuration.parse import read_and_parse_rules
+from gramhopper.configuration.parse import RuleParser #read_and_parse_rules
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -20,7 +20,8 @@ def main():
     with open(Path(configuration_dir(), 'token.txt'), 'r') as token_file:
         bot_token = token_file.read().strip()
 
-    rule_handlers = read_and_parse_rules('./rules.yml')
+    rule_parser = RuleParser()
+    rule_handlers = rule_parser.parse_file('./rules.yml')
     conversation_handler = CombinedConversationHandler(rule_handlers)
 
     updater = Updater(bot_token)

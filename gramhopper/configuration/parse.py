@@ -1,52 +1,39 @@
 from ruamel.yaml import YAML
 from gramhopper.handlers.handler import Handler
-from ..responses import Responses
-from ..triggers import Triggers
+from .triggers_reponses_parsers import TriggerParser, ResponseParser
 
 
-def _parse_trigger_or_response(config, mapping_cls):
-    config_copy = dict(config)
-    if 'name' in config_copy:
-        config_copy.pop('name')
+class RuleParser:
 
-    trigger_or_response_class = mapping_cls[config_copy['type']]
-    config_copy.pop('type')
+    def __init__(self):
+        self.yaml = YAML()
 
-    return trigger_or_response_class(**config_copy)
+    def parse_globals(self, config):
+        if 'triggers' in config:
+            self.global_triggers = TriggerParser.parse_many(config['triggers'])
 
+        if 'responses' in config:
+            self.global_responses = ResponseParser.parse_many(config['responses'])
 
-def _parse_trigger(trigger_config):
-    return _parse_trigger_or_response(trigger_config, Triggers)
-
-def _parse_response(response_config):
-    return _parse_trigger_or_response(response_config, Responses)
-
-def _parse_triggers_or_responses(config, mapping_cls):
-    return {element['name']: _parse_trigger_or_response(element, mapping_cls) for element in config}
-
-
-def read_and_parse_rules(file_path):
-    yaml = YAML()
-    with open(file_path, 'r', encoding='utf-8') as stream:
-        config = yaml.load(stream)
-
-    global_triggers = _parse_triggers_or_responses(config['triggers'], Triggers)
-    global_responses = _parse_triggers_or_responses(config['responses'], Triggers)
-    rule_handlers = []
-
-    for rule in config['rules']:
-        if isinstance(rule['trigger'], str):
-            trigger = global_triggers[rule['trigger']]
+    def _parse_rule_trigger_or_response(self, rule, key, globals, parser):
+        if isinstance(rule[key], str):
+            return globals[rule[key]]
         else:
-            trigger = _parse_trigger(rule['trigger'])
+            return parser.parse_single(rule[key])
 
-        if isinstance(rule['response'], str):
-            response = global_responses[rule['response']]
-        else:
-            response = _parse_response(rule['response'])
+    _parse_rule_trigger = lambda self, rule: self._parse_rule_trigger_or_response(rule, 'trigger', self.global_triggers, TriggerParser)
+    _parse_rule_response = lambda self, rule: self._parse_rule_trigger_or_response(rule, 'response', self.global_responses, ResponseParser)
 
+    def parse_single_rule(self, rule):
+        trigger = self._parse_rule_trigger(rule)
+        response = self._parse_rule_response(rule)
         probability = rule['probability'] if 'probability' in rule else 1
+        return Handler(trigger, response, probability=probability)
 
-        rule_handlers.append(Handler(trigger, response, probability=probability))
+    def parse_file(self, file_path):
+        with open(file_path, 'r', encoding='utf-8') as stream:
+            config = self.yaml.load(stream)
 
-    return rule_handlers
+        self.parse_globals(config)
+
+        return [self.parse_single_rule(rule) for rule in config['rules']]
