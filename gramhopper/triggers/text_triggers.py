@@ -1,4 +1,5 @@
 import re
+from ..dict_enum import DictEnum
 from typing import List, Union
 from telegram import Update
 from .basic_triggers import BaseTrigger
@@ -50,7 +51,7 @@ class _HasExactWordTrigger(_HasSubstringTrigger):
                             '({type(substring)} given)')
 
 
-class TextTriggers:
+class TextTriggers(DictEnum):
     regexp = _RegExpTrigger
     has_substring = _HasSubstringTrigger
     has_exact_word = _HasExactWordTrigger

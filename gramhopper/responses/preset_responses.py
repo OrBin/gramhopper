@@ -1,4 +1,5 @@
 import random
+from ..dict_enum import DictEnum
 from typing import Union, List
 from telegram import Bot, Update, Document
 from .basic_responses import BaseResponse
@@ -34,7 +35,7 @@ class _PresetDocumentResponse(BaseResponse):
         ResponseHelper.document(bot, update, self.preset_response)
 
 
-class PresetResponses:
+class PresetResponses(DictEnum):
     reply = _PresetReplyResponse
     message = _PresetMessageResponse
     document = _PresetDocumentResponse
