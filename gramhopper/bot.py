@@ -1,7 +1,7 @@
 import logging
 from telegram.ext import Updater
-from bot_engine.rule_handlers import rule_handlers
-from bot_engine.handlers.combined_handlers import CombinedConversationHandler
+from gramhopper.rule_handlers import rule_handlers
+from gramhopper.handlers.combined_handlers import CombinedConversationHandler
 
 
 # Enable logging
