@@ -1,17 +1,19 @@
 from pathlib import Path
-from sys import platform
-import os
 
 
-_LINUX_GLOBAL_CONFIGURATION_DIR = '/etc/gramhopper'
-_LINUX_USER_CONFIGURATION_DIR = Path(Path.home(), '.gramhopper/')
+CONFIG_DIR = Path(Path.home(), '.gramhopper/')
+TOKEN_FILE_NAME = 'token.txt'
+RULES_FILE_NAME = 'rules.yml'
+USERS_FILE_NAME = 'users.json'
 
 
-def configuration_dir():
-    if platform == "linux" or platform == "linux2":
-        if os.access(_LINUX_GLOBAL_CONFIGURATION_DIR, os.R_OK):
-            return _LINUX_GLOBAL_CONFIGURATION_DIR
-        else:
-            return _LINUX_USER_CONFIGURATION_DIR
-    else:
-        raise NotImplementedError('Running on OS other than linux is currently unsupported')
+def token_file_path():
+    return Path(CONFIG_DIR, TOKEN_FILE_NAME)
+
+
+def rules_file_path():
+    return Path(CONFIG_DIR, RULES_FILE_NAME)
+
+
+def users_file_path():
+    return Path(CONFIG_DIR, USERS_FILE_NAME)
