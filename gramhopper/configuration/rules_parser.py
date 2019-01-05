@@ -53,6 +53,7 @@ class RulesParser:
         elif isinstance(expr, boolean.NOT):
             return ~self._parse_boolean_expression(expr.args[0], params)
         elif isinstance(expr, boolean.Symbol):
+            # If the trigger/response here is just a name, look for it in the globals
             return params.globals[str(expr)]
 
     def _parse_rule_trigger_or_response(self,
