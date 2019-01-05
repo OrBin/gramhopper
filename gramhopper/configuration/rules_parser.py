@@ -1,16 +1,19 @@
-from typing import NamedTuple, Dict, Type
+from typing import Union, Callable
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
+from boolean import boolean
+from ..responses.basic_responses import BaseResponse
+from ..triggers.basic_triggers import BaseTrigger
 from ..handlers.handler import Handler
-from .triggers_reponses_parsers import TriggerParser, ResponseParser, BaseParser
+from .triggers_reponses_parsers import TriggerParser, ResponseParser
+from .trigger_response_params import TriggerResponseParams
 
 
 class RulesParser:
 
-    class TriggerOrResponseParams(NamedTuple):
-        key: str
-        globals: Dict
-        parser: Type[BaseParser]
+    # Type definitions for type hints
+    TriggerOrResponse = Union[BaseTrigger, BaseResponse]
+    MergeFunction = Callable[[TriggerOrResponse, TriggerOrResponse], TriggerOrResponse]
 
     def __init__(self):
         self.yaml = YAML()
