@@ -1,7 +1,6 @@
 from typing import NamedTuple, Dict, Type
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
-
 from ..handlers.handler import Handler
 from .triggers_reponses_parsers import TriggerParser, ResponseParser, BaseParser
 
@@ -17,8 +16,12 @@ class RulesParser:
         self.yaml = YAML()
         self.global_triggers = {}
         self.global_responses = {}
-        self.trigger_params = RulesParser.TriggerOrResponseParams(key='trigger', globals=self.global_triggers, parser=TriggerParser)
-        self.response_params = RulesParser.TriggerOrResponseParams(key='response', globals=self.global_responses, parser=ResponseParser)
+        self.trigger_params = RulesParser.TriggerOrResponseParams(key='trigger',
+                                                                  globals=self.global_triggers,
+                                                                  parser=TriggerParser)
+        self.response_params = RulesParser.TriggerOrResponseParams(key='response',
+                                                                   globals=self.global_responses,
+                                                                   parser=ResponseParser)
 
     def parse_globals(self, config: CommentedMap):
         if 'triggers' in config:
