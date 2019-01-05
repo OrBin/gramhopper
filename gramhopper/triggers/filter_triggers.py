@@ -1,3 +1,4 @@
+from ..dict_enum import DictEnum
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..trigger_result import TriggerResult
@@ -27,7 +28,7 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
         super().__init__(Filters.language(lang))
 
 
-class FilterTriggers:
+class FilterTriggers(DictEnum):
     all = FilterBasedTrigger(Filters.all)
     text = FilterBasedTrigger(Filters.text)
     command = FilterBasedTrigger(Filters.command)

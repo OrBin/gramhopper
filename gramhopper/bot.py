@@ -1,8 +1,8 @@
 import logging
 from telegram.ext import Updater
 from gramhopper.configuration import token_file_path
-from gramhopper.rule_handlers import rule_handlers
 from gramhopper.handlers.combined_handlers import CombinedConversationHandler
+from gramhopper.configuration.rules_parser import RulesParser
 
 
 # Enable logging
@@ -18,6 +18,8 @@ def main():
     with open(token_file_path(), 'r') as token_file:
         bot_token = token_file.read().strip()
 
+    rule_parser = RulesParser()
+    rule_handlers = rule_parser.parse_file('./rules.yml')
     conversation_handler = CombinedConversationHandler(rule_handlers)
 
     updater = Updater(bot_token)

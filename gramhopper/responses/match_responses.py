@@ -1,3 +1,4 @@
+from ..dict_enum import DictEnum
 from telegram import Bot, Update
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
@@ -21,6 +22,6 @@ class _MatchMessageResponse(_MatchTextResponse):
         ResponseHelper.message(bot, update, self.build_response_text(response_payload))
 
 
-class MatchResponses:
+class MatchResponses(DictEnum):
     reply = _MatchReplyResponse
     message = _MatchMessageResponse
