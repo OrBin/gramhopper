@@ -32,7 +32,7 @@ class _HasSubstringTrigger(_RegExpTrigger):
                                 'A list containing non-strings was given)')
         else:
             raise TypeError(f'Parameter \'substring\' should be either a string or a list of strings '
-                            '({type(substring)} given)')
+                            f'({type(substring)} given)')
 
         prefix = '(?:.* )?' if exact else '.*'
         postfix = '(?: .*)?' if exact else '.*'
@@ -42,13 +42,14 @@ class _HasSubstringTrigger(_RegExpTrigger):
     def validate_strings_list(strings):
         return all(map(lambda element: isinstance(element, str), strings))
 
+
 class _HasExactWordTrigger(_HasSubstringTrigger):
     def __init__(self, word: Union[str, List[str]]):
         try:
             super().__init__(word, exact=True)
         except TypeError:
             raise TypeError(f'Parameter \'word\' should be either a string or a list of strings '
-                            '({type(substring)} given)')
+                            f'({type(word)} given)')
 
 
 class TextTriggers(DictEnum):
