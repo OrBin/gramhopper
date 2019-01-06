@@ -17,12 +17,14 @@ class RulesParser:
         self.trigger_params = TriggerParams(globals=self.global_triggers)
         self.response_params = ResponseParams(globals=self.global_responses)
 
-    def parse_globals(self, config: CommentedMap):
-        if 'triggers' in config:
-            self.global_triggers.update(TriggerParser.parse_many(config['triggers']))
+    @staticmethod
+    def _add_globals(config: CommentedMap, params: TriggerResponseParams):
+        if params.plural_key in config:
+            params.globals.update(params.parser.parse_many(config[params.plural_key]))
 
-        if 'responses' in config:
-            self.global_responses.update(ResponseParser.parse_many(config['responses']))
+    def parse_globals(self, config: CommentedMap):
+        RulesParser._add_globals(config, self.trigger_params)
+        RulesParser._add_globals(config, self.response_params)
 
     def _evaluate_boolean_expression(self, expr: boolean.Expression, params: TriggerResponseParams) -> TriggerResponse:
         # If the trigger/response here is just a name, look for it in the globals
@@ -34,12 +36,12 @@ class RulesParser:
         return boolean_function(*evaluated_args)
 
     def _parse_rule_trigger_or_response(self, rule: CommentedMap, params: TriggerResponseParams) -> TriggerResponse:
-        if isinstance(rule[params.key], str):
+        if isinstance(rule[params.singular_key], str):
             algebra = boolean.BooleanAlgebra()
-            parsed_expr = algebra.parse(rule[params.key])
+            parsed_expr = algebra.parse(rule[params.singular_key])
             return self._evaluate_boolean_expression(parsed_expr, params)
 
-        return params.parser.parse_single(rule[params.key])
+        return params.parser.parse_single(rule[params.singular_key])
 
     def parse_single_rule(self, rule: CommentedMap):
         trigger = self._parse_rule_trigger_or_response(rule, self.trigger_params)
