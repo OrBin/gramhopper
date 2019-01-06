@@ -15,12 +15,12 @@ class RulesParser:
         self.response_params = ResponseParams(globals=self.global_responses)
 
     def parse_globals(self, config: CommentedMap):
-        RulesParsingHelper._add_globals(config, self.trigger_params)
-        RulesParsingHelper._add_globals(config, self.response_params)
+        RulesParsingHelper.add_globals(config, self.trigger_params)
+        RulesParsingHelper.add_globals(config, self.response_params)
 
     def parse_single_rule(self, rule: CommentedMap):
-        trigger = RulesParsingHelper._parse_rule_trigger_or_response(rule, self.trigger_params)
-        response = RulesParsingHelper._parse_rule_trigger_or_response(rule, self.response_params)
+        trigger = RulesParsingHelper.parse_rule_trigger_or_response(rule, self.trigger_params)
+        response = RulesParsingHelper.parse_rule_trigger_or_response(rule, self.response_params)
         probability = rule['probability'] if 'probability' in rule else 1
         return Handler(trigger, response, probability=probability)
 
