@@ -1,4 +1,5 @@
 from typing import Union, Callable
+from operator import or_ as or_operator, and_ as and_operator
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
 from boolean import boolean
@@ -47,9 +48,9 @@ class RulesParser:
 
     def _parse_boolean_expression(self, expr: boolean.Expression, params: TriggerResponseParams) -> TriggerOrResponse:
         if isinstance(expr, boolean.AND):
-            return self._parse_and_or_expression(expr, lambda merged, other: merged & other, params)
+            return self._parse_and_or_expression(expr, and_operator, params)
         elif isinstance(expr, boolean.OR):
-            return self._parse_and_or_expression(expr, lambda merged, other: merged | other, params)
+            return self._parse_and_or_expression(expr, or_operator, params)
         elif isinstance(expr, boolean.NOT):
             return ~self._parse_boolean_expression(expr.args[0], params)
         elif isinstance(expr, boolean.Symbol):
