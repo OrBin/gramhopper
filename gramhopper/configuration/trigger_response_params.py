@@ -7,17 +7,14 @@ from ..responses.basic_responses import BaseResponse
 
 
 @dataclass
-class BaseTriggerResponseParams:
+class TriggerResponseParams:
     singular_key: str
     globals: Dict[str, TriggerResponse]
     parser: Type[BaseParser]
 
-
-@dataclass
-class TriggerResponseParams(BaseTriggerResponseParams):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.plural_key = self.singular_key + 's'
+    @property
+    def plural_key(self):
+        return self.singular_key + 's'
 
 
 @dataclass
