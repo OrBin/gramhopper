@@ -1,5 +1,5 @@
 from typing import Union, Callable
-from operator import or_ as or_operator, and_ as and_operator
+from operator import or_ as or_operator, and_ as and_operator, invert as inversion_operator
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
 from boolean import boolean
@@ -35,24 +35,20 @@ class RulesParser:
         if 'responses' in config:
             self.global_responses.update(ResponseParser.parse_many(config['responses']))
 
-    def _parse_and_or_expression(self,
-                                 expr: Union[boolean.AND, boolean.OR],
-                                 merge_function: MergeFunction,
-                                 params: TriggerResponseParams) -> TriggerOrResponse:
-        args = list(expr.args)
-        merged = self._parse_boolean_expression(args.pop(0), params)
-        for arg in args:
-            other = self._parse_boolean_expression(arg, params)
-            merged = merge_function(merged, other)
-        return merged
+    def _parse_and_or_not_expression(self,
+                                     expr: Union[boolean.AND, boolean.OR, boolean.NOT],
+                                     boolean_function: MergeFunction,
+                                     params: TriggerResponseParams) -> TriggerOrResponse:
+        evaluated_args = [self._parse_boolean_expression(arg, params) for arg in expr.args]
+        return boolean_function(*evaluated_args)
 
     def _parse_boolean_expression(self, expr: boolean.Expression, params: TriggerResponseParams) -> TriggerOrResponse:
         if isinstance(expr, boolean.AND):
-            return self._parse_and_or_expression(expr, and_operator, params)
+            return self._parse_and_or_not_expression(expr, and_operator, params)
         elif isinstance(expr, boolean.OR):
-            return self._parse_and_or_expression(expr, or_operator, params)
+            return self._parse_and_or_not_expression(expr, or_operator, params)
         elif isinstance(expr, boolean.NOT):
-            return ~self._parse_boolean_expression(expr.args[0], params)
+            return self._parse_and_or_not_expression(expr, inversion_operator, params)
         elif isinstance(expr, boolean.Symbol):
             # If the trigger/response here is just a name, look for it in the globals
             return params.globals[str(expr)]
