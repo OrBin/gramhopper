@@ -1,18 +1,11 @@
-from typing import Union
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
 from boolean import boolean
-
+from .trigger_response import TriggerResponse
 from .boolean_operators import OPERATOR_TYPE_TO_FUNCTION
-from ..responses.basic_responses import BaseResponse
-from ..triggers.basic_triggers import BaseTrigger
 from ..handlers.handler import Handler
 from .triggers_reponses_parsers import TriggerParser, ResponseParser
-from .trigger_response_params import TriggerResponseParams
-
-
-# Type definition for type hints
-TriggerResponse = Union[BaseTrigger, BaseResponse]
+from .trigger_response_params import TriggerResponseParams, TriggerParams, ResponseParams
 
 
 class RulesParser:
@@ -21,12 +14,8 @@ class RulesParser:
         self.yaml = YAML()
         self.global_triggers = {}
         self.global_responses = {}
-        self.trigger_params = TriggerResponseParams(key='trigger',
-                                                    globals=self.global_triggers,
-                                                    parser=TriggerParser)
-        self.response_params = TriggerResponseParams(key='response',
-                                                     globals=self.global_responses,
-                                                     parser=ResponseParser)
+        self.trigger_params = TriggerParams(globals=self.global_triggers)
+        self.response_params = ResponseParams(globals=self.global_responses)
 
     def parse_globals(self, config: CommentedMap):
         if 'triggers' in config:
