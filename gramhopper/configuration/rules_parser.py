@@ -12,9 +12,14 @@ from .trigger_response_params import TriggerResponseParams
 
 class RulesParser:
 
-    # Type definitions for type hints
+    OPERATOR_TYPE_TO_FUNCTION = {
+        boolean.AND: and_operator,
+        boolean.OR: or_operator,
+        boolean.NOT: inversion_operator
+    }
+
+    # Type definition for type hints
     TriggerOrResponse = Union[BaseTrigger, BaseResponse]
-    MergeFunction = Callable[[TriggerOrResponse, TriggerOrResponse], TriggerOrResponse]
 
     def __init__(self):
         self.yaml = YAML()
@@ -35,34 +40,21 @@ class RulesParser:
         if 'responses' in config:
             self.global_responses.update(ResponseParser.parse_many(config['responses']))
 
-    def _parse_and_or_not_expression(self,
-                                     expr: Union[boolean.AND, boolean.OR, boolean.NOT],
-                                     boolean_function: MergeFunction,
-                                     params: TriggerResponseParams) -> TriggerOrResponse:
-        evaluated_args = [self._parse_boolean_expression(arg, params) for arg in expr.args]
-        return boolean_function(*evaluated_args)
-
-    def _parse_boolean_expression(self, expr: boolean.Expression, params: TriggerResponseParams) -> TriggerOrResponse:
-        if isinstance(expr, boolean.AND):
-            return self._parse_and_or_not_expression(expr, and_operator, params)
-        elif isinstance(expr, boolean.OR):
-            return self._parse_and_or_not_expression(expr, or_operator, params)
-        elif isinstance(expr, boolean.NOT):
-            return self._parse_and_or_not_expression(expr, inversion_operator, params)
-        elif isinstance(expr, boolean.Symbol):
-            # If the trigger/response here is just a name, look for it in the globals
+    def _evaluate_boolean_expression(self, expr: boolean.Expression, params: TriggerResponseParams) -> TriggerOrResponse:
+        # If the trigger/response here is just a name, look for it in the globals
+        if isinstance(expr, boolean.Symbol):
             return params.globals[str(expr)]
+
+        boolean_function = self.OPERATOR_TYPE_TO_FUNCTION[type(expr)]
+        evaluated_args = [self._evaluate_boolean_expression(arg, params) for arg in expr.args]
+        return boolean_function(*evaluated_args)
 
     def _parse_rule_trigger_or_response(self,
                                         rule: CommentedMap,
                                         params: TriggerResponseParams) -> TriggerOrResponse:
         if isinstance(rule[params.key], str):
             parsed_expr = self.algebra.parse(rule[params.key])
-            if isinstance(parsed_expr, boolean.Symbol):
-                # If the trigger/response here is just a name, look for it in the globals
-                return params.globals[rule[params.key]]
-            else:
-                return self._parse_boolean_expression(parsed_expr, params)
+            return self._evaluate_boolean_expression(parsed_expr, params)
 
         return params.parser.parse_single(rule[params.key])
 
