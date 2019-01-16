@@ -1,1 +1,2 @@
 python_telegram_bot==10.0.1
+boolean.py==3.6
