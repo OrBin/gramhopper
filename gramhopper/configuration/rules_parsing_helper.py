@@ -16,7 +16,8 @@ class RulesParsingHelper:
         Globals are triggers and responses which are defined generally in the rules file,
         as opposed to those defined inside a specific rule.
 
-        :param config: The configuration subroot from which the function reads the triggers/responses.
+        :param config: The configuration subroot from which the function reads the
+        triggers/responses.
         :param params: The trigger/response parameters whose globals should be updated.
         :return: None
         """
@@ -31,7 +32,9 @@ class RulesParsingHelper:
             return params.globals[str(expr)]
 
         boolean_function = OPERATOR_TYPE_TO_FUNCTION[type(expr)]
-        evaluated_args = [RulesParsingHelper.evaluate_boolean_expression(arg, params) for arg in expr.args]
+        evaluated_args = [RulesParsingHelper.evaluate_boolean_expression(arg, params)
+                          for arg
+                          in expr.args]
         return boolean_function(*evaluated_args)
 
     @staticmethod
