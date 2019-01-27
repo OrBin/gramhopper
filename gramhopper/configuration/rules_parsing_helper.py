@@ -1,5 +1,3 @@
-from typing import Dict
-
 from boolean import boolean
 from ruamel_yaml.comments import CommentedMap
 from .boolean_operators import OPERATOR_TYPE_TO_FUNCTION
@@ -29,13 +27,13 @@ class RulesParsingHelper:
 
     @staticmethod
     def evaluate_boolean_expression(expr: boolean.Expression,
-                                    globals: Dict[str, TriggerResponse]) -> TriggerResponse:
+                                    params: TriggerResponseParams) -> TriggerResponse:
         # If the trigger/response here is just a name, look for it in the globals
         if isinstance(expr, boolean.Symbol):
-            return globals[str(expr)]
+            return params.globals[str(expr)]
 
         boolean_function = OPERATOR_TYPE_TO_FUNCTION[type(expr)]
-        evaluated_args = [RulesParsingHelper.evaluate_boolean_expression(arg, globals)
+        evaluated_args = [RulesParsingHelper.evaluate_boolean_expression(arg, params)
                           for arg
                           in expr.args]
         return boolean_function(*evaluated_args)
@@ -46,6 +44,6 @@ class RulesParsingHelper:
         if isinstance(rule[params.singular_key], str):
             algebra = boolean.BooleanAlgebra()
             parsed_expr = algebra.parse(rule[params.singular_key])
-            return RulesParsingHelper.evaluate_boolean_expression(parsed_expr, params.globals)
+            return RulesParsingHelper.evaluate_boolean_expression(parsed_expr, params)
 
-        return params.parser.parse_single(rule[params.singular_key], params.globals)
+        return params.parser.parse_single(rule[params.singular_key])

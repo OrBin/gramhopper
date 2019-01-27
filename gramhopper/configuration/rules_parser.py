@@ -1,20 +1,18 @@
 from ruamel.yaml import YAML
 from ruamel_yaml.comments import CommentedMap
-
-from .params_manager import ParamsManager
 from .rules_parsing_helper import RulesParsingHelper
 from ..handlers.handler import Handler
-#from .trigger_response_params import TriggerParams, ResponseParams
+from .trigger_response_params import TriggerParams, ResponseParams
 
 
 class RulesParser:
 
     def __init__(self):
         self.yaml = YAML()
-        #self.global_triggers = {}
-        #self.global_responses = {}
-        self.trigger_params = ParamsManager.get_trigger_params() # TriggerParams(globals={})
-        self.response_params = ParamsManager.get_response_params() # ResponseParams(globals={})
+        self.global_triggers = {}
+        self.global_responses = {}
+        self.trigger_params = TriggerParams(globals=self.global_triggers)
+        self.response_params = ResponseParams(globals=self.global_responses)
 
     def parse_globals(self, config: CommentedMap):
         RulesParsingHelper.add_globals(config, self.trigger_params)
