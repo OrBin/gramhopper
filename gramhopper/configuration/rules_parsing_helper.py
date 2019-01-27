@@ -46,4 +46,4 @@ class RulesParsingHelper:
             parsed_expr = algebra.parse(rule[params.singular_key])
             return RulesParsingHelper.evaluate_boolean_expression(parsed_expr, params)
 
-        return params.parser.parse_single(rule[params.singular_key])
+        return params.parser.parse_single(rule[params.singular_key], params.globals)
