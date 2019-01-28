@@ -1,7 +1,8 @@
 import abc
 import typing
 from inspect import isclass
-from gramhopper.triggers.basic_triggers import BaseTrigger
+from .boolean_helper import BooleanHelper
+from ..triggers.basic_triggers import BaseTrigger
 from ..responses import Responses
 from ..triggers import Triggers
 
@@ -73,6 +74,11 @@ class TriggerParser(BaseParser):
 
     @classmethod
     def parse_single(cls, config, globals):
+        return BooleanHelper.parse_subrule_as_trigger_or_response(config,
+                                                                  globals,
+                                                                  cls.parse_single_recursively)
+    @classmethod
+    def parse_single_recursively(cls, config, globals):
         if isinstance(config, str):
             return globals[config]
 
