@@ -88,7 +88,7 @@ rules:
 ```
 will yield the following conversation:
 
-![](https://i.imgur.com/CnLlWBS.png "Conversation example")
+![](./demo.gif "Conversation example")
 
 
 ## Run
