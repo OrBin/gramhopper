@@ -34,6 +34,63 @@ Basically, the configuration file has three parts:
 * **Global responses**: responses that can be used in rules without redefining them.
 * **Rules**: Pairs of triggers and responses, which define together what triggers the bot and how it responds.
 
+#### `rules.yml` example
+The following configuration file:
+```yaml
+triggers:
+  - name: cat
+    type: text.has_exact_word
+    word:
+      - Meow
+      - meow
+
+  - name: duck
+    type: text.has_exact_word
+    word: Quack
+
+responses:
+  - name: found_dog
+    type: preset.reply
+    preset_response:
+      - Hey, here's a dog!
+
+rules:
+  - trigger: cat
+    response:
+      type: preset.message
+      preset_response: Hello cat!
+
+  - trigger:
+      type: text.has_substring
+      substring:
+        - Woof
+        - woof
+        - Ruff
+        - ruff
+    response: found_dog
+
+  - trigger:
+      type: text.regexp
+      pattern: ^(Quack|Meow|Woof|Moo)$
+    response:
+      type: match.message
+      template: I hear "{0}"
+    probability: 0.3
+
+  - trigger:
+      type: event_streak
+      counting_event_trigger: duck
+      streak_timeout_sec: 60
+      event_count: 5
+    response:
+      type: preset.message
+      preset_response: Shut up duck!
+```
+will yield the following conversation:
+
+![](https://i.imgur.com/CnLlWBS.png "Conversation example")
+
+
 ## Run
 To run gramhopper, just run:
 ```bash
