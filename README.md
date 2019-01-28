@@ -5,7 +5,7 @@ A bot platform for automatic responses based on various triggers.
 Install the latest version:
 
 ```bash
-pip install gramhopper
+$ pip install gramhopper
 ```
 
 ## Configure
