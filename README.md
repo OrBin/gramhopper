@@ -55,11 +55,14 @@ responses:
       - Hey, here's a dog!
 
 rules:
+  # Identifies a cat (a global "cat" trigger) and sends "Hello cat!" (an inline response).
   - trigger: cat
     response:
       type: preset.message
       preset_response: Hello cat!
 
+  # Identifies a dog (an inline trigger) and replies "Hey, here's a dog!"
+  # (a global "found_dog" response).
   - trigger:
       type: text.has_substring
       substring:
@@ -69,6 +72,8 @@ rules:
         - ruff
     response: found_dog
 
+  # Identifies an animal sound (an inline trigger) and replies 
+  # 'I hear "(the animal sound)"' (an inline response), with a 30% probability.
   - trigger:
       type: text.regexp
       pattern: ^(Quack|Meow|Woof|Moo)$
@@ -77,6 +82,8 @@ rules:
       template: I hear "{0}"
     probability: 0.3
 
+  # Identifies 5 occurrences in 60 seconds of a duck sound (an inline event_streak
+  # trigger that uses a global "duck" trigger") and replies "Shut up duck!".
   - trigger:
       type: event_streak
       counting_event_trigger: duck
