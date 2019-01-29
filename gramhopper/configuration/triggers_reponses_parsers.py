@@ -43,7 +43,6 @@ class TriggerParser(BaseParser):
     def parameters_to_parse_as_trigger(cls, config):
         trigger_class = Triggers[config['type']]
         parameters_type_hints = typing.get_type_hints(trigger_class.__init__)
-
         parameters_to_parse = []
 
         for parameter_name in config:
