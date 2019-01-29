@@ -8,7 +8,7 @@ setup(
 
     author='Or Bin, Meir Halachmi',
     author_email='orbin50@gmail.com, meir.halachmi@gmail.com',
-    install_requires=['python_telegram_bot'],
+    install_requires=['python_telegram_bot==10.0.1', 'boolean.py==3.6'],
 
     license='MIT',
 
@@ -18,8 +18,6 @@ setup(
         'Intended Audience :: Other Audience',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Communications :: Chat',
     ],
