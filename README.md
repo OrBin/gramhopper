@@ -30,8 +30,8 @@ are nicknames and the values are user IDs, for example:
 The configuration file is located at `~/.gramphopper/rules.yml`.
  
 Basically, the configuration file has three parts:
-* **Global triggers**: triggers that can be used in rules without redefining them.
-* **Global responses**: responses that can be used in rules without redefining them.
+* **Global triggers**: triggers that can be used in rules without redefining.
+* **Global responses**: responses that can be used in rules without redefining.
 * **Rules**: Pairs of triggers and responses, which define together what triggers the bot and how it responds.
 
 #### `rules.yml` example
