@@ -1,9 +1,15 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as f:
+    long_description = f.read()
+
 setup(
     name='gramhopper',
 
     description='A bot platform for automatic responses based on various triggers',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+
     url='https://github.com/OrBin/gramhopper',
 
     author='Or Bin, Meir Halachmi',
