@@ -104,7 +104,7 @@ rules:
 ```
 will yield the following conversation:
 
-![](./demo.gif "Conversation example")
+![](https://raw.githubusercontent.com/OrBin/gramhopper/master/demo.gif "Conversation example")
 
 
 ## Run
