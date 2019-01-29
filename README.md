@@ -17,6 +17,15 @@ $ pip install gramhopper
  then select the new bot and click `Disable`. 
 
 ### Enable nicknames for user-based rules
+To use user nicknames, you have to get the user IDs first.
+
+#### Getting user ID in Telegram
+Getting a Telegram user ID can be done using [@userinfobot](https://telegram.me/userinfobot):
+* Go to [@userinfobot](https://telegram.me/userinfobot) and press "START". 
+    The bot will then print your user ID.
+* For getting ID of another user, just forward a message from this user and the bot will print their user ID. 
+
+#### Mapping nicknames to user IDs
 To use user nicknames, `~/.gramphopper/users.json` should contain an object in which the keys 
 are nicknames and the values are user IDs, for example:
 ```json
