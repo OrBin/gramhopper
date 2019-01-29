@@ -1,4 +1,4 @@
-from ruamel.yaml import YAML
+from ruamel_yaml import YAML
 from ruamel_yaml.comments import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
 from ..handlers.handler import Handler
