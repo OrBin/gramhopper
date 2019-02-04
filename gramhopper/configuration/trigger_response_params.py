@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, Type
-from gramhopper.configuration.globals_dict import GlobalsDict
+from .globals_dict import GlobalsDict
 from .triggers_reponses_parsers import BaseParser, TriggerParser, ResponseParser
 from ..triggers.basic_triggers import BaseTrigger
 from ..responses.basic_responses import BaseResponse
