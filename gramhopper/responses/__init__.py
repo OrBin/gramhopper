@@ -1,4 +1,4 @@
 from .responses import Responses
 
 
-__all__ = [Responses]
+__all__ = ['Responses']

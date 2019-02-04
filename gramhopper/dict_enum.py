@@ -2,7 +2,9 @@ from enum import Enum, EnumMeta
 
 
 class DictEnumMeta(EnumMeta):
-    def __getitem__(self, key):
+    """Metaclass for DictEnum"""
+
+    def __getitem__(cls, key):
         key_path = key.split('.')
         item = super().__getitem__(key_path.pop(0)).value
 
