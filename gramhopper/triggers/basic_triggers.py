@@ -23,8 +23,10 @@ class MergedTrigger(BaseTrigger):
 
     Args:
         base_trigger: Base trigger of the merged trigger
-        and_trigger: Optional trigger to "and" with base_trigger. Mutually exclusive with or_trigger.
-        or_trigger: Optional trigger to "or" with base_trigger. Mutually exclusive with and_trigger.
+        and_trigger: Optional trigger to "and" with base_trigger.
+            Mutually exclusive with or_trigger.
+        or_trigger: Optional trigger to "or" with base_trigger.
+            Mutually exclusive with and_trigger.
 
     """
 
@@ -60,17 +62,20 @@ class MergedTrigger(BaseTrigger):
         if base_result.should_respond:
             if or_result.should_respond:
                 merged_payload = self.merge_payloads(base_result, or_result)
-                return TriggerResult(should_respond=True, response_payload=merged_payload)
+                return TriggerResult(should_respond=True,
+                                     response_payload=merged_payload)
             else:
-                return TriggerResult(should_respond=True, response_payload=base_result.response_payload)
+                return TriggerResult(should_respond=True,
+                                     response_payload=base_result.response_payload)
         elif or_result.should_respond:
-            return TriggerResult(should_respond=True, response_payload=or_result.response_payload)
+            return TriggerResult(should_respond=True,
+                                 response_payload=or_result.response_payload)
         else:
             return TriggerResult(should_respond=False)
 
     @staticmethod
     def merge_payloads(first: TriggerResult, second: TriggerResult) -> dict:
-        return { **first.response_payload, **second.response_payload }
+        return {**first.response_payload, **second.response_payload}
 
 
 class InvertedTrigger(BaseTrigger):

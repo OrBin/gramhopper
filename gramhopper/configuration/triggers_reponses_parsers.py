@@ -64,18 +64,19 @@ class TriggerParser(BaseParser):
                     if BaseTrigger in type_hint.__args__:
                         parameters_to_parse.append(parameter_name)
                 else:
-                    raise NotImplementedError(f'Origin type {origin_type} is currently not supported')
+                    raise NotImplementedError(f'Origin type {origin_type} '
+                                              f'is currently not supported')
             elif isclass(type_hint) and issubclass(type_hint, BaseTrigger):
                 parameters_to_parse.append(parameter_name)
 
         return parameters_to_parse
-
 
     @classmethod
     def parse_single(cls, config, globals):
         return BooleanHelper.parse_subrule_as_trigger_or_response(config,
                                                                   globals,
                                                                   cls.parse_single_recursively)
+
     @classmethod
     def parse_single_recursively(cls, config, globals):
         if isinstance(config, str):

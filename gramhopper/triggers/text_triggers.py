@@ -5,6 +5,7 @@ from telegram import Update
 from .basic_triggers import BaseTrigger
 from ..trigger_result import TriggerResult
 
+
 class _RegExpTrigger(BaseTrigger):
     def __init__(self, pattern: str):
         self.pattern = pattern
@@ -15,7 +16,7 @@ class _RegExpTrigger(BaseTrigger):
             match = re.match(self.pattern, text)
             if match is not None:
                 return TriggerResult(should_respond=True,
-                                     response_payload={ 'match': match.groups() })
+                                     response_payload={'match': match.groups()})
 
         return TriggerResult(should_respond=False)
 
@@ -28,11 +29,11 @@ class _HasSubstringTrigger(_RegExpTrigger):
             if self.validate_strings_list(substring):
                 regexp_for_substring = '|'.join(substring)
             else:
-                raise TypeError('Parameter \'substring\' should be either a string or a list of strings. '
-                                'A list containing non-strings was given)')
+                raise TypeError('Parameter \'substring\' should be either a string or a list of '
+                                'strings, but a list containing non-strings was given.')
         else:
-            raise TypeError(f'Parameter \'substring\' should be either a string or a list of strings '
-                            f'({type(substring)} given)')
+            raise TypeError(f'Parameter \'substring\' should be either a string or a list of '
+                            f'strings, but {type(substring)} was given')
 
         prefix = '(?:.* )?' if exact else '.*'
         postfix = '(?: .*)?' if exact else '.*'

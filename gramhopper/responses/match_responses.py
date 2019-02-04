@@ -9,7 +9,7 @@ class _MatchTextResponse(BaseResponse):
         self.template = template
 
     def build_response_text(self, response_payload: dict):
-            return self.template.format(*response_payload['match'])
+        return self.template.format(*response_payload['match'])
 
 
 class _MatchReplyResponse(_MatchTextResponse):

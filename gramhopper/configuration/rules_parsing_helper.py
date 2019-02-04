@@ -24,7 +24,6 @@ class RulesParsingHelper:
             parsed = params.parser.parse_many(config[params.plural_key], params.globals)
             params.globals.update(parsed)
 
-
     @staticmethod
     def parse_rule_trigger_or_response(rule: CommentedMap,
                                        params: TriggerResponseParams) -> TriggerResponse:
@@ -32,4 +31,3 @@ class RulesParsingHelper:
         return BooleanHelper.parse_subrule_as_trigger_or_response(rule[params.singular_key],
                                                                   params.globals,
                                                                   params.parser.parse_single)
-
