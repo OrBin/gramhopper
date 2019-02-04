@@ -22,6 +22,7 @@ class _PresetTextResponse(BaseResponse):
             return random.choice(self.preset_responses)
         return None
 
+
 class _PresetReplyResponse(_PresetTextResponse):
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
         ResponseHelper.reply(bot, update, self.get_response_text())
