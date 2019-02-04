@@ -1,9 +1,9 @@
 import re
-from ..dict_enum import DictEnum
 from typing import List, Union
 from telegram import Update
-from .basic_triggers import BaseTrigger
 from ..trigger_result import TriggerResult
+from ..dict_enum import DictEnum
+from .basic_triggers import BaseTrigger
 
 
 class _RegExpTrigger(BaseTrigger):

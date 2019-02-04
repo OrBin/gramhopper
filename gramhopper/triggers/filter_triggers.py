@@ -3,7 +3,7 @@ from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
 from ..trigger_result import TriggerResult
 from .basic_triggers import BaseTrigger
-from ..users_helper import default_users_helper
+from ..users_helper import DEFAULT_USERS_HELPER
 
 
 class FilterBasedTrigger(BaseTrigger):
@@ -17,7 +17,7 @@ class FilterBasedTrigger(BaseTrigger):
 class _UserFilterBasedTrigger(FilterBasedTrigger):
     def __init__(self, nickname=None, user_id=None, username=None):
         if nickname is not None:
-            super().__init__(Filters.user(default_users_helper.get_user_id_by_nickname(nickname)))
+            super().__init__(Filters.user(DEFAULT_USERS_HELPER.get_user_id_by_nickname(nickname)))
         else:
             super().__init__(Filters.user(user_id, username))
 

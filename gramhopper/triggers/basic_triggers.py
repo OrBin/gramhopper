@@ -41,7 +41,7 @@ class MergedTrigger(BaseTrigger):
     def check_trigger(self, update: Update) -> TriggerResult:
         if self.and_trigger:
             return self.check_trigger_and(update)
-        elif self.or_trigger:
+        if self.or_trigger:
             return self.check_trigger_or(update)
 
     def check_trigger_and(self, update: Update) -> TriggerResult:

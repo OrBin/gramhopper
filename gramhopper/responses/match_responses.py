@@ -1,5 +1,5 @@
-from ..dict_enum import DictEnum
 from telegram import Bot, Update
+from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
 

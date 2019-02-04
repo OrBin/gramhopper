@@ -6,10 +6,10 @@ class DictEnumMeta(EnumMeta):
         key_path = key.split('.')
         item = super().__getitem__(key_path.pop(0)).value
 
-        if len(key_path) > 0:
+        if key_path:
             return item['.'.join(key_path)]
-        else:
-            return item
+
+        return item
 
 
 class DictEnum(Enum, metaclass=DictEnumMeta):

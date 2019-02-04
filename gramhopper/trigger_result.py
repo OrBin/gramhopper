@@ -1,6 +1,7 @@
-from typing import NamedTuple
+from dataclasses import dataclass, field
 
 
-class TriggerResult(NamedTuple):
+@dataclass
+class TriggerResult:
     should_respond: bool
-    response_payload: dict = {}
+    response_payload: dict = field(default_factory=dict)

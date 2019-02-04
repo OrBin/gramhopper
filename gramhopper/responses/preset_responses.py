@@ -1,7 +1,7 @@
 import random
-from ..dict_enum import DictEnum
 from typing import Union, List
 from telegram import Bot, Update, Document
+from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
 
@@ -13,7 +13,7 @@ class _PresetTextResponse(BaseResponse):
     def get_response_text(self):
         if isinstance(self.preset_responses, str):
             return self.preset_responses
-        elif isinstance(self.preset_responses, list):
+        if isinstance(self.preset_responses, list):
             return random.choice(self.preset_responses)
 
 
