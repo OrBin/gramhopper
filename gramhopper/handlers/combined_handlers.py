@@ -22,8 +22,6 @@ class CombinedMessageHandler(MessageHandler):
 class CombinedConversationHandler(ConversationHandler):
     def __init__(self, handlers):
         message_handlers = [CombinedMessageHandler(handlers)]
-        super().__init__(
-            entry_points=message_handlers,
-            states={REGULAR_STATE: message_handlers},
-            fallbacks=[]
-        )
+        super().__init__(entry_points=message_handlers,
+                         states={REGULAR_STATE: message_handlers},
+                         fallbacks=[])

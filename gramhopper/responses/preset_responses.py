@@ -1,7 +1,8 @@
+import abc
 import random
-from ..dict_enum import DictEnum
 from typing import Union, List
 from telegram import Bot, Update, Document
+from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
 
@@ -10,11 +11,16 @@ class _PresetTextResponse(BaseResponse):
     def __init__(self, preset_response: Union[str, List[str]]):
         self.preset_responses = preset_response
 
+    @abc.abstractmethod
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+        pass
+
     def get_response_text(self):
         if isinstance(self.preset_responses, str):
             return self.preset_responses
-        elif isinstance(self.preset_responses, list):
+        if isinstance(self.preset_responses, list):
             return random.choice(self.preset_responses)
+        return None
 
 
 class _PresetReplyResponse(_PresetTextResponse):

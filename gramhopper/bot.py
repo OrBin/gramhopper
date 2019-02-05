@@ -6,12 +6,13 @@ from gramhopper.configuration.rules_parser import RulesParser
 
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
 
 def handle_error(bot, update, error):
     """Log Errors caused by Updates."""
-    logging.error('Update "%s" caused error "%s"', update, error)
+    logging.error('Update "%s" caused error "%s" on bot "%s"', update, error, bot.name)
 
 
 def main():

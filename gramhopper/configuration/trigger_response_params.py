@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, Type
-from .trigger_response import TriggerResponse
+from gramhopper.configuration.globals_dict import GlobalsDict
 from .triggers_reponses_parsers import BaseParser, TriggerParser, ResponseParser
 from ..triggers.basic_triggers import BaseTrigger
 from ..responses.basic_responses import BaseResponse
@@ -9,7 +9,7 @@ from ..responses.basic_responses import BaseResponse
 @dataclass
 class TriggerResponseParams:
     singular_key: str
-    globals: Dict[str, TriggerResponse]
+    global_elements: GlobalsDict
     parser: Type[BaseParser]
 
     @property
@@ -19,11 +19,15 @@ class TriggerResponseParams:
 
 @dataclass
 class TriggerParams(TriggerResponseParams):
-    def __init__(self, globals: Dict[str, BaseTrigger]):
-        super().__init__(singular_key='trigger', globals=globals, parser=TriggerParser)
+    def __init__(self, global_elements: Dict[str, BaseTrigger]):
+        super().__init__(singular_key='trigger',
+                         global_elements=global_elements,
+                         parser=TriggerParser)
 
 
 @dataclass
 class ResponseParams(TriggerResponseParams):
-    def __init__(self, globals: Dict[str, BaseResponse]):
-        super().__init__(singular_key='response', globals=globals, parser=ResponseParser)
+    def __init__(self, global_elements: Dict[str, BaseResponse]):
+        super().__init__(singular_key='response',
+                         global_elements=global_elements,
+                         parser=ResponseParser)

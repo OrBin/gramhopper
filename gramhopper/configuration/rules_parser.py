@@ -11,8 +11,8 @@ class RulesParser:
         self.yaml = YAML()
         self.global_triggers = {}
         self.global_responses = {}
-        self.trigger_params = TriggerParams(globals=self.global_triggers)
-        self.response_params = ResponseParams(globals=self.global_responses)
+        self.trigger_params = TriggerParams(global_elements=self.global_triggers)
+        self.response_params = ResponseParams(global_elements=self.global_responses)
 
     def parse_globals(self, config: CommentedMap):
         RulesParsingHelper.add_globals(config, self.trigger_params)

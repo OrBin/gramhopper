@@ -1,5 +1,6 @@
-from ..dict_enum import DictEnum
+import abc
 from telegram import Bot, Update
+from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
 
@@ -8,8 +9,12 @@ class _MatchTextResponse(BaseResponse):
     def __init__(self, template: str):
         self.template = template
 
+    @abc.abstractmethod
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+        pass
+
     def build_response_text(self, response_payload: dict):
-            return self.template.format(*response_payload['match'])
+        return self.template.format(*response_payload['match'])
 
 
 class _MatchReplyResponse(_MatchTextResponse):
