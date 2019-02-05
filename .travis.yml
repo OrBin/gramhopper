@@ -1,3 +1,4 @@
+dist: xenial
 language: python
 python:
   - 3.7
@@ -12,5 +13,5 @@ jobs:
   include:
     - stage: lint
       script:
-        - pylint ./*.py ./gramhopper
+        - pylint ./*.py ./gramhopper --rcfile=.pylintrc
         - flake8
