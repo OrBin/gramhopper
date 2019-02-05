@@ -1,0 +1,16 @@
+language: python
+python:
+  - 3.7
+install:
+  - pip install -r requirements.txt
+  - pip install pylint flake8
+
+stages:
+  - lint
+
+jobs:
+  include:
+    - stage: lint
+      script:
+        - pylint ./*.py ./gramhopper
+        - flake8
