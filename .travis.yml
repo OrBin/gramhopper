@@ -8,6 +8,8 @@ install:
 
 stages:
   - lint
+  - name: build python package
+    if: branch != master || type != push
 
 jobs:
   include:
@@ -15,3 +17,6 @@ jobs:
       script:
         - pylint ./*.py ./gramhopper
         - flake8
+    - stage: build package
+      script:
+        - python setup.py sdist bdist_wheel
