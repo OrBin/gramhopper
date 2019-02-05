@@ -13,5 +13,5 @@ jobs:
   include:
     - stage: lint
       script:
-        - pylint ./*.py ./gramhopper --rcfile=.pylintrc
+        - pylint ./*.py ./gramhopper
         - flake8
