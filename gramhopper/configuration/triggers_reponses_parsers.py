@@ -12,7 +12,6 @@ class BaseParser(abc.ABC):
     @abc.abstractmethod
     def mapping_class():
         """ Returns the mapping class (`Triggers` or `Responses`)"""
-        pass
 
     @classmethod
     def parse_single(cls, config, global_elements):  # pylint: disable=unused-argument
