@@ -18,7 +18,7 @@ setup(
     install_requires=[
         'python_telegram_bot==11.1.0',
         'boolean.py==3.6',
-        'ruamel_yaml==0.15.46'
+        'ruamel_yaml==0.15.87'
     ],
 
     license='MIT',

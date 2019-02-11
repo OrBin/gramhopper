@@ -8,8 +8,12 @@ install:
 
 stages:
   - lint
-  - name: build python package
-    if: branch != master || type != push
+
+  - name: build
+    if: (branch != master && tag IS blank) || type != push
+
+  - name: deploy docker image
+    if: (branch = master || tag IS present) && type = push
 
 jobs:
   include:
@@ -17,6 +21,18 @@ jobs:
       script:
         - pylint ./*.py ./gramhopper
         - flake8
-    - stage: build package
+    - stage: build
       script:
         - python setup.py sdist bdist_wheel
+        - docker build -t $DOCKER_IMAGE_NAME .
+    - stage: deploy docker image
+      script:
+        - |
+          if [ ! -z "$TRAVIS_TAG" ]; then
+            export IMAGE_TAG=$TRAVIS_TAG
+          else
+            export IMAGE_TAG='latest'
+          fi
+        - docker build -t $DOCKER_IMAGE_NAME:$IMAGE_TAG .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push $DOCKER_IMAGE_NAME:$IMAGE_TAG

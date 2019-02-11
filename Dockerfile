@@ -1,7 +1,13 @@
-FROM python:3.7-alpine
+FROM python:3.7-slim as builder
 
 COPY . /app
-WORKDIR /app/bot_engine
-RUN pip install -r ../requirements.txt
+WORKDIR /app/
+RUN python setup.py bdist_wheel
 
-CMD python bot.py
+
+FROM python:3.7-slim
+
+COPY --from=builder /app/dist/gramhopper-*.whl /
+RUN pip install /gramhopper-*.whl && rm /gramhopper-*.whl
+
+CMD gramhopper

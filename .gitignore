@@ -172,7 +172,4 @@ venv.bak/
 **/.idea
 
 # Project-specific ignores
-token*.txt
-users.json
-gramhopper/rule_handlers.py
-rules.yml
+*.log
