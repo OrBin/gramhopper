@@ -1,3 +1,5 @@
 python_telegram_bot==11.1.0
 boolean.py==3.6
 ruamel_yaml==0.15.46
+sphinx==1.7.9
+sphinx_rtd_theme==0.4.2
