@@ -16,11 +16,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-
-Triggers
-==================
-.. autoclass:: gramhopper.triggers.Triggers
-    :members:
+* `Triggers <./triggers>`_
+* `Responses <./responses>`_
