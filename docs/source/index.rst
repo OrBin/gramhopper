@@ -7,9 +7,12 @@ Welcome to gramhopper's documentation!
 ======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :glob:
+   :maxdepth: 1
+   :caption: Content
 
+   triggers/*
+   responses/*
 
 
 Indices and tables
