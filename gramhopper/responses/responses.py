@@ -4,5 +4,10 @@ from .match_responses import MatchResponses
 
 
 class Responses(DictEnum):
-    preset = PresetResponses
+    """A high-level class for all responses"""
+
     match = MatchResponses
+    """Regexp-based responses. See more in :class:`MatchResponses`."""
+
+    preset = PresetResponses
+    """Preset responses. See more in :class:`PresetResponses`."""
