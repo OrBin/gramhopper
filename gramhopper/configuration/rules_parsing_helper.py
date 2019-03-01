@@ -1,4 +1,4 @@
-from ruamel.yaml.comments import CommentedMap
+from ruamel_yaml.comments import CommentedMap
 from .boolean_helper import BooleanHelper
 from .trigger_response import TriggerResponse
 from .trigger_response_params import TriggerResponseParams
