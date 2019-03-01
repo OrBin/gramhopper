@@ -22,7 +22,10 @@ class BaseParser(abc.ABC):
         mapping_cls = cls.mapping_class()
         element_cls = mapping_cls[config_copy.pop('type')]
 
-        return element_cls(**config_copy)
+        if isclass(element_cls):
+            return element_cls(**config_copy)
+        else:
+            return element_cls
 
     @classmethod
     def parse_many(cls, config, global_elements):
