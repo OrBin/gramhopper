@@ -24,8 +24,7 @@ class BaseParser(abc.ABC):
 
         if isclass(element_cls):
             return element_cls(**config_copy)
-        else:
-            return element_cls
+        return element_cls
 
     @classmethod
     def parse_many(cls, config, global_elements):
