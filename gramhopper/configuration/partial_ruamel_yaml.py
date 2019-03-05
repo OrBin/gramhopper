@@ -15,4 +15,4 @@ except ImportError:
 
 
 YAML = YAML
-CommentedMap = CommentedMap #pylint: disable=invalid-name
+CommentedMap = CommentedMap  # pylint: disable=invalid-name
