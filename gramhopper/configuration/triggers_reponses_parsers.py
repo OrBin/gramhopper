@@ -19,12 +19,14 @@ class BaseParser(abc.ABC):
         if 'name' in config_copy:
             config_copy.pop('name')
 
-        mapping_cls = cls.mapping_class()
-        element_cls = mapping_cls[config_copy.pop('type')]
+        mapping_class = cls.mapping_class()
+        element = mapping_class[config_copy.pop('type')]
 
-        if isclass(element_cls):
-            return element_cls(**config_copy)
-        return element_cls
+        # Some triggers are classes (most of them actually), but some are instances (mostly filter triggers).
+        # This allows both cases to be used.
+        if isclass(element):
+            return element(**config_copy)
+        return element
 
     @classmethod
     def parse_many(cls, config, global_elements):
