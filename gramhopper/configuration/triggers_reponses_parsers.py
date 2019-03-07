@@ -22,7 +22,7 @@ class BaseParser(abc.ABC):
         mapping_class = cls.mapping_class()
         element = mapping_class[config_copy.pop('type')]
 
-        # Some triggers are classes (most of them actually), but some are instances (mostly filter triggers).
+        # Some triggers (most of them) are classes and some are instances (mostly filter triggers).
         # This allows both cases to be used.
         if isclass(element):
             return element(**config_copy)
