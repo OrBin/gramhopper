@@ -1,6 +1,6 @@
 from typing import Union, Callable
 from boolean import boolean
-from ruamel.yaml.comments import CommentedMap
+from .partial_ruamel_yaml import CommentedMap
 from .globals_dict import GlobalsDict
 from .boolean_operators import OPERATOR_TYPE_TO_FUNCTION
 from .trigger_response import TriggerResponse
