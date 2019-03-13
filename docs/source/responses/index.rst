@@ -1,4 +1,6 @@
 Responses
 =========
-.. autoclass:: gramhopper.responses.Responses
-    :members:
+
+.. toctree::
+    match-responses
+    preset-responses

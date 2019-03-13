@@ -1,4 +1,7 @@
 Triggers
 ========
-.. autoclass:: gramhopper.triggers.Triggers
-    :members:
+
+.. toctree::
+    text-triggers
+    filter-triggers
+    event-streak
