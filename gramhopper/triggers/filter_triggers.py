@@ -51,8 +51,8 @@ class FilterTriggers(DictEnum):
     status_update = FilterBasedTrigger(Filters.status_update)
     forwarded = FilterBasedTrigger(Filters.forwarded)
     game = FilterBasedTrigger(Filters.game)
-    entity = FilterBasedTrigger(Filters.entity)
-    caption_entity = FilterBasedTrigger(Filters.caption_entity)
+    entity = FilterBasedTrigger(Filters.entity) # Filters.entity is a class
+    caption_entity = FilterBasedTrigger(Filters.caption_entity) # Filters.caption_entity is a class
     private = FilterBasedTrigger(Filters.private)
     group = FilterBasedTrigger(Filters.group)
     invoice = FilterBasedTrigger(Filters.invoice)

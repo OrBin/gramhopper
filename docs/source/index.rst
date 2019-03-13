@@ -11,11 +11,3 @@ Welcome to gramhopper's documentation!
 
    triggers/index
    responses/index
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* `Triggers <./triggers>`_
-* `Responses <./responses>`_
