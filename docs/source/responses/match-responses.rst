@@ -1,19 +1,25 @@
 Match Responses
 ===============
-There are some *matched-based responses*, which should normally come after a regexp trigger
+There are some matched-based responses, which should normally come after a regexp trigger
 
 .. TODO link to regexp trigger doc here.
 
-match.reply
+General
 -----------
-.. autoclass:: gramhopper.responses.match_responses._MatchReplyResponse
+.. autoclass:: gramhopper.responses.match_responses.MatchResponses
     :members:
-
-    .. automethod:: __init__
 
 match.message
 -----------
 .. autoclass:: gramhopper.responses.match_responses._MatchMessageResponse
+    :members:
+
+    .. automethod:: __init__
+
+
+match.reply
+-----------
+.. autoclass:: gramhopper.responses.match_responses._MatchReplyResponse
     :members:
 
     .. automethod:: __init__

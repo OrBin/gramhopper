@@ -1,9 +1,14 @@
 Preset Responses
 ================
 
-preset.reply
+General
+-----------
+.. autoclass:: gramhopper.responses.preset_responses.PresetResponses
+    :members:
+
+preset.document
 ------------
-.. autoclass:: gramhopper.responses.preset_responses._PresetReplyResponse
+.. autoclass:: gramhopper.responses.preset_responses._PresetDocumentResponse
     :members:
 
     .. automethod:: __init__
@@ -15,9 +20,9 @@ preset.message
 
     .. automethod:: __init__
 
-preset.document
+preset.reply
 ------------
-.. autoclass:: gramhopper.responses.preset_responses._PresetDocumentResponse
+.. autoclass:: gramhopper.responses.preset_responses._PresetReplyResponse
     :members:
 
     .. automethod:: __init__
