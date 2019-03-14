@@ -13,7 +13,7 @@ class _PresetTextResponse(BaseResponse):
 
     def __init__(self, preset_response: Union[str, List[str]]):
         """
-        Creates the response object.
+        Constructs the response.
 
         :param preset_response: The preset response or list of responses
         """
@@ -36,7 +36,7 @@ class _PresetDocumentResponse(BaseResponse):
 
     def __init__(self, preset_response: Union[str, Document]):
         """
-        Creates the response object.
+        Constructs the response.
 
         :param preset_response: The preset document URL or document object
         """

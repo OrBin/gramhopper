@@ -2,6 +2,6 @@ Triggers
 ========
 
 .. toctree::
-    text-triggers
-    filter-triggers
     event-streak
+    filter-triggers
+    text-triggers

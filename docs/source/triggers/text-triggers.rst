@@ -1,6 +1,9 @@
 Text Triggers
 =============
 
+.. autoclass:: gramhopper.triggers.text_triggers.TextTriggers
+    :members:
+
 text.regexp
 ------------
 .. autoclass:: gramhopper.triggers.text_triggers._RegExpTrigger

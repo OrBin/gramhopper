@@ -11,7 +11,7 @@ class _MatchTextResponse(BaseResponse):
 
     def __init__(self, template: str):
         """
-        Creates the response object.
+        Constructs the response.
 
         :param template: The template to use when building the response text
         """
