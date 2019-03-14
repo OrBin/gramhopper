@@ -4,13 +4,11 @@ There are some matched-based responses, which should normally come after a regex
 
 .. TODO link to regexp trigger doc here.
 
-General
------------
 .. autoclass:: gramhopper.responses.match_responses.MatchResponses
     :members:
 
 match.message
------------
+-------------
 .. autoclass:: gramhopper.responses.match_responses._MatchMessageResponse
     :members:
 
