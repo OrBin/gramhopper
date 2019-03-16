@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='gramhopper',
-    version='1.0.4',
+    version='1.0.5',
 
     description='A bot platform for automatic responses based on various triggers',
     long_description=LONG_DESCRIPTION,
@@ -18,7 +18,7 @@ setup(
     install_requires=[
         'python_telegram_bot==11.1.0',
         'boolean.py==3.6',
-        'ruamel_yaml==0.15.46'
+        'ruamel_yaml==0.15.87'
     ],
 
     license='MIT',

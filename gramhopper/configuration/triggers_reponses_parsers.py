@@ -12,7 +12,6 @@ class BaseParser(abc.ABC):
     @abc.abstractmethod
     def mapping_class():
         """ Returns the mapping class (`Triggers` or `Responses`)"""
-        pass
 
     @classmethod
     def parse_single(cls, config, global_elements):  # pylint: disable=unused-argument
@@ -20,10 +19,14 @@ class BaseParser(abc.ABC):
         if 'name' in config_copy:
             config_copy.pop('name')
 
-        mapping_cls = cls.mapping_class()
-        element_cls = mapping_cls[config_copy.pop('type')]
+        mapping_class = cls.mapping_class()
+        element = mapping_class[config_copy.pop('type')]
 
-        return element_cls(**config_copy)
+        # Some triggers (most of them) are classes and some are instances (mostly filter triggers).
+        # This allows both cases to be used.
+        if isclass(element):
+            return element(**config_copy)
+        return element
 
     @classmethod
     def parse_many(cls, config, global_elements):

@@ -2,10 +2,16 @@
 A bot platform for automatic responses based on various triggers.
 
 ## Install
+#### Using pip
 Install the latest version:
-
 ```bash
 $ pip install gramhopper
+```
+
+#### Using docker
+Pull the latest image: 
+```bash
+$ docker pull orbin/gramhopper:latest
 ```
 
 ## Configure
@@ -109,6 +115,13 @@ will yield the following conversation:
 
 ## Run
 To run gramhopper, just run:
+#### From installed package
+
 ```bash
 $ gramhopper
+```
+
+#### From docker image
+```bash
+$ docker run -it -v /your/configuration/dir:/root/.gramhopper orbin/gramhopper:latest
 ```
