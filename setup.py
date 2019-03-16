@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 with open("README.md", "r") as f:
     LONG_DESCRIPTION = f.read()
@@ -35,7 +35,7 @@ setup(
 
     keywords='gramhopper telegram bot',
 
-    packages=find_packages(),
+    packages=find_namespace_packages(include=['gramhopper', 'gramhopper.*']),
 
     entry_points={
         'console_scripts': [
