@@ -1,10 +1,12 @@
 import json
+from os import PathLike
+from typing import Union
 from .configuration import users_file_path
 
 
 class UsersHelper:
 
-    def __init__(self, file_path: str = None):
+    def __init__(self, file_path: Union[PathLike, str, bytes] = None):
         if file_path is not None:
             self.file_path = file_path
         else:
