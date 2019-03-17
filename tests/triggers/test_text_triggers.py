@@ -124,6 +124,44 @@ class TestSubstringTrigger:
 
 @pytest.mark.usefixtures('update')
 class TestExactWordTrigger:
-    def test_exact_word_trigger(self, update):
-        # TODO Write test
-        pass
+    def test_single_substring_exact(self, update):
+        word = 'ello'
+        trigger = _HasExactWordTrigger(word=word)
+
+        update.message.text = 'ello'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] == word
+
+        update.message.text = 'hello'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
+
+    def test_multiple_substrings_exact(self, update):
+        words = ['yellow', 'fellow']
+        trigger = _HasExactWordTrigger(word=words)
+
+        update.message.text = 'yellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in words
+
+        update.message.text = 'fellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in words
+
+        update.message.text = 'yellowstone'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
