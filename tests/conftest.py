@@ -1,3 +1,8 @@
+"""
+This file contains global fixtures to use broadly on tests.
+Read more here: https://docs.pytest.org/en/latest/fixture.html#conftest-py-sharing-fixture-functions
+"""
+
 from datetime import datetime
 from pytest import fixture
 from telegram import Message, User, Chat, Update
