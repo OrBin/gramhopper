@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
-from ..trigger_result import TriggerResult
+from gramhopper.triggers.trigger_result import TriggerResult
 from .basic_triggers import BaseTrigger
 from ..users_helper import DEFAULT_USERS_HELPER
 
