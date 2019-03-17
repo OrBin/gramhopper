@@ -1,31 +1,129 @@
-from datetime import datetime
-from pytest import fixture
-from telegram import Message, User, Chat, Update
-from ...gramhopper.triggers.text_triggers import _RegExpTrigger
+import pytest
+from ...gramhopper.triggers.text_triggers import _RegExpTrigger, \
+    _HasSubstringTrigger, _HasExactWordTrigger
 
 
-@fixture(scope='module')
-def update():
-    return Update(0, Message(0, User(0, 'Testuser', False), datetime.now(),
-                             Chat(0, 'private')))
+@pytest.mark.usefixtures('update')
+class TestRegexpTrigger:
+    def test_regexp_trigger(self, update):
+        EMAIL_PATTERN = r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
+        trigger = _RegExpTrigger(EMAIL_PATTERN)
+
+        # Assuring that the regexp matches the message text
+        update.message.text = 'user@example.com'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 3
+        assert match[0] == 'user'
+        assert match[1] == 'example'
+        assert match[2] == 'com'
+
+        # Assuring that the regexp doesn't match the message text
+        update.message.text = 'This is not an email address'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
 
 
-def test_regexp_trigger(update):
-    EMAIL_PATTERN = r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
-    trigger = _RegExpTrigger(EMAIL_PATTERN)
+@pytest.mark.usefixtures('update')
+class TestSubstringTrigger:
+    def test_single_substring_exact(self, update):
+        substring = 'ello'
+        trigger = _HasSubstringTrigger(substring=substring, exact=True)
 
-    # Assuring that the regexp matches the message text
-    update.message.text = 'user@example.com'
-    result = trigger.check_trigger(update)
-    assert result.should_respond
-    assert 'match' in result.response_payload
-    match = result.response_payload['match']
-    assert match[0] == 'user'
-    assert match[1] == 'example'
-    assert match[2] == 'com'
+        update.message.text = 'ello'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] == substring
 
-    # Assuring that the regexp doesn't match the message text
-    update.message.text = ''
-    result = trigger.check_trigger(update)
-    assert not result.should_respond
-    assert result.response_payload == {}
+        update.message.text = 'hello'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
+
+    def test_single_substring_not_exact(self, update):
+        substring = 'ello'
+        trigger = _HasSubstringTrigger(substring=substring, exact=False)
+
+        update.message.text = 'ello'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] == substring
+
+        update.message.text = 'yellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] == substring
+
+        update.message.text = 'goodbye'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
+
+    def test_multiple_substrings_exact(self, update):
+        substrings = ['yellow', 'fellow']
+        trigger = _HasSubstringTrigger(substring=substrings, exact=True)
+
+        update.message.text = 'yellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in substrings
+
+        update.message.text = 'fellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in substrings
+
+        update.message.text = 'yellowstone'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
+
+    def test_multiple_substrings_not_exact(self, update):
+        substrings = ['yellow', 'ello']
+        trigger = _HasSubstringTrigger(substring=substrings, exact=False)
+
+        update.message.text = 'yellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in substrings
+
+        update.message.text = 'fellow'
+        result = trigger.check_trigger(update)
+        assert result.should_respond
+        assert 'match' in result.response_payload
+        match = result.response_payload['match']
+        assert len(match) == 1
+        assert match[0] in substrings
+
+        update.message.text = 'goodbye'
+        result = trigger.check_trigger(update)
+        assert not result.should_respond
+        assert result.response_payload == {}
+
+
+@pytest.mark.usefixtures('update')
+class TestExactWordTrigger:
+    def test_exact_word_trigger(self, update):
+        # TODO Write test
+        pass
