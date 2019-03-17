@@ -18,7 +18,7 @@ setup(
     install_requires=[
         'python_telegram_bot==11.1.0',
         'boolean.py==3.6',
-        'ruamel_yaml==0.15.87'
+        'ruamel_yaml~=0.15'
     ],
 
     license='MIT',
@@ -39,7 +39,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'gramhopper=gramhopper.bot:main',
+            'gramhopper=gramhopper:main',
         ],
     },
 )
