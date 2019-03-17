@@ -21,6 +21,7 @@ jobs:
     - stage: lint
       script:
         - pylint ./*.py ./gramhopper
+        - pylint --rcfile=./tests/tests.pylintrc ./tests
         - flake8
     - stage: test
       script:

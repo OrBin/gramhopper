@@ -6,8 +6,8 @@ from ...gramhopper.triggers.text_triggers import _RegExpTrigger, \
 @pytest.mark.usefixtures('update')
 class TestRegexpTrigger:
     def test_regexp_trigger(self, update):
-        EMAIL_PATTERN = r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
-        trigger = _RegExpTrigger(EMAIL_PATTERN)
+        email_pattern = r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
+        trigger = _RegExpTrigger(email_pattern)
 
         # Assuring that the regexp matches the message text
         update.message.text = 'user@example.com'
