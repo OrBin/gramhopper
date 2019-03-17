@@ -1,12 +1,12 @@
 import logging
 from telegram.ext import Updater
-from gramhopper.configuration import token_file_path, rules_file_path
-from gramhopper.handlers.combined_handlers import CombinedConversationHandler
-from gramhopper.handlers.default_error_handler import handle_error
-from gramhopper.configuration.rules_parser import RulesParser
+from .configuration import token_file_path, rules_file_path
+from .configuration.rules_parser import RulesParser
+from .handlers.combined_handlers import CombinedConversationHandler
+from .handlers.default_error_handler import handle_error
 
 
-def main():
+def start_bot():
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 
@@ -26,7 +26,3 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
-
-
-if __name__ == '__main__':
-    main()

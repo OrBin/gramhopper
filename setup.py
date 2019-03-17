@@ -39,7 +39,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'gramhopper=gramhopper:main',
+            'gramhopper=gramhopper.bot:start_bot',
         ],
     },
 )
