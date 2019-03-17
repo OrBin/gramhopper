@@ -59,7 +59,6 @@ class _PresetReplyResponse(_PresetTextResponse):
         ResponseHelper.reply(bot, update, self.get_response_text())
 
 
-
 class PresetResponses(DictEnum):
     """\
     Preset responses.\
@@ -74,4 +73,3 @@ class PresetResponses(DictEnum):
 
     reply = _PresetReplyResponse
     """A preset **reply** response. See more in :class:`_PresetReplyResponse`."""
-

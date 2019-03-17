@@ -10,8 +10,8 @@ class EventStreakTrigger(BaseTrigger):
     Event-streak trigger. This is used to trigger a rule in a case of a streak of events,
     for example when a certain phrase is written a few times in a row.
 
-    This trigger gets a defined trigger as a "counting" event and optionally another one as a "resetting"
-    event (to stop counting).
+    This trigger gets a defined trigger as a "counting" event and optionally another one as a
+    "resetting" event (to stop counting).
     It also gets the count of events to be considered a streak, and the timeout of the streak (the
     allowed time period between the first event and the last event in the streak.
     """
