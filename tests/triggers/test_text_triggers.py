@@ -11,7 +11,7 @@ def update():
 
 
 def test_regexp_trigger(update):
-    EMAIL_PATTERN = '^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
+    EMAIL_PATTERN = r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$'
     trigger = _RegExpTrigger(EMAIL_PATTERN)
 
     # Assuring that the regexp matches the message text
