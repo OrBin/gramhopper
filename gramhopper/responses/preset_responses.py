@@ -8,8 +8,10 @@ from .response_helper import ResponseHelper
 
 
 class _PresetTextResponse(BaseResponse):
-    """A base class for preset responses. It is handling the response text building without\
-    handling the actual response action"""
+    """
+    A base class for preset responses. It is handling the response text building without
+    handling the actual response action.
+    """
 
     def __init__(self, preset_response: Union[str, List[str]]):
         """
@@ -60,10 +62,11 @@ class _PresetReplyResponse(_PresetTextResponse):
 
 
 class PresetResponses(DictEnum):
-    """\
-    Preset responses.\
-    These responses use a preset response/s to respond with. If a list of responses is given,\
-    one of them will be chosen randomly for each response."""
+    """
+    Preset responses.
+    These responses use a preset response/s to respond with. If a list of responses is given,
+    one of them will be chosen randomly for each response.
+    """
 
     document = _PresetDocumentResponse
     """A preset **document** response. See more in :class:`_PresetDocumentResponse`."""

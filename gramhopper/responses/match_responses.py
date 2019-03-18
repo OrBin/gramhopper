@@ -6,8 +6,10 @@ from .response_helper import ResponseHelper
 
 
 class _MatchTextResponse(BaseResponse):
-    """A base class for regexp-based responses. It is handling the response text building without\
-    handling the actual response action"""
+    """
+    A base class for regexp-based responses. It is handling the response text building without
+    handling the actual response action.
+    """
 
     def __init__(self, template: str):
         """
@@ -40,10 +42,11 @@ class _MatchReplyResponse(_MatchTextResponse):
 
 
 class MatchResponses(DictEnum):
-    """\
-    Regexp-based responses.\
-    These responses use the regexp match result from the trigger, as well as the given template,\
-    to build the response text"""
+    """
+    Regexp-based responses.
+    These responses use the regexp match result from the trigger, as well as the given template,
+    to build the response text.
+    """
 
     message = _MatchMessageResponse
     """A regexp-based **message** response. See more in :class:`_MatchMessageResponse`."""
