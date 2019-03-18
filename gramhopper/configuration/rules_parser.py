@@ -1,3 +1,5 @@
+from os import PathLike
+from typing import Union
 from .partial_ruamel_yaml import YAML
 from .partial_ruamel_yaml import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
@@ -24,7 +26,7 @@ class RulesParser:
         probability = rule['probability'] if 'probability' in rule else 1
         return Handler(trigger, response, probability=probability)
 
-    def parse_file(self, file_path: str):
+    def parse_file(self, file_path: Union[PathLike, str, bytes]):
         with open(file_path, 'r', encoding='utf-8') as stream:
             config = self.yaml.load(stream)
 
