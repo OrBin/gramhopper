@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='gramhopper',
-    version='1.0.5',
+    version='1.0.6',
 
     description='A bot platform for automatic responses based on various triggers',
     long_description=LONG_DESCRIPTION,
