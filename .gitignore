@@ -173,3 +173,4 @@ venv.bak/
 
 # Project-specific ignores
 *.log
+pytype_output/**

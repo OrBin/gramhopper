@@ -1,7 +1,7 @@
 import abc
 from typing import Optional
 from telegram import Update
-from ..trigger_result import TriggerResult
+from .trigger_result import TriggerResult
 
 
 class BaseTrigger(abc.ABC):
@@ -75,7 +75,7 @@ class MergedTrigger(BaseTrigger):
             should_respond = True
             response_payload = or_result.response_payload
 
-        return TriggerResult(should_respond, response_payload)
+        return TriggerResult(should_respond, response_payload)  # pytype: disable=wrong-arg-count
 
     @staticmethod
     def merge_payloads(first: TriggerResult, second: TriggerResult) -> dict:

@@ -1,0 +1,5 @@
+[basic]
+disable=missing-docstring, unsubscriptable-object, no-self-use, unsupported-membership-test
+
+[design]
+min-public-methods=1
