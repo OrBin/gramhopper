@@ -1,7 +1,7 @@
 import re
 from typing import List, Union
 from telegram import Update
-from ..trigger_result import TriggerResult
+from .trigger_result import TriggerResult
 from ..dict_enum import DictEnum
 from .basic_triggers import BaseTrigger
 

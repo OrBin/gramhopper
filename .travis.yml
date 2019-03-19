@@ -4,10 +4,12 @@ python:
   - 3.7
 install:
   - pip install -r requirements.txt
-  - pip install pylint flake8 pytype
+  - pip install pylint flake8 pytype pytest
+  - cp -R tests/assets/.gramhopper ~/.gramhopper
 
 stages:
   - lint
+  - test
 
   - name: build
     if: (branch != master && tag IS blank) || type != push
@@ -20,8 +22,12 @@ jobs:
     - stage: lint
       script:
         - pylint ./*.py ./gramhopper
-        - flake8
+        - pylint --rcfile=./tests/tests.pylintrc ./tests
+        - flake8 --exclude=venv
         - pytype  --config ./setup.cfg -V $TRAVIS_PYTHON_VERSION ./*.py ./gramhopper
+    - stage: test
+      script:
+        - pytest
     - stage: build
       script:
         - python setup.py sdist bdist_wheel

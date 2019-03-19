@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 from telegram import Update
-from ..trigger_result import TriggerResult
+from .trigger_result import TriggerResult
 from .basic_triggers import BaseTrigger
 
 

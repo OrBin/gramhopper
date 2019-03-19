@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 with open("README.md", "r") as f:
     LONG_DESCRIPTION = f.read()
@@ -18,7 +18,7 @@ setup(
     install_requires=[
         'python_telegram_bot==11.1.0',
         'boolean.py==3.6',
-        'ruamel_yaml==0.15.87'
+        'ruamel_yaml~=0.15'
     ],
 
     license='MIT',
@@ -35,11 +35,11 @@ setup(
 
     keywords='gramhopper telegram bot',
 
-    packages=find_packages(),
+    packages=find_namespace_packages(include=['gramhopper', 'gramhopper.*']),
 
     entry_points={
         'console_scripts': [
-            'gramhopper=gramhopper.bot:main',
+            'gramhopper=gramhopper.bot:start_bot',
         ],
     },
 )
