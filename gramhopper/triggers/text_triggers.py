@@ -7,7 +7,17 @@ from .basic_triggers import BaseTrigger
 
 
 class _RegExpTrigger(BaseTrigger):
+    """
+    Regular-expression-based trigger. This is used to trigger a rule when an incoming message
+    matches the given pattern.
+    """
+
     def __init__(self, pattern: str):
+        """
+        Constructs the trigger.
+
+        :param pattern: The pattern to test the message's match with
+        """
         self.pattern = pattern
 
     def check_trigger(self, update: Update) -> TriggerResult:
@@ -22,7 +32,19 @@ class _RegExpTrigger(BaseTrigger):
 
 
 class _HasSubstringTrigger(_RegExpTrigger):
+    """
+    Substring trigger. This is used to trigger a rule when a certain substring  (or one of a list
+    of substrings) exists in an incoming message.
+    """
+
     def __init__(self, substring: Union[str, List[str]], exact: bool = False):
+        """
+        Constructs the trigger.
+
+        :param substring: The substring/s to search in the message
+        :param exact: Whether the exact substring should appear (as a whole word) in the message
+        """
+
         if isinstance(substring, str):
             regexp_for_substring = substring
         elif isinstance(substring, list):
@@ -45,7 +67,18 @@ class _HasSubstringTrigger(_RegExpTrigger):
 
 
 class _HasExactWordTrigger(_HasSubstringTrigger):
+    """
+    Word trigger - the same as substring trigger, but for exact words search. This is used to
+    trigger a rule when a certain word (or one of a list of words) exists in an incoming message.
+    """
+
     def __init__(self, word: Union[str, List[str]]):
+        """
+        Constructs the trigger.
+
+        :param word: The word/s to search in the message
+        """
+
         try:
             super().__init__(word, exact=True)
         except TypeError:
@@ -54,6 +87,13 @@ class _HasExactWordTrigger(_HasSubstringTrigger):
 
 
 class TextTriggers(DictEnum):
-    regexp = _RegExpTrigger
+    """Text-based triggers."""
+
     has_substring = _HasSubstringTrigger
+    """A substring trigger. See more in :class:`_HasSubstringTrigger`."""
+
     has_exact_word = _HasExactWordTrigger
+    """A word trigger. See more in :class:`_HasExactWordTrigger`."""
+
+    regexp = _RegExpTrigger
+    """A regexp-based trigger. See more in :class:`_RegExpTrigger`."""

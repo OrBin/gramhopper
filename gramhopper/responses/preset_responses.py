@@ -8,7 +8,17 @@ from .response_helper import ResponseHelper
 
 
 class _PresetTextResponse(BaseResponse):
+    """
+    A base class for preset responses. It is handling the response text building without
+    handling the actual response action.
+    """
+
     def __init__(self, preset_response: Union[str, List[str]]):
+        """
+        Constructs the response.
+
+        :param preset_response: The preset response or list of responses
+        """
         self.preset_responses = preset_response
 
     @abc.abstractmethod
@@ -23,25 +33,46 @@ class _PresetTextResponse(BaseResponse):
         return None
 
 
-class _PresetReplyResponse(_PresetTextResponse):
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.reply(bot, update, self.get_response_text())
-
-
-class _PresetMessageResponse(_PresetTextResponse):
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.message(bot, update, self.get_response_text())
-
-
 class _PresetDocumentResponse(BaseResponse):
+    """A preset response in which the response method is a document"""
+
     def __init__(self, preset_response: Union[str, Document]):
+        """
+        Constructs the response.
+
+        :param preset_response: The preset document URL or document object
+        """
         self.preset_response = preset_response
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
         ResponseHelper.document(bot, update, self.preset_response)
 
 
+class _PresetMessageResponse(_PresetTextResponse):
+    """A preset response in which the response method is a normal message"""
+
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+        ResponseHelper.message(bot, update, self.get_response_text())
+
+
+class _PresetReplyResponse(_PresetTextResponse):
+    """A preset response in which the response method is a reply to the triggering message"""
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+        ResponseHelper.reply(bot, update, self.get_response_text())
+
+
 class PresetResponses(DictEnum):
-    reply = _PresetReplyResponse
-    message = _PresetMessageResponse
+    """
+    Preset responses.
+    These responses use a preset response/s to respond with. If a list of responses is given,
+    one of them will be chosen randomly for each response.
+    """
+
     document = _PresetDocumentResponse
+    """A preset **document** response. See more in :class:`_PresetDocumentResponse`."""
+
+    message = _PresetMessageResponse
+    """A preset **message** response. See more in :class:`_PresetMessageResponse`."""
+
+    reply = _PresetReplyResponse
+    """A preset **reply** response. See more in :class:`_PresetReplyResponse`."""

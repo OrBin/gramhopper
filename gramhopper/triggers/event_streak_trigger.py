@@ -6,11 +6,30 @@ from .basic_triggers import BaseTrigger
 
 
 class EventStreakTrigger(BaseTrigger):
+    """
+    Event-streak trigger. This is used to trigger a rule in a case of a streak of events,
+    for example when a certain phrase is written a few times in a row.
+
+    This trigger gets a defined trigger as a "counting" event and optionally another one as a
+    "resetting" event (to stop counting).
+    It also gets the count of events to be considered a streak, and the timeout of the streak (the
+    allowed time period between the first event and the last event in the streak.
+    """
+
     def __init__(self,
                  streak_timeout_sec: int,
                  event_count: int,
                  counting_event_trigger: BaseTrigger,
                  resetting_event_trigger: Optional[BaseTrigger] = None):
+        """
+        Constructs the trigger.
+
+        :param streak_timeout_sec: The allowed time period between the first event and the last \
+        event in the streak
+        :param event_count: The count of events to be considered a streak
+        :param counting_event_trigger: A trigger to identify an event that counts towards the streak
+        :param resetting_event_trigger: A trigger to identify an event that resets the streak
+        """
         self.streak_timeout_sec = streak_timeout_sec
         self.event_count = event_count
         self.counting_event_trigger = counting_event_trigger
