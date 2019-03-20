@@ -1,5 +1,7 @@
-from ruamel_yaml import YAML
-from ruamel_yaml.comments import CommentedMap
+from os import PathLike
+from typing import Union
+from .partial_ruamel_yaml import YAML
+from .partial_ruamel_yaml import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
 from ..handlers.handler import Handler
 from .trigger_response_params import TriggerParams, ResponseParams
@@ -11,8 +13,8 @@ class RulesParser:
         self.yaml = YAML()
         self.global_triggers = {}
         self.global_responses = {}
-        self.trigger_params = TriggerParams(globals=self.global_triggers)
-        self.response_params = ResponseParams(globals=self.global_responses)
+        self.trigger_params = TriggerParams(global_elements=self.global_triggers)
+        self.response_params = ResponseParams(global_elements=self.global_responses)
 
     def parse_globals(self, config: CommentedMap):
         RulesParsingHelper.add_globals(config, self.trigger_params)
@@ -24,7 +26,7 @@ class RulesParser:
         probability = rule['probability'] if 'probability' in rule else 1
         return Handler(trigger, response, probability=probability)
 
-    def parse_file(self, file_path: str):
+    def parse_file(self, file_path: Union[PathLike, str, bytes]):
         with open(file_path, 'r', encoding='utf-8') as stream:
             config = self.yaml.load(stream)
 

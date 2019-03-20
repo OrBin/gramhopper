@@ -1,0 +1,5 @@
+[basic]
+disable=missing-docstring
+
+[design]
+min-public-methods=1

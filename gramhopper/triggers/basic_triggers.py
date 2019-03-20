@@ -1,6 +1,7 @@
 import abc
+from typing import Optional
 from telegram import Update
-from ..trigger_result import TriggerResult
+from .trigger_result import TriggerResult
 
 
 class BaseTrigger(abc.ABC):
@@ -23,8 +24,10 @@ class MergedTrigger(BaseTrigger):
 
     Args:
         base_trigger: Base trigger of the merged trigger
-        and_trigger: Optional trigger to "and" with base_trigger. Mutually exclusive with or_trigger.
-        or_trigger: Optional trigger to "or" with base_trigger. Mutually exclusive with and_trigger.
+        and_trigger: Optional trigger to "and" with base_trigger.
+            Mutually exclusive with or_trigger.
+        or_trigger: Optional trigger to "or" with base_trigger.
+            Mutually exclusive with and_trigger.
 
     """
 
@@ -36,11 +39,14 @@ class MergedTrigger(BaseTrigger):
         self.and_trigger = and_trigger
         self.or_trigger = or_trigger
 
-    def check_trigger(self, update: Update) -> TriggerResult:
+    def check_trigger(self, update: Update) -> Optional[TriggerResult]:
         if self.and_trigger:
             return self.check_trigger_and(update)
-        elif self.or_trigger:
+
+        if self.or_trigger:
             return self.check_trigger_or(update)
+
+        return None
 
     def check_trigger_and(self, update: Update) -> TriggerResult:
         base_result = self.base_trigger.check_trigger(update)
@@ -50,27 +56,30 @@ class MergedTrigger(BaseTrigger):
             merged_payload = self.merge_payloads(base_result, and_result)
             return TriggerResult(should_respond=True,
                                  response_payload=merged_payload)
-        else:
-            return TriggerResult(should_respond=False)
+
+        return TriggerResult(should_respond=False)
 
     def check_trigger_or(self, update: Update) -> TriggerResult:
         base_result = self.base_trigger.check_trigger(update)
         or_result = self.or_trigger.check_trigger(update)
 
+        should_respond = False
+        response_payload = {}
         if base_result.should_respond:
+            should_respond = True
             if or_result.should_respond:
-                merged_payload = self.merge_payloads(base_result, or_result)
-                return TriggerResult(should_respond=True, response_payload=merged_payload)
+                response_payload = self.merge_payloads(base_result, or_result)
             else:
-                return TriggerResult(should_respond=True, response_payload=base_result.response_payload)
+                response_payload = base_result.response_payload
         elif or_result.should_respond:
-            return TriggerResult(should_respond=True, response_payload=or_result.response_payload)
-        else:
-            return TriggerResult(should_respond=False)
+            should_respond = True
+            response_payload = or_result.response_payload
+
+        return TriggerResult(should_respond, response_payload)  # pytype: disable=wrong-arg-count
 
     @staticmethod
     def merge_payloads(first: TriggerResult, second: TriggerResult) -> dict:
-        return { **first.response_payload, **second.response_payload }
+        return {**first.response_payload, **second.response_payload}
 
 
 class InvertedTrigger(BaseTrigger):

@@ -5,7 +5,10 @@ from ..triggers.basic_triggers import BaseTrigger
 
 
 class Handler():
-    def __init__(self, trigger_checker: BaseTrigger, responder: BaseResponse, probability: float = 1):
+    def __init__(self,
+                 trigger_checker: BaseTrigger,
+                 responder: BaseResponse,
+                 probability: float = 1):
         self.trigger_checker = trigger_checker
         self.responder = responder
 

@@ -1,5 +1,5 @@
-from ruamel_yaml.comments import CommentedMap
-from gramhopper.configuration.boolean_helper import BooleanHelper
+from .partial_ruamel_yaml import CommentedMap
+from .boolean_helper import BooleanHelper
 from .trigger_response import TriggerResponse
 from .trigger_response_params import TriggerResponseParams
 
@@ -21,15 +21,13 @@ class RulesParsingHelper:
         :return: None
         """
         if params.plural_key in config:
-            parsed = params.parser.parse_many(config[params.plural_key], params.globals)
-            params.globals.update(parsed)
-
+            parsed = params.parser.parse_many(config[params.plural_key], params.global_elements)
+            params.global_elements.update(parsed)
 
     @staticmethod
     def parse_rule_trigger_or_response(rule: CommentedMap,
                                        params: TriggerResponseParams) -> TriggerResponse:
 
         return BooleanHelper.parse_subrule_as_trigger_or_response(rule[params.singular_key],
-                                                                  params.globals,
+                                                                  params.global_elements,
                                                                   params.parser.parse_single)
-
