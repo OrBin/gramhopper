@@ -1,15 +1,14 @@
 dist: xenial
 language: python
-python:
-  - 3.7
+python: 3.7
 install:
   - pip install -r requirements.txt
   - pip install pylint flake8 pytype pytest
-  - cp -R tests/assets/.gramhopper ~/.gramhopper
 
 stages:
   - lint
   - test
+  - build docs
 
   - name: build
     if: (branch != master && tag IS blank) || type != push
@@ -25,13 +24,21 @@ jobs:
         - pylint --rcfile=./tests/tests.pylintrc ./tests
         - flake8 --exclude=venv
         - pytype  --config ./setup.cfg -V $TRAVIS_PYTHON_VERSION ./*.py ./gramhopper
+
     - stage: test
       script:
         - pytest
+        - cp -R tests/assets/.gramhopper ~/.gramhopper
+
+    - stage: build docs
+      script:
+        - cd ./docs && make html
+
     - stage: build
       script:
         - python setup.py sdist bdist_wheel
         - docker build -t $DOCKER_IMAGE_NAME .
+
     - stage: deploy docker image
       script:
         - |

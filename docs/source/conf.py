@@ -27,7 +27,7 @@ author = 'Or Bin, Meir Halachmi'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0.4'
+release = '1.0.7'
 
 
 # -- General configuration ---------------------------------------------------
@@ -70,7 +70,7 @@ exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
-
+add_module_names = False
 
 # -- Options for HTML output -------------------------------------------------
 
