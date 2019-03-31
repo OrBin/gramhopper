@@ -18,17 +18,17 @@ class TestEventStreakTrigger:
                                      counting_event_trigger=self.COUNTING_TRIGGER,
                                      resetting_event_trigger=self.RESETTING_TRIGGER)
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.DO_NOTHING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.DO_NOTHING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert trigger.check_trigger(update).should_respond
 
     def test_broken_streak(self, generate_new_update):
         trigger = EventStreakTrigger(streak_timeout_sec=1,
@@ -36,17 +36,17 @@ class TestEventStreakTrigger:
                                      counting_event_trigger=self.COUNTING_TRIGGER,
                                      resetting_event_trigger=self.RESETTING_TRIGGER)
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.RESETTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.RESETTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
     def test_no_enough_events_for_streak(self, generate_new_update):
         trigger = EventStreakTrigger(streak_timeout_sec=1,
@@ -54,11 +54,11 @@ class TestEventStreakTrigger:
                                      counting_event_trigger=self.COUNTING_TRIGGER,
                                      resetting_event_trigger=self.RESETTING_TRIGGER)
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
     def test_timed_out_streak(self, generate_new_update):
         trigger = EventStreakTrigger(streak_timeout_sec=0.2,
@@ -66,13 +66,13 @@ class TestEventStreakTrigger:
                                      counting_event_trigger=self.COUNTING_TRIGGER,
                                      resetting_event_trigger=self.RESETTING_TRIGGER)
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
 
         sleep(0.2)
 
-        temp_update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
-        assert not trigger.check_trigger(temp_update).should_respond
+        update = generate_new_update(message_text=self.COUNTING_MESSAGE_TEXT)
+        assert not trigger.check_trigger(update).should_respond
