@@ -33,7 +33,8 @@ def _generate_new_update_impl(update_id=0,
                               user_is_bot=False,
                               message_date=None,
                               chat_id=0,
-                              chat_type='private'):
+                              chat_type='private',
+                              message_text=None):
 
     if not message_date:
         message_date = datetime.now()
@@ -42,4 +43,5 @@ def _generate_new_update_impl(update_id=0,
                   Message(message_id,
                           User(user_id, user_first_name, user_is_bot),
                           message_date,
-                          Chat(chat_id, chat_type)))
+                          Chat(chat_id, chat_type),
+                          text=message_text))
