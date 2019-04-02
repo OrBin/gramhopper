@@ -1,4 +1,3 @@
-# pylint: disable=unsubscriptable-object, unsupported-membership-test
 import pytest
 from ...gramhopper.triggers.text_triggers import _RegExpTrigger, \
     _HasSubstringTrigger, _HasExactWordTrigger

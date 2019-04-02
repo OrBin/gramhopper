@@ -1,5 +1,5 @@
-import pytest
 from time import sleep
+import pytest
 from ...gramhopper.triggers.text_triggers import _HasExactWordTrigger
 from ...gramhopper.triggers.event_streak_trigger import EventStreakTrigger
 
