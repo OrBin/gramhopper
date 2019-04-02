@@ -26,6 +26,7 @@ def generate_new_update():
     return _generate_new_update_impl
 
 
+# pylint: disable=too-many-arguments
 def _generate_new_update_impl(update_id=0,
                               message_id=0,
                               user_id=0,

@@ -1,3 +1,4 @@
+# pylint: disable=unsubscriptable-object, unsupported-membership-test
 import pytest
 from ...gramhopper.triggers.text_triggers import _RegExpTrigger, \
     _HasSubstringTrigger, _HasExactWordTrigger
@@ -14,6 +15,8 @@ class TestRegexpTrigger:
         update.message.text = 'user@example1.com'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 3
@@ -42,6 +45,8 @@ class TestSubstringTrigger:
         update.message.text = 'ello'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -61,6 +66,8 @@ class TestSubstringTrigger:
         update.message.text = 'ello'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -69,6 +76,8 @@ class TestSubstringTrigger:
         update.message.text = 'yellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -88,6 +97,8 @@ class TestSubstringTrigger:
         update.message.text = 'yellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -96,6 +107,8 @@ class TestSubstringTrigger:
         update.message.text = 'ello'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -115,6 +128,8 @@ class TestSubstringTrigger:
         update.message.text = 'yellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -123,6 +138,8 @@ class TestSubstringTrigger:
         update.message.text = 'fellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -149,6 +166,8 @@ class TestExactWordTrigger:
         update.message.text = 'ello'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -168,6 +187,8 @@ class TestExactWordTrigger:
         update.message.text = 'yellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
@@ -176,6 +197,8 @@ class TestExactWordTrigger:
         update.message.text = 'fellow'
         result = trigger.check_trigger(update)
         assert result.should_respond
+        assert result.response_payload
+        assert isinstance(result.response_payload, dict)
         assert 'match' in result.response_payload
         match = result.response_payload['match']
         assert len(match) == 1
