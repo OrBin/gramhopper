@@ -22,7 +22,7 @@ class _PresetTextResponse(BaseResponse):
         self.preset_responses = preset_response
 
     @abc.abstractmethod
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+    def respond(self, bot: Bot, update: Update, response_payload: dict):
         pass
 
     def get_response_text(self):
@@ -44,20 +44,20 @@ class _PresetDocumentResponse(BaseResponse):
         """
         self.preset_response = preset_response
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+    def respond(self, bot: Bot, update: Update, response_payload: dict):
         ResponseHelper.document(bot, update, self.preset_response)
 
 
 class _PresetMessageResponse(_PresetTextResponse):
     """A preset response in which the response method is a normal message"""
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.message(bot, update, self.get_response_text())
+    def respond(self, bot: Bot, update: Update, response_payload: dict):
+        return ResponseHelper.message(bot, update, self.get_response_text())
 
 
 class _PresetReplyResponse(_PresetTextResponse):
     """A preset response in which the response method is a reply to the triggering message"""
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+    def respond(self, bot: Bot, update: Update, response_payload: dict):
         ResponseHelper.reply(bot, update, self.get_response_text())
 
 
