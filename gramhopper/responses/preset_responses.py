@@ -45,7 +45,7 @@ class _PresetDocumentResponse(BaseResponse):
         self.preset_response = preset_response
 
     def respond(self, bot: Bot, update: Update, response_payload: dict):
-        ResponseHelper.document(bot, update, self.preset_response)
+        return ResponseHelper.document(bot, update, self.preset_response)
 
 
 class _PresetMessageResponse(_PresetTextResponse):
@@ -58,7 +58,7 @@ class _PresetMessageResponse(_PresetTextResponse):
 class _PresetReplyResponse(_PresetTextResponse):
     """A preset response in which the response method is a reply to the triggering message"""
     def respond(self, bot: Bot, update: Update, response_payload: dict):
-        ResponseHelper.reply(bot, update, self.get_response_text())
+        return ResponseHelper.reply(bot, update, self.get_response_text())
 
 
 class PresetResponses(DictEnum):
