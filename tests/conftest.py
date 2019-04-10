@@ -73,8 +73,9 @@ def bot() -> Bot:
     """
     return Bot(_get_bot_parameter('token'))
 
+
 @fixture(scope='module')
-def chat_id() -> str:
+def bot_chat_id() -> str:
     """
     Returns a chat id from 'CHAT_ID' environment variable if exists,
     or the default one from PUBLIC_TEST_BOT_PARAMETERS otherwise.
