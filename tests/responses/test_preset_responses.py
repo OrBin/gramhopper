@@ -1,13 +1,21 @@
+import time
 import pytest
 from flaky import flaky
 from ...gramhopper.responses.preset_responses import _PresetTextResponse, \
     _PresetDocumentResponse, _PresetMessageResponse, _PresetReplyResponse
 
-FLAKY_MAX_RUNS = 5
+
+FLAKY_MAX_RUNS = 6
 FLAKY_MIN_PASSES = 1
 
-@pytest.mark.usefixtures('bot')
-@pytest.mark.usefixtures('chat_id')
+
+def delay_rerun(*args):
+    time.sleep(2)
+    return True
+
+
+@flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES, rerun_filter=delay_rerun)
+@pytest.mark.usefixtures('bot', 'chat_id', 'generate_new_update')
 class TestPresetMessageResponse:
 
     SINGLE_PRESET_TEXT = 'one'
@@ -29,46 +37,27 @@ class TestPresetMessageResponse:
         assert message
         assert message.text in self.MULTIPLE_PRESET_TEXTS
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_message_with_none_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, None)
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_message_with_empty_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, {})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_message_with_some_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, {'key': 'value'})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_messages_with_none_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, None)
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_messages_with_empty_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, {})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_messages_with_some_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_message(bot, chat_id, generate_new_update, {'key': 'value'})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
-    def test_multiple_preset_messages(self, bot, chat_id, generate_new_update):
-        possible_values_for_payload = [None, {}, {'key': 'value'}]
-        for payload in possible_values_for_payload:
-            self._test_multiple_preset_messages(bot, chat_id, generate_new_update, payload)
 
-
-@pytest.mark.usefixtures('bot')
-@pytest.mark.usefixtures('chat_id')
+@flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES, rerun_filter=delay_rerun)
+@pytest.mark.usefixtures('bot', 'chat_id', 'generate_new_update')
 class TestPresetReplyResponse:
 
     SINGLE_PRESET_TEXT = 'one'
@@ -94,40 +83,20 @@ class TestPresetReplyResponse:
         assert message.text in self.MULTIPLE_PRESET_TEXTS
         assert message.reply_to_message.message_id == message_to_reply_to.message_id
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_reply_with_none_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, None)
 
-
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_reply_with_empty_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, {})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_single_preset_reply_with_some_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, {'key': 'value'})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_replies_with_none_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, None)
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_replies_with_empty_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, {})
 
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
     def test_multiple_preset_replies_with_some_payload(self, bot, chat_id, generate_new_update):
         self._test_single_preset_reply(bot, chat_id, generate_new_update, {'key': 'value'})
-
-    @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES)
-    @pytest.mark.usefixtures('generate_new_update')
-    def test_multiple_preset_replies(self, bot, chat_id, generate_new_update):
-        possible_values_for_payload = [None, {}, {'key': 'value'}]
-        for payload in possible_values_for_payload:
-            self._test_multiple_preset_replies(bot, chat_id, generate_new_update, payload)
