@@ -3,3 +3,6 @@ disable=missing-docstring, unsubscriptable-object, no-self-use, unsupported-memb
 
 [design]
 min-public-methods=1
+
+[format]
+max-line-length=110
