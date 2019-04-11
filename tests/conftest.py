@@ -11,7 +11,8 @@ from telegram import Message, User, Chat, Update, Bot
 
 PUBLIC_TEST_BOT_PARAMETERS = {
     'token': '796912871:AAEc8dtCAmj4Jf4uht5dMfUWJCqOh8RDvAc',
-    'chat_id': '-240130726',  # This is a dedicated group for testing
+    # This chat is a dedicated group for testing: https://t.me/joinchat/CXsY9g5QGqY93g7tbNVVYw
+    'chat_id': '-240130726',
 }
 
 
