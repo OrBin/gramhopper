@@ -47,13 +47,13 @@ class TestPresetMessageResponse:
         self._test_single_preset_message(bot, bot_chat_id, generate_new_update, {'key': 'value'})
 
     def test_multiple_preset_messages_with_none_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_message(bot, bot_chat_id, generate_new_update, None)
+        self._test_multiple_preset_messages(bot, bot_chat_id, generate_new_update, None)
 
     def test_multiple_preset_messages_with_empty_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_message(bot, bot_chat_id, generate_new_update, {})
+        self._test_multiple_preset_messages(bot, bot_chat_id, generate_new_update, {})
 
     def test_multiple_preset_messages_with_some_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_message(bot, bot_chat_id, generate_new_update, {'key': 'value'})
+        self._test_multiple_preset_messages(bot, bot_chat_id, generate_new_update, {'key': 'value'})
 
 
 @flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES, rerun_filter=delay_rerun)
@@ -93,10 +93,34 @@ class TestPresetReplyResponse:
         self._test_single_preset_reply(bot, bot_chat_id, generate_new_update, {'key': 'value'})
 
     def test_multiple_preset_replies_with_none_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_reply(bot, bot_chat_id, generate_new_update, None)
+        self._test_multiple_preset_replies(bot, bot_chat_id, generate_new_update, None)
 
     def test_multiple_preset_replies_with_empty_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_reply(bot, bot_chat_id, generate_new_update, {})
+        self._test_multiple_preset_replies(bot, bot_chat_id, generate_new_update, {})
 
     def test_multiple_preset_replies_with_some_payload(self, bot, bot_chat_id, generate_new_update):
-        self._test_single_preset_reply(bot, bot_chat_id, generate_new_update, {'key': 'value'})
+        self._test_multiple_preset_replies(bot, bot_chat_id, generate_new_update, {'key': 'value'})
+
+
+@flaky(max_runs=FLAKY_MAX_RUNS, min_passes=FLAKY_MIN_PASSES, rerun_filter=delay_rerun)
+@pytest.mark.usefixtures('bot', 'bot_chat_id', 'generate_new_update')
+class TestPresetDocumentResponse:
+
+    DOCUMENT_URL = 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif'
+
+    def _test_preset_document_url(self, bot, bot_chat_id, generate_new_update, payload):
+        response = _PresetDocumentResponse(self.DOCUMENT_URL)
+        update = generate_new_update(chat_id=bot_chat_id)
+
+        message = response.respond(bot, update, payload)
+        assert message
+        assert message.document
+
+    def test_single_preset_reply_with_none_payload(self, bot, bot_chat_id, generate_new_update):
+        self._test_preset_document_url(bot, bot_chat_id, generate_new_update, None)
+
+    def test_single_preset_reply_with_empty_payload(self, bot, bot_chat_id, generate_new_update):
+        self._test_preset_document_url(bot, bot_chat_id, generate_new_update, {})
+
+    def test_single_preset_reply_with_some_payload(self, bot, bot_chat_id, generate_new_update):
+        self._test_preset_document_url(bot, bot_chat_id, generate_new_update, {'key': 'value'})
