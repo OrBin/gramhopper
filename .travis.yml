@@ -23,7 +23,7 @@ jobs:
         - pylint ./*.py ./gramhopper
         - pylint --rcfile=./tests/tests.pylintrc ./tests
         - flake8 --exclude=venv
-        - pytype  --config ./setup.cfg -V $TRAVIS_PYTHON_VERSION ./*.py ./gramhopper
+        - pytype  --config ./setup.cfg -V $TRAVIS_PYTHON_VERSION ./*.py ./gramhopper ./tests
 
     - stage: test
       script:

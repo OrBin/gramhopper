@@ -1,5 +1,8 @@
 [basic]
-disable=missing-docstring, unsubscriptable-object, no-self-use, unsupported-membership-test
+disable=missing-docstring, unsubscriptable-object, no-self-use, unsupported-membership-test, too-many-arguments
 
 [design]
 min-public-methods=1
+
+[format]
+max-line-length=110
