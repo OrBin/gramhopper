@@ -1,21 +1,13 @@
 import itertools
-import time
 from typing import Union, List
 import pytest
 from flaky import flaky
 from ...gramhopper.responses.preset_responses import _PresetDocumentResponse, \
     _PresetMessageResponse, _PresetReplyResponse
+from . import FLAKY_MAX_RUNS, FLAKY_MIN_PASSES, delay_rerun
 
 
-FLAKY_MAX_RUNS = 10
-FLAKY_MIN_PASSES = 1
-FLAKY_TIMEOUT_ON_FAILURE_SEC = 3
 RESPONSE_PAYLOADS = [None, {}, {'key': 'value'}]
-
-
-def delay_rerun(*args):  # pylint: disable=unused-argument
-    time.sleep(FLAKY_TIMEOUT_ON_FAILURE_SEC)
-    return True
 
 
 def is_acceptable(str_to_check: str, acceptable_string_or_strings: Union[str, List[str]]):

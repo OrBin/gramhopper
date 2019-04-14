@@ -1,5 +1,6 @@
 import abc
 from telegram import Bot, Update
+from telegram.message import Message
 from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
@@ -20,7 +21,7 @@ class _MatchTextResponse(BaseResponse):
         self.template = template
 
     @abc.abstractmethod
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
         pass
 
     def build_response_text(self, response_payload: dict):
@@ -30,15 +31,15 @@ class _MatchTextResponse(BaseResponse):
 class _MatchMessageResponse(_MatchTextResponse):
     """A regexp-based response in which the response method is a normal message"""
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.message(bot, update, self.build_response_text(response_payload))
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
+        return ResponseHelper.message(bot, update, self.build_response_text(response_payload))
 
 
 class _MatchReplyResponse(_MatchTextResponse):
     """A regexp-based response in which the response method is a reply to the triggering message"""
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.reply(bot, update, self.build_response_text(response_payload))
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
+        return ResponseHelper.reply(bot, update, self.build_response_text(response_payload))
 
 
 class MatchResponses(DictEnum):
