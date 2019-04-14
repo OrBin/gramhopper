@@ -1,7 +1,6 @@
 import pytest
 from flaky import flaky
-from ...gramhopper.responses.match_responses import _MatchTextResponse, \
-    _MatchMessageResponse, _MatchReplyResponse
+from ...gramhopper.responses.match_responses import _MatchMessageResponse, _MatchReplyResponse
 from . import FLAKY_MAX_RUNS, FLAKY_MIN_PASSES, delay_rerun
 
 
