@@ -8,6 +8,7 @@ from ..users_helper import DEFAULT_USERS_HELPER
 
 class FilterBasedTrigger(BaseTrigger):
     def __init__(self, message_filter: BaseFilter):
+        super().__init__()
         self.filter = message_filter
 
     def check_trigger(self, update: Update) -> TriggerResult:

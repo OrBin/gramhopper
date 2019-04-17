@@ -20,6 +20,7 @@ class _PresetTextResponse(BaseResponse):
 
         :param preset_response: The preset response or list of responses
         """
+        super().__init__()
         self.preset_responses = preset_response
 
     @abc.abstractmethod
@@ -43,6 +44,7 @@ class _PresetDocumentResponse(BaseResponse):
 
         :param preset_response: The preset document URL or document object
         """
+        super().__init__()
         self.preset_response = preset_response
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:

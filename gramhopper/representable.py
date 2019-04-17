@@ -1,5 +1,8 @@
 class Representable:
 
+    def __init__(self):
+        self.__name = None
+
     @property
     def name(self):
         return self.__name
@@ -9,7 +12,7 @@ class Representable:
         self.__name = value
 
     def __str__(self):
-        try:
+        if self.__name:
             return self.__name
-        except AttributeError:
-            return f'inline {self.__class__.__name__}'
+
+        return f'inline {self.__class__.__name__}'

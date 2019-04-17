@@ -30,6 +30,7 @@ class EventStreakTrigger(BaseTrigger):
         :param counting_event_trigger: A trigger to identify an event that counts towards the streak
         :param resetting_event_trigger: A trigger to identify an event that resets the streak
         """
+        super().__init__()
         self.streak_timeout_sec = streak_timeout_sec
         self.event_count = event_count
         self.counting_event_trigger = counting_event_trigger

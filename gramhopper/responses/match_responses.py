@@ -18,6 +18,7 @@ class _MatchTextResponse(BaseResponse):
 
         :param template: The template to use when building the response text
         """
+        super().__init__()
         self.template = template
 
     @abc.abstractmethod
