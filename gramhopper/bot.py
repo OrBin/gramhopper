@@ -15,9 +15,9 @@ def start_bot():
 
     rule_parser = RulesParser()
     rules_file_path = default_rules_file_path()
-    logging.info(f'Reading and parsing rules file from {rules_file_path}')
+    logging.info('Reading and parsing rules file from %s', rules_file_path)
     rule_handlers = rule_parser.parse_file(rules_file_path)
-    logging.info(f'Found {len(rule_handlers)} rules')
+    logging.info('Found %d rules', len(rule_handlers))
     conversation_handler = CombinedConversationHandler(rule_handlers)
 
     logging.info('Creating bot updater')

@@ -23,11 +23,13 @@ class Handler():
         self.probability_to_respond = probability
 
     def handle(self, bot: Bot, update: Update):
-        logging.debug(f'[{self.handler_repr}] Received update {update.update_id}')
+        logging.debug('[%s] Received update %s', self.handler_repr, update.update_id)
         trigger_result = self.trigger_checker.check_trigger(update)
         if trigger_result.should_respond:
-            logging.info(f'[{self.handler_repr}] Bot should respond to update {update.update_id} '
-                         f'with a probability of {self.probability_to_respond}')
+            logging.info('[%s] Bot should respond to update %s with a probability of %f',
+                         self.handler_repr,
+                         update.update_id,
+                         self.probability_to_respond)
             if random.random() <= self.probability_to_respond:
-                logging.info(f'[{self.handler_repr}] Responding to update {update.update_id}')
+                logging.info('[%s] Responding to update %s', self.handler_repr, update.update_id)
                 self.responder.respond(bot, update, trigger_result.response_payload)

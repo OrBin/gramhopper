@@ -26,15 +26,15 @@ class RulesParser:
         response = RulesParsingHelper.parse_rule_trigger_or_response(rule, self.response_params)
         probability = rule['probability'] if 'probability' in rule else 1
         handler = Handler(trigger, response, probability=probability)
-        logging.info(f'Parsed {handler.handler_repr}')
+        logging.info('Parsed %s', handler.handler_repr)
         return handler
 
     def parse_file(self, file_path: Union[PathLike, str, bytes]):
         with open(file_path, 'r', encoding='utf-8') as stream:
             config = self.yaml.load(stream)
 
-        logging.info(f'Parsing globals from {file_path}')
+        logging.info('Parsing globals from %s', file_path)
         self.parse_globals(config)
 
-        logging.info(f'Parsing rules from {file_path}')
+        logging.info('Parsing rules from %s', file_path)
         return [self.parse_single_rule(rule) for rule in config['rules']]
