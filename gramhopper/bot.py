@@ -1,15 +1,14 @@
 import logging
 from telegram.ext import Updater
-from .configuration import token_file_path, default_rules_file_path
+from .logging_config import configure_logger
+from .paths import token_file_path, default_rules_file_path
 from .configuration.rules_parser import RulesParser
 from .handlers.combined_handlers import CombinedConversationHandler
 from .handlers.default_error_handler import handle_error
 
 
 def start_bot():
-    logging.basicConfig(format='%(asctime)s %(module)s.%(funcName)s %(levelname)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S',
-                        level=logging.INFO)
+    configure_logger()
 
     with open(token_file_path(), 'r') as token_file:
         bot_token = token_file.read().strip()
