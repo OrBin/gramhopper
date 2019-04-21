@@ -77,13 +77,15 @@ def lint(context):
 
 @task
 def test(context):
-    print('Backing up configuration directory...')
     gramhopper_dir = os.path.join(os.path.expanduser('~'), '.gramhopper')
     gramhopper_backup_dir = os.path.join(os.path.expanduser('~'), '.gramhopper_bak')
-    shutil.copytree(gramhopper_dir, gramhopper_backup_dir)
+
+    if os.path.exists(gramhopper_dir):
+        print('Backing up configuration directory...')
+        shutil.copytree(gramhopper_dir, gramhopper_backup_dir)
 
     print('Copying test assets...')
-    shutil.rmtree(gramhopper_dir)
+    shutil.rmtree(gramhopper_dir, ignore_errors=True)
     shutil.copytree('./tests/assets/.gramhopper', gramhopper_dir)
 
     print('Running tests...')
@@ -92,9 +94,10 @@ def test(context):
     print('Removing test assets...')
     shutil.rmtree(gramhopper_dir)
 
-    print('Restoring configuration directory...')
-    shutil.copytree(gramhopper_backup_dir, gramhopper_dir)
-    shutil.rmtree(gramhopper_backup_dir)
+    if os.path.exists(gramhopper_backup_dir):
+        print('Restoring configuration directory...')
+        shutil.copytree(gramhopper_backup_dir, gramhopper_dir)
+        shutil.rmtree(gramhopper_backup_dir)
 
 
 @task
