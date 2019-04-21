@@ -1,7 +1,7 @@
 import json
 import os
 from typing import Union
-from .configuration import users_file_path
+from .paths import users_file_path
 
 
 class UsersHelper:

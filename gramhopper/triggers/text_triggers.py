@@ -18,6 +18,7 @@ class _RegExpTrigger(BaseTrigger):
 
         :param pattern: The pattern to test the message's match with
         """
+        super().__init__()
         self.pattern = pattern
 
     def check_trigger(self, update: Update) -> TriggerResult:
@@ -44,7 +45,6 @@ class _HasSubstringTrigger(_RegExpTrigger):
         :param substring: The substring/s to search in the message
         :param exact: Whether the exact substring should appear (as a whole word) in the message
         """
-
         if isinstance(substring, str):
             regexp_for_substring = substring
         elif isinstance(substring, list):
@@ -78,7 +78,6 @@ class _HasExactWordTrigger(_HasSubstringTrigger):
 
         :param word: The word/s to search in the message
         """
-
         try:
             super().__init__(word, exact=True)
         except TypeError:
