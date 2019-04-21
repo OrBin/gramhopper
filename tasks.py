@@ -77,15 +77,24 @@ def lint(context):
 
 @task
 def test(context):
+    print('Backing up configuration directory...')
+    gramhopper_dir = os.path.join(os.path.expanduser('~'), '.gramhopper')
+    gramhopper_backup_dir = os.path.join(os.path.expanduser('~'), '.gramhopper_bak')
+    shutil.copytree(gramhopper_dir, gramhopper_backup_dir)
+
     print('Copying test assets...')
-    # TODO backup and restore current ~/.gramhopper
-    context.run('cp -R tests/assets/.gramhopper ~/.gramhopper')  # TODO change to python code
+    shutil.rmtree(gramhopper_dir)
+    shutil.copytree('./tests/assets/.gramhopper', gramhopper_dir)
 
     print('Running tests...')
     context.run('pytest', echo=True)
 
-    # print('Removing test assets...')
-    # context.run('rm ~/.gramhopper')  # TODO change to python code
+    print('Removing test assets...')
+    shutil.rmtree(gramhopper_dir)
+
+    print('Restoring configuration directory...')
+    shutil.copytree(gramhopper_backup_dir, gramhopper_dir)
+    shutil.rmtree(gramhopper_backup_dir)
 
 
 @task
