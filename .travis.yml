@@ -13,7 +13,7 @@ stages:
   - name: build
     if: (branch != master && tag IS blank) || type != push
 
-  - name: deploy docker image
+  - name: deploy
     if: (branch = master || tag IS present) && type = push
 
 jobs:
