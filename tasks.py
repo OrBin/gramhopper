@@ -71,3 +71,11 @@ def lint(context):
     print(finished_string)
     sys.exit(exit_code)
 
+
+@task
+def test(context):
+    print('Copying test assets...')
+    context.run('cp -R tests/assets/.gramhopper ~/.gramhopper')
+
+    print('Running tests...')
+    context.run('pytest')
