@@ -102,34 +102,11 @@ def clean(context, package=False, docker=False, docs=False, lint=False, test=Fal
 
     if package:
         print('Removing package build outputs...')
-        shutil.rmtree('./build', ignore_errors=True)
-        shutil.rmtree('./dist', ignore_errors=True)
-        shutil.rmtree('./gramhopper.egg-info', ignore_errors=True)
+        clean_package()
 
     if docker:
         print('Removing docker images...')
-        docker_result = context.run('docker', hide='both')
-        # If docker is installed, remove both the image with the default tag and
-        # the image with the tag from the environment variable
-        if docker_result.exited == TASK_SUCCESS_CODE:
-            tags_to_remove = [DEFAULT_DOCKER_TAG]
-            if DOCKER_TAG_ENV_VARIABLE in os.environ:
-                tags_to_remove.append(os.environ[DOCKER_TAG_ENV_VARIABLE])
-
-            hashes_to_remove = []
-            for tag in tags_to_remove:
-                hash_result = context.run(f'docker images -q {tag}', hide='out')
-                hash = hash_result.stdout.split('\n')[0].strip()
-                if len(hash):
-                    hashes_to_remove.append(hash)
-
-            if len(hashes_to_remove):
-                hashes_to_remove = ' '.join(set(hashes_to_remove))
-                context.run(f'docker rmi -f {hashes_to_remove}')
-            else:
-                print('No docker images to remove')
-        else:
-            print('Docker is not installed on this machine')
+        clean_docker(context)
 
     if docs:
         print('Removing docs build outputs...')
@@ -142,3 +119,34 @@ def clean(context, package=False, docker=False, docs=False, lint=False, test=Fal
     if test:
         print('Removing test outputs and cache files...')
         shutil.rmtree('./.pytest_cache', ignore_errors=True)
+
+
+def clean_package():
+    shutil.rmtree('./build', ignore_errors=True)
+    shutil.rmtree('./dist', ignore_errors=True)
+    shutil.rmtree('./gramhopper.egg-info', ignore_errors=True)
+
+
+def clean_docker(context):
+    docker_result = context.run('docker', hide='both')
+    # If docker is installed, remove both the image with the default tag and
+    # the image with the tag from the environment variable
+    if docker_result.exited == TASK_SUCCESS_CODE:
+        tags_to_remove = [DEFAULT_DOCKER_TAG]
+        if DOCKER_TAG_ENV_VARIABLE in os.environ:
+            tags_to_remove.append(os.environ[DOCKER_TAG_ENV_VARIABLE])
+
+        hashes_to_remove = []
+        for tag in tags_to_remove:
+            hash_result = context.run(f'docker images -q {tag}', hide='out')
+            hash = hash_result.stdout.split('\n')[0].strip()
+            if len(hash):
+                hashes_to_remove.append(hash)
+
+        if len(hashes_to_remove):
+            hashes_to_remove = ' '.join(set(hashes_to_remove))
+            context.run(f'docker rmi -f {hashes_to_remove}')
+        else:
+            print('No docker images to remove')
+    else:
+        print('Docker is not installed on this machine')
