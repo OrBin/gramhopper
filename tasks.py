@@ -66,5 +66,8 @@ def lint(context):
     if not result.exited == TASK_SUCCEEDED_CODE:
         exit_code = TASK_FAILED_CODE
 
+    finished_string = 'Lint task finished ' + \
+                      ('successfully' if exit_code == TASK_SUCCEEDED_CODE else 'with errors')
+    print(finished_string)
     sys.exit(exit_code)
 
