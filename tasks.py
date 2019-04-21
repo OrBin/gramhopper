@@ -117,7 +117,13 @@ def publish_docker_image(context, full_image_name):
 
 
 @task
-def clean(context, package=False, docker=False, docs=False, lint=False, test=False, all=False):
+def clean(context,  # pylint: disable=too-many-arguments
+          package=False,
+          docker=False,
+          docs=False,
+          lint=False,  # pylint: disable=redefined-outer-name
+          test=False,  # pylint: disable=redefined-outer-name
+          all=False):  # pylint: disable=redefined-builtin
 
     if all:
         package = True
@@ -169,11 +175,11 @@ def clean_docker(context):
         hashes_to_remove = []
         for tag in tags_to_remove:
             hash_result = context.run(f'docker images -q {tag}', hide='out')
-            hash = hash_result.stdout.split('\n')[0].strip()
-            if len(hash):
-                hashes_to_remove.append(hash)
+            image_hash = hash_result.stdout.split('\n')[0].strip()
+            if image_hash:
+                hashes_to_remove.append(image_hash)
 
-        if len(hashes_to_remove):
+        if hashes_to_remove:
             hashes_to_remove = ' '.join(set(hashes_to_remove))
             context.run(f'docker rmi -f {hashes_to_remove}', echo=True)
         else:
