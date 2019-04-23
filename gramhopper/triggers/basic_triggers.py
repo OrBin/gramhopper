@@ -2,9 +2,11 @@ import abc
 from typing import Optional
 from telegram import Update
 from .trigger_result import TriggerResult
+from ..representable import Representable
 
 
-class BaseTrigger(abc.ABC):
+class BaseTrigger(abc.ABC, Representable):
+
     @abc.abstractmethod
     def check_trigger(self, update: Update) -> TriggerResult:
         pass
@@ -35,6 +37,7 @@ class MergedTrigger(BaseTrigger):
                  base_trigger: BaseTrigger,
                  and_trigger: BaseTrigger = None,
                  or_trigger: BaseTrigger = None):
+        super().__init__()
         self.base_trigger = base_trigger
         self.and_trigger = and_trigger
         self.or_trigger = or_trigger
@@ -89,6 +92,7 @@ class InvertedTrigger(BaseTrigger):
     """
 
     def __init__(self, original_trigger: BaseTrigger):
+        super().__init__()
         self.original_trigger = original_trigger
 
     def check_trigger(self, update: Update) -> TriggerResult:

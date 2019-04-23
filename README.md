@@ -1,4 +1,8 @@
 # gramhopper
+[![image](https://img.shields.io/pypi/v/gramhopper.svg)](https://pypi.org/project/gramhopper/)
+[![image](https://img.shields.io/pypi/l/gramhopper.svg)](https://pypi.org/project/gramhopper/)
+[![image](https://img.shields.io/pypi/pyversions/gramhopper.svg)](https://pypi.org/project/gramhopper/)
+
 A bot platform for automatic responses based on various triggers.
 
 ## Install
