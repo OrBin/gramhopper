@@ -61,7 +61,6 @@ def lint(context):
         exit_code = TASK_FAILURE_CODE
 
     print('Running pytype...')
-
     python_version = '%d.%d' % (sys.version_info.major,  # pytype: disable=attribute-error
                                 sys.version_info.minor)  # pytype: disable=attribute-error
     cmd = f'pytype  --config ./setup.cfg -V {python_version} {source_code_dirs} {test_code_dirs}'
