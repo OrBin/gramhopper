@@ -4,3 +4,4 @@ ruamel_yaml~=0.15
 sphinx==1.7.9
 sphinx_rtd_theme==0.4.2
 flaky==3.5.3
+invoke==1.2.0

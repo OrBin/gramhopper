@@ -3,7 +3,7 @@ language: python
 python: 3.7
 install:
   - pip install -r requirements.txt
-  - pip install pylint flake8 pytype pytest
+  - pip install pylint flake8 pytype pytest invoke twine
 
 stages:
   - lint
@@ -13,33 +13,28 @@ stages:
   - name: build
     if: (branch != master && tag IS blank) || type != push
 
-  - name: deploy docker image
+  - name: deploy
     if: (branch = master || tag IS present) && type = push
 
 jobs:
   include:
     - stage: lint
       script:
-        - pylint ./*.py ./gramhopper
-        - pylint --rcfile=./tests/tests.pylintrc ./tests
-        - flake8 --exclude=venv
-        - pytype  --config ./setup.cfg -V $TRAVIS_PYTHON_VERSION ./*.py ./gramhopper ./tests
+        - invoke lint
 
     - stage: test
       script:
-        - pytest
-        - cp -R tests/assets/.gramhopper ~/.gramhopper
+        - invoke test
 
     - stage: build docs
       script:
-        - cd ./docs && make html
+        - invoke build-docs
 
     - stage: build
       script:
-        - python setup.py sdist bdist_wheel
-        - docker build -t $DOCKER_IMAGE_NAME .
+        - invoke build
 
-    - stage: deploy docker image
+    - stage: deploy
       script:
         - |
           if [ ! -z "$TRAVIS_TAG" ]; then
@@ -47,6 +42,6 @@ jobs:
           else
             export IMAGE_TAG='latest'
           fi
-        - docker build -t $DOCKER_IMAGE_NAME:$IMAGE_TAG .
+        - invoke build --docker-tag=$IMAGE_TAG
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push $DOCKER_IMAGE_NAME:$IMAGE_TAG
+        - invoke publish --docker-tag=$IMAGE_TAG --production-pypi
