@@ -1,3 +1,4 @@
+from functools import reduce
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
@@ -35,14 +36,19 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
 
 class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
     def __init__(self, message_type=None):
-        if hasattr(Filters, message_type):
-            message_type_filter = getattr(Filters, message_type)
+        try:
+            subfilters = message_type.split('.')
+            message_type_filter = reduce(
+                lambda filter_group, subfilter: getattr(filter_group, subfilter),
+                subfilters,
+                Filters
+            )
             if isinstance(message_type_filter, BaseFilter):
                 super().__init__(message_type_filter)
             else:
                 raise ValueError(f'"{message_type}" is not a valid message type to filter by, but it is a valid '
                                  f'filter. Did you mean to use "{message_type}" as a filter type instead?')
-        else:
+        except AttributeError:
             raise ValueError(f'{message_type} is not a valid message type to filter by.')
 
 
