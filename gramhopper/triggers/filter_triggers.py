@@ -35,9 +35,9 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
 
 
 class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
-    def __init__(self, message_type=None):
+    def __init__(self, message_type):
+        subfilters = message_type.split('.')
         try:
-            subfilters = message_type.split('.')
             message_type_filter = reduce(getattr, subfilters, Filters)
             if isinstance(message_type_filter, BaseFilter):
                 super().__init__(message_type_filter)
@@ -46,7 +46,7 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
                                  f'but it is a valid filter. Did you mean to use '
                                  f'"{message_type}" as a filter type instead?')
         except AttributeError:
-            raise ValueError(f'{message_type} is not a valid message type to filter by.')
+            raise ValueError(f'"{message_type}" is not a valid message type to filter by.')
 
 
 class FilterTriggers(DictEnum):
