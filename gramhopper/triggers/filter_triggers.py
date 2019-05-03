@@ -38,16 +38,13 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
     def __init__(self, message_type=None):
         try:
             subfilters = message_type.split('.')
-            message_type_filter = reduce(
-                lambda filter_group, subfilter: getattr(filter_group, subfilter),
-                subfilters,
-                Filters
-            )
+            message_type_filter = reduce(getattr, subfilters, Filters)
             if isinstance(message_type_filter, BaseFilter):
                 super().__init__(message_type_filter)
             else:
-                raise ValueError(f'"{message_type}" is not a valid message type to filter by, but it is a valid '
-                                 f'filter. Did you mean to use "{message_type}" as a filter type instead?')
+                raise ValueError(f'"{message_type}" is not a valid message type to filter by, '
+                                 f'but it is a valid filter. Did you mean to use '
+                                 f'"{message_type}" as a filter type instead?')
         except AttributeError:
             raise ValueError(f'{message_type} is not a valid message type to filter by.')
 
