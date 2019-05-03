@@ -1,3 +1,4 @@
+from functools import reduce
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
@@ -33,32 +34,23 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
         super().__init__(Filters.language(lang))
 
 
+class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
+    def __init__(self, message_type):
+        subfilters = message_type.split('.')
+        try:
+            message_type_filter = reduce(getattr, subfilters, Filters)
+            if isinstance(message_type_filter, BaseFilter):
+                super().__init__(message_type_filter)
+            else:
+                raise ValueError(f'"{message_type}" is not a valid message type to filter by, '
+                                 f'but it is a valid filter. Did you mean to use '
+                                 f'"{message_type}" as a filter type instead?')
+        except AttributeError:
+            raise ValueError(f'"{message_type}" is not a valid message type to filter by.')
+
+
 class FilterTriggers(DictEnum):
-    all = FilterBasedTrigger(Filters.all)
-    text = FilterBasedTrigger(Filters.text)
-    command = FilterBasedTrigger(Filters.command)
-    reply = FilterBasedTrigger(Filters.reply)
-    audio = FilterBasedTrigger(Filters.audio)
-    document = FilterBasedTrigger(Filters.document)
-    animation = FilterBasedTrigger(Filters.animation)
-    photo = FilterBasedTrigger(Filters.photo)
-    sticker = FilterBasedTrigger(Filters.sticker)
-    video = FilterBasedTrigger(Filters.video)
-    voice = FilterBasedTrigger(Filters.voice)
-    video_note = FilterBasedTrigger(Filters.video_note)
-    contact = FilterBasedTrigger(Filters.contact)
-    location = FilterBasedTrigger(Filters.location)
-    venue = FilterBasedTrigger(Filters.venue)
-    status_update = FilterBasedTrigger(Filters.status_update)
-    forwarded = FilterBasedTrigger(Filters.forwarded)
-    game = FilterBasedTrigger(Filters.game)
-    entity = FilterBasedTrigger(Filters.entity)  # Filters.entity is a class
-    caption_entity = FilterBasedTrigger(Filters.caption_entity)  # Filters.caption_entity is a class
-    private = FilterBasedTrigger(Filters.private)
-    group = FilterBasedTrigger(Filters.group)
-    invoice = FilterBasedTrigger(Filters.invoice)
-    successful_payment = FilterBasedTrigger(Filters.successful_payment)
-    passport_data = FilterBasedTrigger(Filters.passport_data)
+    message_type = _MessageTypeFilterBasedTrigger
     user = _UserFilterBasedTrigger
     chat = _ChatFilterBasedTrigger
     language = _LanguageFilterBasedTrigger
