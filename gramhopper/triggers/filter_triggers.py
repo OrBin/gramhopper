@@ -77,7 +77,7 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
         """
         Constructs the trigger.
 
-        :param lang: The language code/s to pass messages in.
+        :param lang: The language code/s in which to pass messages.
         """
         super().__init__(Filters.language(lang))
 
@@ -92,7 +92,8 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
         """
         Constructs the trigger.
 
-        :param message_type: The message type to filter to pass messages of. See more in \
+        :param message_type: The message type of which to filter to pass messages, for example: \
+            'photo', 'status_update.left_chat_member' or 'document'. See more in \
             :class:`telegram.ext.filters.Filters` in `python-telegrm-bot documentation \
             <https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html\
             #telegram.ext.filters.Filters>`_.
