@@ -76,6 +76,7 @@ class _LanguageFilterBasedTrigger(FilterBasedTrigger):
     def __init__(self, lang: Union[str, List[str]]):
         """
         Constructs the trigger.
+
         :param lang: The language code/s to pass messages in.
         """
         super().__init__(Filters.language(lang))
@@ -88,6 +89,14 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
     """
 
     def __init__(self, message_type):
+        """
+        Constructs the trigger.
+
+        :param message_type: The message type to filter to pass messages of. See more in \
+            :class:`telegram.ext.filters.Filters` in `python-telegrm-bot documentation \
+            <https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html\
+            #telegram.ext.filters.Filters>`_.
+        """
         subfilters = message_type.split('.')
         try:
             message_type_filter = reduce(getattr, subfilters, Filters)
@@ -102,7 +111,16 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
 
 
 class FilterTriggers(DictEnum):
+    """Text-based triggers."""
+
     user = _UserFilterBasedTrigger
+    """A user filter trigger. See more in :class:`_UserFilterBasedTrigger`."""
+
     chat = _ChatFilterBasedTrigger
+    """A user filter trigger. See more in :class:`_ChatFilterBasedTrigger`."""
+
     language = _LanguageFilterBasedTrigger
+    """A user filter trigger. See more in :class:`_LanguageFilterBasedTrigger`."""
+
     message_type = _MessageTypeFilterBasedTrigger
+    """A user filter trigger. See more in :class:`_MessageTypeFilterBasedTrigger`."""
