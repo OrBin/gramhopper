@@ -1,4 +1,5 @@
 from functools import reduce
+from typing import List, Union
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
@@ -8,7 +9,17 @@ from ..users_helper import DEFAULT_USERS_HELPER
 
 
 class FilterBasedTrigger(BaseTrigger):
+    """
+    A base class for filter-based triggers. This is used to trigger a rule when an incoming message
+    passes through the specific filter.
+    """
+
     def __init__(self, message_filter: BaseFilter):
+        """
+        Constructs the trigger.
+
+        :param message_filter: The filter to test if the message passes through
+        """
         super().__init__()
         self.filter = message_filter
 
@@ -17,7 +28,22 @@ class FilterBasedTrigger(BaseTrigger):
 
 
 class _UserFilterBasedTrigger(FilterBasedTrigger):
-    def __init__(self, nickname=None, user_id=None, username=None):
+    """
+    A user filter trigger. This is used to trigger a rule when an incoming message comes from a
+    specific user.
+    """
+
+    def __init__(self, nickname: str = None, user_id: int = None, username: str = None):
+        """
+        Constructs the trigger.
+        `nickname` can be used if such a nickname is defined in users.json file.
+        Otherwise, one of `user_id` and `username` should be specified.
+
+        :param message_filter: The filter to test if the message passes through
+        :param nickname: The nickname of the user to pass messages from.
+        :param user_id: The Telegram user ID of the user to pass messages from.
+        :param username: The Telegram username of the user to pass messages from.
+        """
         if nickname is not None:
             super().__init__(Filters.user(DEFAULT_USERS_HELPER.get_user_id_by_nickname(nickname)))
         else:
@@ -25,16 +51,42 @@ class _UserFilterBasedTrigger(FilterBasedTrigger):
 
 
 class _ChatFilterBasedTrigger(FilterBasedTrigger):
-    def __init__(self, chat_id=None, username=None):
+    """
+    A chat filter trigger. This is used to trigger a rule when an incoming message is in a specific
+    chat.
+    """
+
+    def __init__(self, chat_id: int = None, username: str = None):
+        """
+        Constructs the trigger.
+        One and only one of `chat_id` and `username` should be specified.
+
+        :param chat_id: The Telegram chat ID of the chat to pass messages from.
+        :param username: The Telegram username whose chat to pass messages from.
+        """
         super().__init__(Filters.chat(chat_id, username))
 
 
 class _LanguageFilterBasedTrigger(FilterBasedTrigger):
-    def __init__(self, lang):
+    """
+    A language filter trigger. This is used to trigger a rule when an incoming message is in a
+    specific language.
+    """
+
+    def __init__(self, lang: Union[str, List[str]]):
+        """
+        Constructs the trigger.
+        :param lang: The language code/s to pass messages in.
+        """
         super().__init__(Filters.language(lang))
 
 
 class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
+    """
+    A message type filter trigger. This is used to trigger a rule when an incoming message is of a
+    specific type.
+    """
+
     def __init__(self, message_type):
         subfilters = message_type.split('.')
         try:
@@ -50,7 +102,7 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
 
 
 class FilterTriggers(DictEnum):
-    message_type = _MessageTypeFilterBasedTrigger
     user = _UserFilterBasedTrigger
     chat = _ChatFilterBasedTrigger
     language = _LanguageFilterBasedTrigger
+    message_type = _MessageTypeFilterBasedTrigger
