@@ -16,8 +16,9 @@ class BaseParser(abc.ABC):
     @classmethod
     def parse_single(cls, config, global_elements):  # pylint: disable=unused-argument
         config_copy = dict(config)
+        name = None
         if 'name' in config_copy:
-            config_copy.pop('name')
+            name = config_copy.pop('name')
 
         mapping_class = cls.mapping_class()
         element = mapping_class[config_copy.pop('type')]
@@ -25,7 +26,10 @@ class BaseParser(abc.ABC):
         # Some triggers (most of them) are classes and some are instances (mostly filter triggers).
         # This allows both cases to be used.
         if isclass(element):
-            return element(**config_copy)
+            trigger_or_response = element(**config_copy)
+            if name:
+                trigger_or_response.name = name
+            return trigger_or_response
         return element
 
     @classmethod

@@ -4,19 +4,82 @@ Read more here: https://docs.pytest.org/en/latest/fixture.html#conftest-py-shari
 """
 
 from datetime import datetime
+from os import getenv
 from pytest import fixture
-from telegram import Message, User, Chat, Update
+from telegram import Message, User, Chat, Update, Bot
 
 
-# This fixture was copied from the tests in python-telegram-bot:
-#
+PUBLIC_TEST_BOT_PARAMETERS = {
+    'token': '796912871:AAEc8dtCAmj4Jf4uht5dMfUWJCqOh8RDvAc',
+    # This chat is a dedicated group for testing: https://t.me/joinchat/CXsY9g5QGqY93g7tbNVVYw
+    'chat_id': '-240130726',
+}
+
+
 @fixture(scope='module')
-def update():
+def update() -> Update:
     """
     Creates a dummy update fixture.
-    This fixture was copied from the tests in python-telegram-bot:
-    https://github.com/python-telegram-bot/python-telegram-bot/blob/b5891a6/tests/test_filters.py#L29
     :return: a dummy update fixture
     """
-    return Update(0, Message(0, User(0, 'Testuser', False), datetime.now(),
-                             Chat(0, 'private')))
+    return _generate_new_update_impl()
+
+
+@fixture(scope='module')
+def generate_new_update():
+    """
+    Returns a generator function for new updates
+    :return: an updates generator function
+    """
+    return _generate_new_update_impl
+
+
+# pylint: disable=too-many-arguments
+def _generate_new_update_impl(update_id=0,
+                              message_id=0,
+                              user_id=0,
+                              user_first_name='Testuser',
+                              user_is_bot=False,
+                              message_date=None,
+                              chat_id=0,
+                              chat_type='private',
+                              message_text=None) -> Update:
+
+    if not message_date:
+        message_date = datetime.now()
+
+    return Update(update_id,
+                  Message(message_id,
+                          User(user_id, user_first_name, user_is_bot),
+                          message_date,
+                          Chat(chat_id, chat_type),
+                          text=message_text))
+
+
+def _get_bot_parameter(parameter_name: str) -> str:
+    value = getenv(parameter_name.upper())
+
+    if value:
+        return value
+
+    return PUBLIC_TEST_BOT_PARAMETERS[parameter_name]
+
+
+@fixture(scope='module')
+def bot() -> Bot:
+    """
+    Creates a valid bot instance, with a token from 'TOKEN' environment variable if exists,
+    or the default one from PUBLIC_TEST_BOT_PARAMETERS otherwise.
+    :return: a bot instance
+    """
+    return Bot(_get_bot_parameter('token'))
+
+
+@fixture(scope='module')
+def bot_chat_id() -> str:
+    """
+    Returns a chat id from 'CHAT_ID' environment variable if exists,
+    or the default one from PUBLIC_TEST_BOT_PARAMETERS otherwise.
+    :return: a chat id
+    """
+    return _get_bot_parameter('chat_id')

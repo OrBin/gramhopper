@@ -1,7 +1,7 @@
 import json
 import os
 from typing import Union
-from .configuration import users_file_path
+from .paths import users_file_path
 
 
 class UsersHelper:
@@ -21,7 +21,7 @@ class UsersHelper:
                 with open(self.file_path, 'r') as file:
                     self._users = json.load(file)
 
-    def get_user_id_by_nickname(self, nickname: str):
+    def get_user_id_by_nickname(self, nickname: str) -> int:
         return self._users[nickname]
 
 

@@ -42,6 +42,7 @@ release = '1.0.7'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
+    'sphinx.ext.intersphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -159,3 +160,6 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+intersphinx_mapping = {
+    'python-telegram-bot': ('https://python-telegram-bot.readthedocs.io/en/stable', None)
+}

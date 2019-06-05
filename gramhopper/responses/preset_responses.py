@@ -2,6 +2,7 @@ import abc
 import random
 from typing import Union, List
 from telegram import Bot, Update, Document
+from telegram.message import Message
 from ..dict_enum import DictEnum
 from .basic_responses import BaseResponse
 from .response_helper import ResponseHelper
@@ -19,10 +20,11 @@ class _PresetTextResponse(BaseResponse):
 
         :param preset_response: The preset response or list of responses
         """
+        super().__init__()
         self.preset_responses = preset_response
 
     @abc.abstractmethod
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
         pass
 
     def get_response_text(self):
@@ -42,23 +44,24 @@ class _PresetDocumentResponse(BaseResponse):
 
         :param preset_response: The preset document URL or document object
         """
+        super().__init__()
         self.preset_response = preset_response
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.document(bot, update, self.preset_response)
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
+        return ResponseHelper.document(bot, update, self.preset_response)
 
 
 class _PresetMessageResponse(_PresetTextResponse):
     """A preset response in which the response method is a normal message"""
 
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.message(bot, update, self.get_response_text())
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
+        return ResponseHelper.message(bot, update, self.get_response_text())
 
 
 class _PresetReplyResponse(_PresetTextResponse):
     """A preset response in which the response method is a reply to the triggering message"""
-    def respond(self, bot: Bot, update: Update, response_payload: dict) -> None:
-        ResponseHelper.reply(bot, update, self.get_response_text())
+    def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
+        return ResponseHelper.reply(bot, update, self.get_response_text())
 
 
 class PresetResponses(DictEnum):
