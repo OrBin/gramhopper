@@ -5,13 +5,14 @@ from invoke import task
 
 
 DEFAULT_DOCKER_IMAGE = 'orbin/gramhopper'
+DEFAULT_DOCKER_TAG = 'latest'
 DOCKER_IMAGE_ENV_VARIABLE = 'DOCKER_IMAGE_TAG'
 TASK_SUCCESS_CODE = 0
 TASK_FAILURE_CODE = 1
 
 
 @task
-def build(context, package=True, docker_image=True, docker_tag=DEFAULT_DOCKER_IMAGE, docs=False):
+def build(context, package=True, docker_image=True, docker_tag=DEFAULT_DOCKER_TAG, docs=False):
     if package:
         print('Building package...')
         context.run('python setup.py sdist bdist_wheel', echo=True)
@@ -20,11 +21,11 @@ def build(context, package=True, docker_image=True, docker_tag=DEFAULT_DOCKER_IM
         print('Building docker image...')
 
         # If not specified the tag as a flag, the tag from the environment variable is preferred
-        if docker_tag == DEFAULT_DOCKER_IMAGE and \
+        if docker_tag == DEFAULT_DOCKER_TAG and \
                 DOCKER_IMAGE_ENV_VARIABLE in os.environ:
             docker_tag = os.environ[DOCKER_IMAGE_ENV_VARIABLE]
 
-        context.run(f'docker build -t {docker_tag} .', echo=True)
+        context.run(f'docker build -t {DEFAULT_DOCKER_IMAGE}:{docker_tag} .', echo=True)
 
     if docs:
         build_docs(context)
