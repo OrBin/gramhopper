@@ -7,13 +7,11 @@ A bot platform for automatic responses based on various triggers.
 
 ## Install
 #### Using pip
-Install the latest version:
 ```bash
 $ pip install gramhopper
 ```
 
 #### Using docker
-Pull the latest image: 
 ```bash
 $ docker pull orbin/gramhopper:latest
 ```
