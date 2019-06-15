@@ -55,6 +55,10 @@ Basically, the configuration file has three parts:
 
 #### `rules.yml` example
 The following configuration file:
+
+<details>
+ <summary>Click to view</summary>
+ 
 ```yaml
 triggers:
   - name: cat
@@ -112,6 +116,8 @@ rules:
       type: preset.message
       preset_response: Shut up duck!
 ```
+</details>
+
 will yield the following conversation:
 
 ![](https://raw.githubusercontent.com/OrBin/gramhopper/master/demo.gif "Conversation example")
