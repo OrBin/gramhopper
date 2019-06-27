@@ -42,7 +42,12 @@ To override this token, set the environment variable `TOKEN` before running test
 The same applies for a chat ID to test with, which you can override with the environment variable `CHAT_ID`.
 
 ### Follow the style guide
-TODO
+Our code generally follows PEP8, with some exceptions.
+We use some linters to make sure we keep following the required style. To run them all, run:
+```bash
+invoke lint
+```
+If you have a lint error, fix it; don't add a comment to ignore it.
 
 ### Submit a pull request
 TODO
