@@ -49,8 +49,14 @@ invoke lint
 ```
 If you have a lint error, fix it; don't add a comment to ignore it.
 
+### Commit messages
+Please write informative, detailed (but not too detailed) commit messages.
+Preferably, start your commit message with tagging the issue you are working on, for example: *`#40 Created a sphinx page for filter triggers`*.
+
 ### Submit a pull request
-TODO
+If you're done coding and you've run the build, test and lint tasks, go ahead and [submit a new pull-request](https://github.com/OrBin/gramhopper/compare).
+
+After you submit your pull request, verify that all status checks (CI build checks) are passing.
 
 ## Improving documentation
 Improving documentation is a great way to contribute, too!
