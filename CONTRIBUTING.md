@@ -15,10 +15,31 @@ Please follow the bug report template (which appears when creating an issue) and
 ## Contributing code
 
 ### Find an issue to work on
-TODO
+Look at issues tagged with [good first issue](https://github.com/OrBin/gramhopper/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+) label and find one you'd like to work on.
 
 ### How to build and test
-TODO
+We use [Invoke](http://docs.pyinvoke.org) CLI to execute development tasjs like test, build, lint, etc.
+
+#### Building
+To build, run:
+```bash
+invoke build
+```
+You can also use flags with this command:
+* Use `--no-package` to avoid building the package.
+* Use `--no-docker-image` to avoid building the docker image.
+* Use `--docs` to build the documentation, too.
+* You can combine these flags however you want.
+
+#### Testing
+To run tests, run:
+```bash
+invoke test
+```
+Testing Telegram bots require a bot token, so we provide a pre-created token that's already configured for you.<br>
+To override this token, set the environment variable `TOKEN` before running tests.
+
+The same applies for a chat ID to test with, which you can override with the environment variable `CHAT_ID`.
 
 ### Follow the style guide
 TODO
@@ -26,17 +47,23 @@ TODO
 ### Submit a pull request
 TODO
 
-## Adding documentation
-Adding documentation is a great way to contribute, too!
+## Improving documentation
+Improving documentation is a great way to contribute, too!
 
 Our documentation is built using [Sphinx](http://www.sphinx-doc.org/).
 It is based on RST files located in [`docs/`](https://github.com/OrBin/gramhopper/tree/dev/docs/source) directory, and on docstrings in the python code.<br>
 Find [here](https://github.com/OrBin/gramhopper/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3Adocumentation+) issues related to documentation.
 
 #### Building the documentation
-Run `invoke build-docs` to build the documentation.<br>
+To build the documentation, run:
+```bash
+invoke build-docs
+```
 The build output will be in `docs/build` directory.<br>
-Run `invoke clean --docs` to clear the documentation build outputs.
+To clear the documentation build outputs, run:
+```bash
+invoke clean --docs
+```
 
 ## Code of conduct
 This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to follow this code.
