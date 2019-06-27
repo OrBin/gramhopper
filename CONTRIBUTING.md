@@ -1,5 +1,5 @@
 # Contributing to gramhopper
-Thanks for getting interested in contributing gramhopper! :clap::clap:
+Thanks for getting interested in contributing to gramhopper! :clap::clap:
 
 This document is a set of guidelines to help you contribute the project.
 
