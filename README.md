@@ -84,4 +84,4 @@ docker run -it -v /your/configuration/dir:/root/.gramhopper orbin/gramhopper:lat
 Read more about the various triggers and responses in [our documentation](https://gramhopper.readthedocs.io/en/latest/).
 
 ## Contributing
-You are welcome to contribute gramhopper - read the [contribution guidelines](CONTRIBUTING.md) to get started.
+You are welcome to contribute to gramhopper - read the [contribution guidelines](CONTRIBUTING.md) to get started.
