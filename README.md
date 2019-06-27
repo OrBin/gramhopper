@@ -79,3 +79,9 @@ $ gramhopper
 $ docker pull orbin/gramhopper:latest
 $ docker run -it -v /your/configuration/dir:/root/.gramhopper orbin/gramhopper:latest
 ```
+
+## Documentation
+Read more about the various triggers and responses in [our documentation](https://gramhopper.readthedocs.io/en/latest/).
+
+## Contributing
+You are welcome to contribute gramhopper - read the [contribution guidelines](CONTRIBUTING.md) to get started.
