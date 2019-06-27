@@ -5,7 +5,6 @@
 
 A bot platform for automatic responses based on various triggers.
 
-## Demo
 ![](https://raw.githubusercontent.com/OrBin/gramhopper/master/demo.gif "Conversation example")
 <details>
  <summary>Click to view this demo's configuration</summary>
