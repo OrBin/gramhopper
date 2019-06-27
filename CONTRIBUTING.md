@@ -27,9 +27,16 @@ TODO
 TODO
 
 ## Adding documentation
-TODO
+Adding documentation is a great way to contribute, too!
+
+Our documentation is built using [Sphinx](http://www.sphinx-doc.org/).
+It is based on RST files located in [`docs/`](https://github.com/OrBin/gramhopper/tree/dev/docs/source) directory, and on docstrings in the python code.<br>
+Find [here](https://github.com/OrBin/gramhopper/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3Adocumentation+) issues related to documentation.
+
+#### Building the documentation
+Run `invoke build-docs` to build the documentation.<br>
+The build output will be in `docs/build` directory.<br>
+Run `invoke clean --docs` to clear the documentation build outputs.
 
 ## Code of conduct
 This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to follow this code.
-
-
