@@ -16,4 +16,6 @@ Please follow the bug report template (which appears when creating an issue) and
 TODO
 
 ## Code of conduct
-TODO
+This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to follow this code.
+
+
