@@ -13,6 +13,20 @@ When reporting a bug, please provide as much information as possible, to help us
 Please follow the bug report template (which appears when creating an issue) and fill all applicable fields
 
 ## Contributing code
+
+### Find an issue to work on
+TODO
+
+### How to build and test
+TODO
+
+### Follow the style guide
+TODO
+
+### Submit a pull request
+TODO
+
+## Adding documentation
 TODO
 
 ## Code of conduct
