@@ -70,14 +70,14 @@ To run gramhopper, just run:
 #### From installed package
 
 ```bash
-$ pip install gramhopper
-$ gramhopper
+pip install gramhopper
+gramhopper
 ```
 
 #### From docker image
 ```bash
-$ docker pull orbin/gramhopper:latest
-$ docker run -it -v /your/configuration/dir:/root/.gramhopper orbin/gramhopper:latest
+docker pull orbin/gramhopper:latest
+docker run -it -v /your/configuration/dir:/root/.gramhopper orbin/gramhopper:latest
 ```
 
 ## Documentation
