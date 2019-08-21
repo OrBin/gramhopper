@@ -1,5 +1,5 @@
 import abc
-from typing import Dict, get_type_hints, Union, List
+from typing import Dict, get_type_hints, Union, List, Any, Type
 from inspect import isclass
 from .partial_ruamel_yaml import CommentedMap, CommentedSeq
 from .trigger_response import TriggerResponse
@@ -16,12 +16,13 @@ class BaseParser(abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def mapping_class() -> DictEnum:
+    def mapping_class() -> Type[DictEnum]:
         """ Returns the mapping class (`Triggers` or `Responses`)"""
+        raise NotImplementedError()
 
     @classmethod
     def parse_single(cls,
-                     config: Dict[str, any],
+                     config: Dict[str, Any],
                      global_elements: GlobalsDict) -> TriggerResponse:  # pylint: disable=unused-argument
         """
         Parse a single configuration subtree as a trigger/response
@@ -67,7 +68,7 @@ class TriggerParser(BaseParser):
     """ A parser for trigger configuration """
 
     @staticmethod
-    def mapping_class() -> DictEnum:
+    def mapping_class() -> Type[DictEnum]:
         """ Returns the mapping class (`Triggers` or `Responses`)"""
         return Triggers
 
@@ -110,7 +111,7 @@ class TriggerParser(BaseParser):
         return parameters_to_parse
 
     @classmethod
-    def parse_single(cls, config: Dict[str, any], global_elements: GlobalsDict) \
+    def parse_single(cls, config: Dict[str, Any], global_elements: GlobalsDict) \
             -> BaseTrigger:
         """
         Parse a single configuration subtree as a trigger
@@ -148,6 +149,6 @@ class ResponseParser(BaseParser):
     """ A parser for response configuration """
 
     @staticmethod
-    def mapping_class() -> DictEnum:
+    def mapping_class() -> Type[DictEnum]:
         """ Returns the mapping class (`Triggers` or `Responses`)"""
         return Responses
