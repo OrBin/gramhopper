@@ -7,7 +7,7 @@ from .boolean_helper import BooleanHelper
 from ..dict_enum import DictEnum
 
 
-class BaseParser(abc.ABC):
+class TriggerResponseParser(abc.ABC):
     """ A common base parser for trigger/response configuration parsers"""
 
     def __init__(self, mapping_class: Type[DictEnum], element_base_class: Type[TriggerResponse]):
@@ -24,13 +24,10 @@ class BaseParser(abc.ABC):
         """ Returns the element base class (`BaseTrigger` or `BaseResponse`)"""
         return self.__element_base_class
 
-    def parse_atomic(self,
-                     config: Dict[str, Any],
-                     global_elements: GlobalsDict) -> TriggerResponse:  # pylint: disable=unused-argument
+    def parse_atomic(self, config: Dict[str, Any]) -> TriggerResponse:
         """
         Parses an atomic configuration subtree as a trigger/response
         :param config: A configuration subtree to parse
-        :param global_elements: A dictionary with all triggers and responses configured globally
         :return: The trigger/response object created from the given configuration subtree
         """
         config_copy = dict(config)
@@ -49,7 +46,7 @@ class BaseParser(abc.ABC):
             return trigger_or_response
         return element
 
-    def parse_single(self, config: Dict[str, Any], global_elements: GlobalsDict) \
+    def parse_single(self, config: Union[CommentedMap, str], global_elements: GlobalsDict) \
             -> TriggerResponse:
         """
         Parses a single configuration subtree as a trigger/response
@@ -57,9 +54,10 @@ class BaseParser(abc.ABC):
         :param global_elements: A dictionary with all triggers and responses configured globally
         :return: The trigger/response object created from the given configuration subtree
         """
-        return BooleanHelper.parse_subrule_as_trigger_or_response(config,
-                                                                  global_elements,
-                                                                  self._parse_single_recursively)
+        if isinstance(config, str):
+            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(config, global_elements)
+
+        return self._parse_single_recursively(config, global_elements)
 
     def parse_many(self, config: CommentedSeq, global_elements: GlobalsDict) \
             -> Dict[str, TriggerResponse]:
@@ -133,4 +131,4 @@ class BaseParser(abc.ABC):
         for parameter in parameters_to_parse:
             config_copy[parameter] = self.parse_single(config[parameter], global_elements)
 
-        return self.parse_atomic(config_copy, global_elements)
+        return self.parse_atomic(config_copy)#, global_elements)

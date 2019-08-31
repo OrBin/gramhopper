@@ -28,6 +28,10 @@ class RulesParsingHelper:
     def parse_rule_trigger_or_response(rule: CommentedMap,
                                        params: TriggerResponseParams) -> TriggerResponse:
 
-        return BooleanHelper.parse_subrule_as_trigger_or_response(rule[params.singular_key],
-                                                                  params.global_elements,
-                                                                  params.parser.parse_single)
+        subrule = rule[params.singular_key]
+
+        if isinstance(subrule, str):
+            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(subrule, params.global_elements)
+
+        return params.parser.parse_single(subrule, params.global_elements)
+

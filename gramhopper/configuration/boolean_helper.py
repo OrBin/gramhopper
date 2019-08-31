@@ -6,9 +6,7 @@ from .common_types import TriggerResponse, GlobalsDict
 
 
 class BooleanHelper:
-    """
-    A helper class for parsing boolean algebra expressions.
-    """
+    """ A helper class for parsing boolean algebra expressions. """
 
     ParsingFunction = Callable[[CommentedMap, GlobalsDict], TriggerResponse]
 
@@ -31,6 +29,20 @@ class BooleanHelper:
                           in expr.args]
         return boolean_function(*evaluated_args)
 
+
+    @staticmethod
+    def parse_boolean_subrule_as_trigger_or_response(subrule: str, global_elements: GlobalsDict) \
+            -> TriggerResponse:
+        """
+        Convert a subrule (a configuration subtree) into a `BaseTrigger`/`BaseResponse` object
+        :param subrule: A boolean subrule (for example, "rule1 and (not rule2)")
+        :param global_elements: A dictionary with all triggers and responses configured globally
+        :return: The trigger/response object created from the given subrule
+        """
+        algebra = boolean.BooleanAlgebra()
+        parsed_expr = algebra.parse(subrule)
+        return BooleanHelper.evaluate_boolean_expression(parsed_expr, global_elements)
+
     @staticmethod
     def parse_subrule_as_trigger_or_response(subrule: Union[CommentedMap, str],
                                              global_elements: GlobalsDict,
@@ -43,8 +55,6 @@ class BooleanHelper:
         :return: The trigger/response object created from the given subrule
         """
         if isinstance(subrule, str):
-            algebra = boolean.BooleanAlgebra()
-            parsed_expr = algebra.parse(subrule)
-            return BooleanHelper.evaluate_boolean_expression(parsed_expr, global_elements)
+            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(subrule, global_elements)
 
         return parsing_func(subrule, global_elements)
