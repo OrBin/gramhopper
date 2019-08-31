@@ -1,6 +1,6 @@
 from .partial_ruamel_yaml import CommentedMap
 from .boolean_helper import BooleanHelper
-from .trigger_response import TriggerResponse
+from .common_types import TriggerResponse
 from .trigger_response_params import TriggerResponseParams
 
 

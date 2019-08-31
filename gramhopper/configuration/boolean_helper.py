@@ -1,9 +1,8 @@
 from typing import Union, Callable
 from boolean import boolean
 from .partial_ruamel_yaml import CommentedMap
-from .globals_dict import GlobalsDict
-from .boolean_operators import OPERATOR_TYPE_TO_FUNCTION
-from .trigger_response import TriggerResponse
+from .boolean_operators import OPERATOR_TO_FUNCTION
+from .common_types import TriggerResponse, GlobalsDict
 
 
 class BooleanHelper:
@@ -11,8 +10,7 @@ class BooleanHelper:
     A helper class for parsing boolean algebra expressions.
     """
 
-    ParsingFunction = Callable[[Union[CommentedMap, str], GlobalsDict],
-                               TriggerResponse]
+    ParsingFunction = Callable[[CommentedMap, GlobalsDict], TriggerResponse]
 
     @staticmethod
     def evaluate_boolean_expression(expr: boolean.Expression,
@@ -27,7 +25,7 @@ class BooleanHelper:
         if isinstance(expr, boolean.Symbol):
             return global_elements[str(expr)]
 
-        boolean_function = OPERATOR_TYPE_TO_FUNCTION[type(expr)]
+        boolean_function = OPERATOR_TO_FUNCTION[type(expr)]
         evaluated_args = [BooleanHelper.evaluate_boolean_expression(arg, global_elements)
                           for arg
                           in expr.args]

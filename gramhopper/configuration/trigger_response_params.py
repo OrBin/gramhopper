@@ -1,6 +1,6 @@
 from typing import Dict, Type
 from dataclasses import dataclass
-from .globals_dict import GlobalsDict
+from .common_types import GlobalsDict
 from .triggers_reponses_parsers import BaseParser, TriggerParser, ResponseParser
 from ..triggers.basic_triggers import BaseTrigger
 from ..responses.basic_responses import BaseResponse

@@ -2,8 +2,7 @@ import abc
 from typing import Dict, get_type_hints, Union, List, Any, Type
 from inspect import isclass
 from .partial_ruamel_yaml import CommentedMap, CommentedSeq
-from .trigger_response import TriggerResponse
-from .globals_dict import GlobalsDict
+from .common_types import TriggerResponse, GlobalsDict
 from .boolean_helper import BooleanHelper
 from ..dict_enum import DictEnum
 from ..triggers.basic_triggers import BaseTrigger
