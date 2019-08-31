@@ -31,7 +31,7 @@ class RulesParsingHelper:
         subrule = rule[params.singular_key]
 
         if isinstance(subrule, str):
-            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(subrule, params.global_elements)
+            return BooleanHelper.parse_boolean_subrule(subrule, params.global_elements)
 
         return params.parser.parse_single(subrule, params.global_elements)
 

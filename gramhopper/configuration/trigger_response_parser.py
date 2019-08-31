@@ -49,15 +49,22 @@ class TriggerResponseParser(abc.ABC):
     def parse_single(self, config: Union[CommentedMap, str], global_elements: GlobalsDict) \
             -> TriggerResponse:
         """
-        Parses a single configuration subtree as a trigger/response
+        Recursively parses a single configuration subtree as a trigger/response
         :param config: A configuration subtree to parse
         :param global_elements: A dictionary with all triggers and responses configured globally
         :return: The trigger/response object created from the given configuration subtree
         """
         if isinstance(config, str):
-            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(config, global_elements)
+            return BooleanHelper.parse_boolean_subrule(config, global_elements)
 
-        return self._parse_single_recursively(config, global_elements)
+        config_copy = dict(config)
+        parameters_to_parse = self.__find_parameters_to_parse_as_subelement(config)
+        config.pop('type')
+
+        for parameter in parameters_to_parse:
+            config_copy[parameter] = self.parse_single(config[parameter], global_elements)
+
+        return self.parse_atomic(config_copy)
 
     def parse_many(self, config: CommentedSeq, global_elements: GlobalsDict) \
             -> Dict[str, TriggerResponse]:
@@ -74,7 +81,7 @@ class TriggerResponseParser(abc.ABC):
             in config
         }
 
-    def parameters_to_parse_as_subelement(self, config: CommentedMap) -> List[str]:
+    def __find_parameters_to_parse_as_subelement(self, config: CommentedMap) -> List[str]:
         """
         Finds parameters in configuration which should be parsed as triggers/responses themselves
         (For example, when using a trigger/response that gets another trigger/response as a
@@ -112,23 +119,3 @@ class TriggerResponseParser(abc.ABC):
                 parameters_to_parse.append(parameter_name)
 
         return parameters_to_parse
-
-    def _parse_single_recursively(self, config: CommentedMap, global_elements: GlobalsDict) \
-            -> TriggerResponse:
-        """
-        Recursively parses a single configuration subtree as a trigger/response
-        :param config: A configuration subtree to parse
-        :param global_elements: A dictionary with all triggers and responses configured globally
-        :return: The trigger/response object created from the given configuration subtree
-        """
-        if isinstance(config, str):
-            return global_elements[config]
-
-        config_copy = dict(config)
-        parameters_to_parse = self.parameters_to_parse_as_subelement(config)
-        config.pop('type')
-
-        for parameter in parameters_to_parse:
-            config_copy[parameter] = self.parse_single(config[parameter], global_elements)
-
-        return self.parse_atomic(config_copy)#, global_elements)

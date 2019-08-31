@@ -31,8 +31,7 @@ class BooleanHelper:
 
 
     @staticmethod
-    def parse_boolean_subrule_as_trigger_or_response(subrule: str, global_elements: GlobalsDict) \
-            -> TriggerResponse:
+    def parse_boolean_subrule(subrule: str, global_elements: GlobalsDict) -> TriggerResponse:
         """
         Convert a subrule (a configuration subtree) into a `BaseTrigger`/`BaseResponse` object
         :param subrule: A boolean subrule (for example, "rule1 and (not rule2)")
@@ -42,19 +41,3 @@ class BooleanHelper:
         algebra = boolean.BooleanAlgebra()
         parsed_expr = algebra.parse(subrule)
         return BooleanHelper.evaluate_boolean_expression(parsed_expr, global_elements)
-
-    @staticmethod
-    def parse_subrule_as_trigger_or_response(subrule: Union[CommentedMap, str],
-                                             global_elements: GlobalsDict,
-                                             parsing_func: ParsingFunction) -> TriggerResponse:
-        """
-        Convert a subrule (a configuration subtree) into a `BaseTrigger`/`BaseResponse` object
-        :param subrule: A subrule (a configuration subtree)
-        :param global_elements: A dictionary with all triggers and responses configured globally
-        :param parsing_func: A specific parsing function (for the specific subrule type to parse)
-        :return: The trigger/response object created from the given subrule
-        """
-        if isinstance(subrule, str):
-            return BooleanHelper.parse_boolean_subrule_as_trigger_or_response(subrule, global_elements)
-
-        return parsing_func(subrule, global_elements)
