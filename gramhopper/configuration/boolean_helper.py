@@ -1,4 +1,4 @@
-from typing import Union, Callable
+from typing import Callable
 from boolean import boolean
 from .partial_ruamel_yaml import CommentedMap
 from .boolean_operators import OPERATOR_TO_FUNCTION
@@ -28,7 +28,6 @@ class BooleanHelper:
                           for arg
                           in expr.args]
         return boolean_function(*evaluated_args)
-
 
     @staticmethod
     def parse_boolean_subrule(subrule: str, global_elements: GlobalsDict) -> TriggerResponse:

@@ -34,4 +34,3 @@ class RulesParsingHelper:
             return BooleanHelper.parse_boolean_subrule(subrule, params.global_elements)
 
         return params.parser.parse_single(subrule, params.global_elements)
-
