@@ -1,5 +1,5 @@
 import re
-from typing import List, Union
+from typing import List, Union, Any
 from telegram import Update
 from .trigger_result import TriggerResult
 from ..dict_enum import DictEnum
@@ -48,7 +48,7 @@ class _HasSubstringTrigger(_RegExpTrigger):
         if isinstance(substring, str):
             regexp_for_substring = substring
         elif isinstance(substring, list):
-            if self.validate_strings_list(substring):
+            if self.__are_all_elements_strings(substring):
                 regexp_for_substring = '|'.join(substring)
             else:
                 raise TypeError('Parameter \'substring\' should be either a string or a list of '
@@ -62,8 +62,13 @@ class _HasSubstringTrigger(_RegExpTrigger):
         super().__init__(f'^{prefix}({regexp_for_substring}){postfix}$')
 
     @staticmethod
-    def validate_strings_list(strings):
-        return all(map(lambda element: isinstance(element, str), strings))
+    def __are_all_elements_strings(list_to_check: List[Any]):
+        """
+        Checks whether all elements in a list are strings or not.
+        :param list_to_check: The list to check the elements in
+        :return: `True` if all elements are strings, `False` otherwise
+        """
+        return all(map(lambda element: isinstance(element, str), list_to_check))
 
 
 class _HasExactWordTrigger(_HasSubstringTrigger):

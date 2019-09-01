@@ -25,7 +25,12 @@ class _MatchTextResponse(BaseResponse):
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
         pass
 
-    def build_response_text(self, response_payload: dict):
+    def build_response_text(self, response_payload: dict) -> str:
+        """
+        Build the text to respond with.
+        :param response_payload: The payload received from the trigger. Should contain a `match` key
+        :return: The formatted text to respond with
+        """
         return self.template.format(*response_payload['match'])
 
 
