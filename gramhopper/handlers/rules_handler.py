@@ -5,7 +5,7 @@ from ..responses.basic_responses import BaseResponse
 from ..triggers.basic_triggers import BaseTrigger
 
 
-class Handler:
+class RuleHandler:
     """
     A handler for a single rule. Consists of a trigger checker (`BaseTrigger`),
     a responder (`BaseResponse`) and probability.
