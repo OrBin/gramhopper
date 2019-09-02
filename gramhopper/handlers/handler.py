@@ -5,7 +5,13 @@ from ..responses.basic_responses import BaseResponse
 from ..triggers.basic_triggers import BaseTrigger
 
 
-class Handler():
+class Handler:
+    """
+    A handler for a single rule. Consists of a trigger checker (`BaseTrigger`),
+    a responder (`BaseResponse`) and probability.
+    Has a method `handle` that gets a Telegram bot and a Telegram update and responds as it should,
+    if it should.
+    """
     def __init__(self,
                  trigger_checker: BaseTrigger,
                  responder: BaseResponse,

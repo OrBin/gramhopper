@@ -6,6 +6,11 @@ from ..representable import Representable
 
 
 class BaseTrigger(abc.ABC, Representable):
+    """
+    A base class for all triggers.
+    Has a method `check_trigger` that gets a Telegram update and return a `TriggerResult`.
+    Supports intersection, union and negation.
+    """
 
     @abc.abstractmethod
     def check_trigger(self, update: Update) -> TriggerResult:
