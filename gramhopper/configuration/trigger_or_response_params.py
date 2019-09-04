@@ -1,7 +1,7 @@
 from typing import Dict
 from dataclasses import dataclass
 from .common_types import GlobalsDict
-from .trigger_response_parser import TriggerResponseParser
+from .trigger_or_response_parser import TriggerOrResponseParser
 from ..triggers.basic_triggers import BaseTrigger
 from ..responses.basic_responses import BaseResponse
 from ..responses import Responses
@@ -9,10 +9,10 @@ from ..triggers import Triggers
 
 
 @dataclass
-class TriggerResponseParams:
+class TriggerOrResponseParams:
     singular_key: str
     global_elements: GlobalsDict
-    parser: TriggerResponseParser
+    parser: TriggerOrResponseParser
 
     @property
     def plural_key(self):
@@ -20,16 +20,16 @@ class TriggerResponseParams:
 
 
 @dataclass
-class TriggerParams(TriggerResponseParams):
+class TriggerParams(TriggerOrResponseParams):
     def __init__(self, global_elements: Dict[str, BaseTrigger]):
         super().__init__(singular_key='trigger',
                          global_elements=global_elements,
-                         parser=TriggerResponseParser(Triggers, BaseTrigger))
+                         parser=TriggerOrResponseParser(Triggers, BaseTrigger))
 
 
 @dataclass
-class ResponseParams(TriggerResponseParams):
+class ResponseParams(TriggerOrResponseParams):
     def __init__(self, global_elements: Dict[str, BaseResponse]):
         super().__init__(singular_key='response',
                          global_elements=global_elements,
-                         parser=TriggerResponseParser(Responses, BaseResponse))
+                         parser=TriggerOrResponseParser(Responses, BaseResponse))

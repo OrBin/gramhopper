@@ -2,15 +2,15 @@ import abc
 from typing import Dict, get_type_hints, Union, List, Any, Type
 from inspect import isclass
 from .partial_ruamel_yaml import CommentedMap, CommentedSeq
-from .common_types import TriggerResponse, GlobalsDict
+from .common_types import TriggerOrResponse, GlobalsDict
 from .boolean_helper import BooleanHelper
 from ..dict_enum import DictEnum
 
 
-class TriggerResponseParser(abc.ABC):
+class TriggerOrResponseParser(abc.ABC):
     """ A common base parser for trigger/response configuration parsers"""
 
-    def __init__(self, mapping_class: Type[DictEnum], element_base_class: Type[TriggerResponse]):
+    def __init__(self, mapping_class: Type[DictEnum], element_base_class: Type[TriggerOrResponse]):
         self.__mapping_class = mapping_class
         self.__element_base_class = element_base_class
 
@@ -20,11 +20,11 @@ class TriggerResponseParser(abc.ABC):
         return self.__mapping_class
 
     @property
-    def element_base_class(self) -> Type[TriggerResponse]:
+    def element_base_class(self) -> Type[TriggerOrResponse]:
         """ Returns the element base class (`BaseTrigger` or `BaseResponse`)"""
         return self.__element_base_class
 
-    def parse_atomic(self, config: Dict[str, Any]) -> TriggerResponse:
+    def parse_atomic(self, config: Dict[str, Any]) -> TriggerOrResponse:
         """
         Parses an atomic configuration subtree as a trigger/response
         :param config: A configuration subtree to parse
@@ -47,7 +47,7 @@ class TriggerResponseParser(abc.ABC):
         return element
 
     def parse_single(self, config: Union[CommentedMap, str], global_elements: GlobalsDict) \
-            -> TriggerResponse:
+            -> TriggerOrResponse:
         """
         Recursively parses a single configuration subtree as a trigger/response
         :param config: A configuration subtree to parse
@@ -67,7 +67,7 @@ class TriggerResponseParser(abc.ABC):
         return self.parse_atomic(config_copy)
 
     def parse_many(self, config: CommentedSeq, global_elements: GlobalsDict) \
-            -> Dict[str, TriggerResponse]:
+            -> Dict[str, TriggerOrResponse]:
         """
         Parse all triggers/responses in a configuration
         :param config: A configuration subtree to config as a list of triggers/responses

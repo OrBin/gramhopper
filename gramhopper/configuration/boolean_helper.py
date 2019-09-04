@@ -2,17 +2,17 @@ from typing import Callable
 from boolean import boolean
 from .partial_ruamel_yaml import CommentedMap
 from .boolean_operators import OPERATOR_TO_FUNCTION
-from .common_types import TriggerResponse, GlobalsDict
+from .common_types import TriggerOrResponse, GlobalsDict
 
 
 class BooleanHelper:
     """ A helper class for parsing boolean algebra expressions. """
 
-    ParsingFunction = Callable[[CommentedMap, GlobalsDict], TriggerResponse]
+    ParsingFunction = Callable[[CommentedMap, GlobalsDict], TriggerOrResponse]
 
     @staticmethod
     def evaluate_boolean_expression(expr: boolean.Expression,
-                                    global_elements: GlobalsDict) -> TriggerResponse:
+                                    global_elements: GlobalsDict) -> TriggerOrResponse:
         """
         Convert a boolean expression into a `BaseTrigger`/`BaseResponse` object
         :param expr: A boolean expression parsed from a subrule (a configuration subtree)
@@ -30,7 +30,7 @@ class BooleanHelper:
         return boolean_function(*evaluated_args)
 
     @staticmethod
-    def parse_boolean_subrule(subrule: str, global_elements: GlobalsDict) -> TriggerResponse:
+    def parse_boolean_subrule(subrule: str, global_elements: GlobalsDict) -> TriggerOrResponse:
         """
         Convert a subrule (a configuration subtree) into a `BaseTrigger`/`BaseResponse` object
         :param subrule: A boolean subrule (for example, "rule1 and (not rule2)")

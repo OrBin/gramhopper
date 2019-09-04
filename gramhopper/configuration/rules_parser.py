@@ -5,7 +5,7 @@ from .partial_ruamel_yaml import YAML
 from .partial_ruamel_yaml import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
 from ..handlers.rules_handler import RuleHandler
-from .trigger_response_params import TriggerParams, ResponseParams
+from .trigger_or_response_params import TriggerParams, ResponseParams
 
 
 class RulesParser:
