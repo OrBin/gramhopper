@@ -28,6 +28,12 @@ class _PresetTextResponse(BaseResponse):
         pass
 
     def get_response_text(self):
+        """
+        Returns the text to respond with.
+        If one preset response was given, then it is returned.
+        If multiple preset responses were given, one of them is randomly chosen and returned.
+        :return: The text to respond with
+        """
         if isinstance(self.preset_responses, str):
             return self.preset_responses
         if isinstance(self.preset_responses, list):

@@ -1,13 +1,13 @@
 from .partial_ruamel_yaml import CommentedMap
 from .boolean_helper import BooleanHelper
-from .trigger_response import TriggerResponse
-from .trigger_response_params import TriggerResponseParams
+from .common_types import TriggerOrResponse
+from .trigger_or_response_params import TriggerOrResponseParams
 
 
 class RulesParsingHelper:
 
     @staticmethod
-    def add_globals(config: CommentedMap, params: TriggerResponseParams) -> None:
+    def add_globals(config: CommentedMap, params: TriggerOrResponseParams) -> None:
         """
         Adds globals (a generic name for "global triggers" and "global responses")
         from *config* to *params.globals*.
@@ -26,8 +26,11 @@ class RulesParsingHelper:
 
     @staticmethod
     def parse_rule_trigger_or_response(rule: CommentedMap,
-                                       params: TriggerResponseParams) -> TriggerResponse:
+                                       params: TriggerOrResponseParams) -> TriggerOrResponse:
 
-        return BooleanHelper.parse_subrule_as_trigger_or_response(rule[params.singular_key],
-                                                                  params.global_elements,
-                                                                  params.parser.parse_single)
+        subrule = rule[params.singular_key]
+
+        if isinstance(subrule, str):
+            return BooleanHelper.parse_boolean_subrule(subrule, params.global_elements)
+
+        return params.parser.parse_single(subrule, params.global_elements)

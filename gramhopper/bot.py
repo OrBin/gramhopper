@@ -8,6 +8,7 @@ from .handlers.default_error_handler import handle_error
 
 
 def start_bot():
+    """ Configures and runs the bot """
     configure_logger()
 
     with open(token_file_path(), 'r') as token_file:

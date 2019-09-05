@@ -11,11 +11,12 @@ so we decided to create this file, which is a *very* partial accessor to ruamel_
 # pytype: disable=import-error
 try:
     from ruamel_yaml import YAML
-    from ruamel_yaml.comments import CommentedMap
+    from ruamel_yaml.comments import CommentedMap, CommentedSeq
 except ImportError:
     from ruamel.yaml import YAML
-    from ruamel.yaml.comments import CommentedMap
+    from ruamel.yaml.comments import CommentedMap, CommentedSeq
 
 
 YAML = YAML
 CommentedMap = CommentedMap  # pylint: disable=invalid-name
+CommentedSeq = CommentedSeq  # pylint: disable=invalid-name
