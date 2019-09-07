@@ -74,6 +74,11 @@ pip install gramhopper
 gramhopper
 ```
 
+##### Specify configuration file
+```bash
+gramhopper --config=/path/to/rules_file.yml
+```
+
 #### From docker image
 ```bash
 docker pull orbin/gramhopper:latest
