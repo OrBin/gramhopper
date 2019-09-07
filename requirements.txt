@@ -5,3 +5,7 @@ sphinx==1.7.9
 sphinx_rtd_theme==0.4.2
 flaky==3.5.3
 invoke==1.2.0
+pytype==2019.9.6
+pylint==2.3.1
+flake8==3.7.8
+pytest==5.1.2

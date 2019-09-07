@@ -1,6 +1,6 @@
 import logging
 import os
-from argparse import ArgumentParser, FileType
+from argparse import ArgumentParser
 from telegram.ext import Updater
 from .logging_config import configure_logger
 from .paths import token_file_path, default_rules_file_path
