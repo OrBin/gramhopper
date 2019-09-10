@@ -158,10 +158,12 @@ def clean(context,  # pylint: disable=too-many-arguments
     if lint:
         print('Removing lint outputs and cache files...')
         shutil.rmtree('./pytype_output', ignore_errors=True)
+        shutil.rmtree('./.pytype', ignore_errors=True)
 
     if test:
         print('Removing test outputs and cache files...')
         shutil.rmtree('./.pytest_cache', ignore_errors=True)
+        shutil.rmtree('./gramhopper_test.egg-info', ignore_errors=True)
 
 
 def clean_package():
