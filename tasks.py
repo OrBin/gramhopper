@@ -8,6 +8,9 @@ DEFAULT_DOCKER_IMAGE = 'orbin/gramhopper'
 DOCKER_IMAGE_ENV_VARIABLE = 'DOCKER_IMAGE_TAG'
 TASK_SUCCESS_CODE = 0
 TASK_FAILURE_CODE = 1
+SUCCESS_COLOR = '\033[92m'
+FAILURE_COLOR = '\033[91m'
+DEFAULT_COLOR = '\033[39m'
 
 
 @task
@@ -68,8 +71,10 @@ def lint(context):
     if not result.exited == TASK_SUCCESS_CODE:
         exit_code = TASK_FAILURE_CODE
 
-    finished_string = 'Lint task finished ' + \
-                      ('successfully' if exit_code == TASK_SUCCESS_CODE else 'with errors')
+    message_color = SUCCESS_COLOR if exit_code == TASK_SUCCESS_CODE else FAILURE_COLOR
+    status_string = 'successfully' if exit_code == TASK_SUCCESS_CODE else 'with errors'
+
+    finished_string = f'{message_color}Lint task finished {status_string} {DEFAULT_COLOR}'
     print(finished_string)
     sys.exit(exit_code)
 
