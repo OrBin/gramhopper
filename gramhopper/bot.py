@@ -13,8 +13,8 @@ def start_bot():
     """ Configures and runs the bot """
     configure_logger()
 
-    parser = ArgumentParser(description='TODO TODO TODO')
-    parser.add_argument('--config', action='store', type=str, help='TODO TODO TODO')
+    parser = ArgumentParser(description='A rule-based Telegram bot engine, no coding required')
+    parser.add_argument('--config', action='store', type=str, help='specify configuration file')
     args = parser.parse_args()
     logging.debug(f'Parsed arguments: {args}')
 
