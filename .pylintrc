@@ -3,3 +3,6 @@ disable=missing-docstring
 
 [design]
 min-public-methods=1
+
+[logging]
+disable=logging-fstring-interpolation

@@ -1,4 +1,6 @@
 import logging
+import os
+from argparse import ArgumentParser
 from telegram.ext import Updater
 from .logging_config import configure_logger
 from .paths import token_file_path, default_rules_file_path
@@ -11,11 +13,27 @@ def start_bot():
     """ Configures and runs the bot """
     configure_logger()
 
+    parser = ArgumentParser(description='A rule-based Telegram bot engine, no coding required')
+    parser.add_argument('--config', action='store', type=str, help='specify configuration file')
+    args = parser.parse_args()
+    logging.debug(f'Parsed arguments: {args}')
+
     with open(token_file_path(), 'r') as token_file:
         bot_token = token_file.read().strip()
 
     rule_parser = RulesParser()
-    rules_file_path = default_rules_file_path()
+
+    if args.config:
+        config_path = os.path.expanduser(os.path.expandvars(args.config))
+        print(config_path)
+        if os.access(config_path, os.R_OK):
+            rules_file_path = config_path
+        else:
+            rules_file_path = default_rules_file_path()
+            logging.warning(f'Cannot read {config_path}, defaulting to {rules_file_path}')
+    else:
+        rules_file_path = default_rules_file_path()
+
     logging.info('Reading and parsing rules file from %s', rules_file_path)
     rule_handlers = rule_parser.parse_file(rules_file_path)
     logging.info('Found %d rules', len(rule_handlers))
