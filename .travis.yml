@@ -1,9 +1,9 @@
 dist: xenial
 language: python
 python: 
-  - 3.7 
-  - 3.7-dev 
-  - 3.8-dev
+  - "3.7"
+  - "3.7-dev"
+  - "3.8-dev"
 install:
   - pip install -r requirements.txt
   - pip install pylint flake8 pytype pytest invoke twine
