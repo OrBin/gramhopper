@@ -1,5 +1,5 @@
 [basic]
-disable=missing-docstring, unsubscriptable-object, no-self-use, unsupported-membership-test, too-many-arguments
+disable=missing-docstring, no-self-use, too-many-arguments
 
 [design]
 min-public-methods=1
