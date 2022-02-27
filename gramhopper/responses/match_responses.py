@@ -19,7 +19,8 @@ class _MatchTextResponse(BaseResponse):
         Constructs the response.
 
         :param template: The template to use when building the response text
-        :param parse_mode: Optional parse mode for the message. Read more in :py:class:`telegram.ParseMode`.
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
         super().__init__(parse_mode)
         self.template = template

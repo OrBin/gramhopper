@@ -19,7 +19,8 @@ class _PresetTextResponse(BaseResponse):
         Constructs the response.
 
         :param preset_response: The preset response or list of responses
-        :param parse_mode: Optional parse mode for the message. Read more in :py:class:`telegram.ParseMode`.
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
         super().__init__(parse_mode)
         self.preset_responses = preset_response
@@ -50,26 +51,42 @@ class _PresetDocumentResponse(BaseResponse):
         Constructs the response.
 
         :param preset_response: The preset document URL or document object
-        :param parse_mode: Optional parse mode for the message. Read more in :py:class:`telegram.ParseMode`.
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
         super().__init__(parse_mode)
         self.preset_response = preset_response
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.document(bot, update, self.preset_response, **self.response_helper_kwargs)
+        return ResponseHelper.document(
+            bot,
+            update,
+            self.preset_response,
+            **self.response_helper_kwargs,
+        )
 
 
 class _PresetMessageResponse(_PresetTextResponse):
     """A preset response in which the response method is a normal message"""
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.message(bot, update, self.get_response_text(), **self.response_helper_kwargs)
+        return ResponseHelper.message(
+            bot,
+            update,
+            self.get_response_text(),
+            **self.response_helper_kwargs,
+        )
 
 
 class _PresetReplyResponse(_PresetTextResponse):
     """A preset response in which the response method is a reply to the triggering message"""
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.reply(bot, update, self.get_response_text(), **self.response_helper_kwargs)
+        return ResponseHelper.reply(
+            bot,
+            update,
+            self.get_response_text(),
+            **self.response_helper_kwargs,
+        )
 
 
 class PresetResponses(DictEnum):
