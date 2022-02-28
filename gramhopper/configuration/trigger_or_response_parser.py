@@ -39,6 +39,8 @@ class TriggerOrResponseParser(abc.ABC):
 
         # Some triggers (most of them) are classes and some are instances (mostly filter triggers).
         # This allows both cases to be used.
+        # TODO: this comment does not seem to be correct any more. Try removing the case outside
+        #  the "if" block; All triggers and responses seem to be classes.
         if isclass(element):
             trigger_or_response = element(**config_copy)
             if name:

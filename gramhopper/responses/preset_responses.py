@@ -1,6 +1,6 @@
 import abc
 import random
-from typing import Union, List
+from typing import Union, List, Optional
 from telegram import Bot, Update, Document
 from telegram.message import Message
 from ..dict_enum import DictEnum
@@ -14,13 +14,15 @@ class _PresetTextResponse(BaseResponse):
     handling the actual response action.
     """
 
-    def __init__(self, preset_response: Union[str, List[str]]):
+    def __init__(self, preset_response: Union[str, List[str]], parse_mode: Optional[str] = None):
         """
         Constructs the response.
 
         :param preset_response: The preset response or list of responses
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
-        super().__init__()
+        super().__init__(parse_mode)
         self.preset_responses = preset_response
 
     @abc.abstractmethod
@@ -44,30 +46,47 @@ class _PresetTextResponse(BaseResponse):
 class _PresetDocumentResponse(BaseResponse):
     """A preset response in which the response method is a document"""
 
-    def __init__(self, preset_response: Union[str, Document]):
+    def __init__(self, preset_response: Union[str, Document], parse_mode: Optional[str] = None):
         """
         Constructs the response.
 
         :param preset_response: The preset document URL or document object
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
-        super().__init__()
+        super().__init__(parse_mode)
         self.preset_response = preset_response
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.document(bot, update, self.preset_response)
+        return ResponseHelper.document(
+            bot,
+            update,
+            self.preset_response,
+            **self.response_helper_kwargs,
+        )
 
 
 class _PresetMessageResponse(_PresetTextResponse):
     """A preset response in which the response method is a normal message"""
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.message(bot, update, self.get_response_text())
+        return ResponseHelper.message(
+            bot,
+            update,
+            self.get_response_text(),
+            **self.response_helper_kwargs,
+        )
 
 
 class _PresetReplyResponse(_PresetTextResponse):
     """A preset response in which the response method is a reply to the triggering message"""
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.reply(bot, update, self.get_response_text())
+        return ResponseHelper.reply(
+            bot,
+            update,
+            self.get_response_text(),
+            **self.response_helper_kwargs,
+        )
 
 
 class PresetResponses(DictEnum):

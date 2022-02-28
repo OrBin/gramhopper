@@ -1,4 +1,6 @@
 import abc
+from typing import Optional
+
 from telegram import Bot, Update
 from telegram.message import Message
 from ..dict_enum import DictEnum
@@ -12,13 +14,15 @@ class _MatchTextResponse(BaseResponse):
     handling the actual response action.
     """
 
-    def __init__(self, template: str):
+    def __init__(self, template: str, parse_mode: Optional[str] = None):
         """
         Constructs the response.
 
         :param template: The template to use when building the response text
+        :param parse_mode: Optional parse mode for the message. Read more in \
+            :py:class:`telegram.ParseMode`.
         """
-        super().__init__()
+        super().__init__(parse_mode)
         self.template = template
 
     @abc.abstractmethod
@@ -38,14 +42,24 @@ class _MatchMessageResponse(_MatchTextResponse):
     """A regexp-based response in which the response method is a normal message"""
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.message(bot, update, self.build_response_text(response_payload))
+        return ResponseHelper.message(
+            bot,
+            update,
+            self.build_response_text(response_payload),
+            **self.response_helper_kwargs,
+        )
 
 
 class _MatchReplyResponse(_MatchTextResponse):
     """A regexp-based response in which the response method is a reply to the triggering message"""
 
     def respond(self, bot: Bot, update: Update, response_payload: dict) -> Message:
-        return ResponseHelper.reply(bot, update, self.build_response_text(response_payload))
+        return ResponseHelper.reply(
+            bot,
+            update,
+            self.build_response_text(response_payload),
+            **self.response_helper_kwargs,
+        )
 
 
 class MatchResponses(DictEnum):
