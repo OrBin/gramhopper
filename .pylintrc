@@ -1,5 +1,8 @@
 [basic]
-disable=missing-docstring
+disable=missing-docstring, fixme
 
 [design]
 min-public-methods=1
+
+[logging]
+disable=logging-fstring-interpolation

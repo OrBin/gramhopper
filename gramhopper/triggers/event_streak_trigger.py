@@ -48,7 +48,7 @@ class EventStreakTrigger(BaseTrigger):
             now_timestamp = datetime.now().timestamp()
 
             if now_timestamp - self.streak_start_timestamp > self.streak_timeout_sec:
-                self.reset_count()
+                self.__reset_count()
 
             if self.message_counter == 0:
                 self.streak_start_timestamp = datetime.now().timestamp()
@@ -56,13 +56,14 @@ class EventStreakTrigger(BaseTrigger):
             self.message_counter += 1
 
             if self.message_counter == self.event_count:
-                self.reset_count()
+                self.__reset_count()
                 return TriggerResult(should_respond=True)
 
         elif self.resetting_event_trigger.check_trigger(update).should_respond:
-            self.reset_count()
+            self.__reset_count()
 
         return TriggerResult(should_respond=False)
 
-    def reset_count(self):
+    def __reset_count(self):
+        """ Resets the message counter, which is checked against `event_count` """
         self.message_counter = 0

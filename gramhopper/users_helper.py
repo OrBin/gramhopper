@@ -5,6 +5,7 @@ from .paths import users_file_path
 
 
 class UsersHelper:
+    """ A helper for loading and reading users from the users file """
 
     def __init__(self, file_path: Union[os.PathLike, str, bytes] = None):
         if file_path is not None:

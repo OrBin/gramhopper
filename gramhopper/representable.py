@@ -1,5 +1,9 @@
 class Representable:
-
+    """
+    A "representable" interface for triggers and responses.
+    The representation is the name of the trigger/response if given,
+    or "inline <Type of trigger/response>" otherwise.
+    """
     def __init__(self):
         self.__name = None
 
