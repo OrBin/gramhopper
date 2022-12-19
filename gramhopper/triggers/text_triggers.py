@@ -86,8 +86,10 @@ class _HasExactWordTrigger(_HasSubstringTrigger):
         try:
             super().__init__(word, exact=True)
         except TypeError:
-            raise TypeError(f'Parameter \'word\' should be either a string or a list of strings '
-                            f'({type(word)} given)')
+            raise TypeError(  # pylint: disable=raise-missing-from
+                f'Parameter \'word\' should be either a string or a list of strings'
+                f' ({type(word)} given)'
+            )
 
 
 class TextTriggers(DictEnum):

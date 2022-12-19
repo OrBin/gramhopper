@@ -1,6 +1,7 @@
 import logging
 import random
 from telegram import Update, Bot
+from telegram.ext import CallbackContext
 from ..responses.basic_responses import BaseResponse
 from ..triggers.basic_triggers import BaseTrigger
 
@@ -28,7 +29,7 @@ class RuleHandler:
 
         self.probability_to_respond = probability
 
-    def handle(self, bot: Bot, update: Update):
+    def handle(self, update: Update, context: CallbackContext):
         logging.debug('[%s] Received update %s', self.handler_repr, update.update_id)
         trigger_result = self.trigger_checker.check_trigger(update)
         if trigger_result.should_respond:
@@ -38,4 +39,4 @@ class RuleHandler:
                          self.probability_to_respond)
             if random.random() <= self.probability_to_respond:
                 logging.info('[%s] Responding to update %s', self.handler_repr, update.update_id)
-                self.responder.respond(bot, update, trigger_result.response_payload)
+                self.responder.respond(context.bot, update, trigger_result.response_payload)

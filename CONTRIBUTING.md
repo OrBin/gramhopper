@@ -18,7 +18,7 @@ Please follow the bug report template (which appears when creating an issue) and
 Look at issues tagged with [good first issue](https://github.com/OrBin/gramhopper/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+) label and find one you'd like to work on.
 
 ### How to build and test
-We use [Invoke](http://docs.pyinvoke.org) CLI to execute development tasjs like test, build, lint, etc.
+We use [Invoke](http://docs.pyinvoke.org) CLI to execute development tasks like test, build, lint, etc.
 
 #### Building
 To build, run:

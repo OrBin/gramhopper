@@ -1,7 +1,7 @@
 import abc
 from typing import Dict, get_type_hints, Union, List, Any, Type
 from inspect import isclass
-from .partial_ruamel_yaml import CommentedMap, CommentedSeq
+from ruamel.yaml import CommentedMap, CommentedSeq
 from .common_types import TriggerOrResponse, GlobalsDict
 from .boolean_helper import BooleanHelper
 from ..dict_enum import DictEnum

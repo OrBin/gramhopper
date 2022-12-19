@@ -18,7 +18,7 @@ def start_bot():
     args = parser.parse_args()
     logging.debug(f'Parsed arguments: {args}')
 
-    with open(token_file_path(), 'r') as token_file:
+    with open(token_file_path(), 'r', encoding='utf-8') as token_file:
         bot_token = token_file.read().strip()
 
     rule_parser = RulesParser()

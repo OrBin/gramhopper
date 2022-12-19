@@ -1,5 +1,5 @@
 from functools import reduce
-from typing import List, Union
+from typing import List, Union, Optional
 from telegram import Update
 from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
@@ -24,7 +24,7 @@ class FilterBasedTrigger(BaseTrigger):
         self.filter = message_filter
 
     def check_trigger(self, update: Update) -> TriggerResult:
-        return TriggerResult(should_respond=self.filter(update.message))
+        return TriggerResult(should_respond=self.filter(update))
 
 
 class _UserFilterBasedTrigger(FilterBasedTrigger):
@@ -33,7 +33,12 @@ class _UserFilterBasedTrigger(FilterBasedTrigger):
     specific user.
     """
 
-    def __init__(self, nickname: str = None, user_id: int = None, username: str = None):
+    def __init__(
+            self,
+            nickname: Optional[str] = None,
+            user_id: Optional[int] = None,
+            username: Optional[str] = None,
+    ):
         """
         Constructs the trigger.
         `nickname` can be used if such a nickname is defined in users.json file.
@@ -56,7 +61,7 @@ class _ChatFilterBasedTrigger(FilterBasedTrigger):
     chat.
     """
 
-    def __init__(self, chat_id: int = None, username: str = None):
+    def __init__(self, chat_id: Optional[int] = None, username: Optional[str] = None):
         """
         Constructs the trigger.
         One and only one of `chat_id` and `username` should be specified.
@@ -106,7 +111,9 @@ class _MessageTypeFilterBasedTrigger(FilterBasedTrigger):
                                  f'but it is a valid filter. Did you mean to use '
                                  f'"{message_type}" as a filter type instead?')
         except AttributeError:
-            raise ValueError(f'"{message_type}" is not a valid message type to filter by.')
+            raise ValueError(  # pylint: disable=raise-missing-from
+                f'"{message_type}" is not a valid message type to filter by.'
+            )
 
 
 class FilterTriggers(DictEnum):

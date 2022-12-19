@@ -1,8 +1,8 @@
 import logging
 from os import PathLike
 from typing import Union, List
-from .partial_ruamel_yaml import YAML
-from .partial_ruamel_yaml import CommentedMap
+from ruamel.yaml import YAML
+from ruamel.yaml import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
 from ..handlers.rules_handler import RuleHandler
 from .trigger_or_response_params import TriggerParams, ResponseParams
