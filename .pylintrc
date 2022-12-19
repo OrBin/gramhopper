@@ -1,5 +1,5 @@
 [basic]
-disable=missing-docstring, fixme
+disable=missing-docstring, fixme, invalid-name
 
 [design]
 min-public-methods=1

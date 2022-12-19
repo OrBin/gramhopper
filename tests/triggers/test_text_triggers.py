@@ -2,6 +2,8 @@ import pytest
 from ...gramhopper.triggers.text_triggers import _RegExpTrigger, \
     _HasSubstringTrigger, _HasExactWordTrigger
 
+# pylint: disable=use-implicit-booleaness-not-comparison
+
 
 @pytest.mark.usefixtures('update')
 class TestRegexpTrigger:

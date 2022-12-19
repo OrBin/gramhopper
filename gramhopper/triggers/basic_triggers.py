@@ -40,8 +40,8 @@ class MergedTrigger(BaseTrigger):
 
     def __init__(self,
                  base_trigger: BaseTrigger,
-                 and_trigger: BaseTrigger = None,
-                 or_trigger: BaseTrigger = None):
+                 and_trigger: Optional[BaseTrigger] = None,
+                 or_trigger: Optional[BaseTrigger] = None):
         super().__init__()
         self.base_trigger = base_trigger
         self.and_trigger = and_trigger

@@ -48,12 +48,16 @@ def _generate_new_update_impl(update_id=0,
     if not message_date:
         message_date = datetime.now()
 
-    return Update(update_id,
-                  Message(message_id,
-                          User(user_id, user_first_name, user_is_bot),
-                          message_date,
-                          Chat(chat_id, chat_type),
-                          text=message_text))
+    return Update(
+        update_id,
+        Message(
+            message_id=message_id,
+            from_user=User(user_id, user_first_name, user_is_bot),
+            date=message_date,
+            chat=Chat(chat_id, chat_type),
+            text=message_text
+        ),
+    )
 
 
 def _get_bot_parameter(parameter_name: str) -> str:

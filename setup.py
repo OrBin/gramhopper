@@ -1,11 +1,13 @@
+from pathlib import Path
 from setuptools import setup, find_namespace_packages
 
-with open("README.md", "r") as f:
-    LONG_DESCRIPTION = f.read()
+
+LONG_DESCRIPTION = Path("README.md").read_text(encoding='utf-8')
+
 
 setup(
     name='gramhopper',
-    version='2.1.0',
+    version='3.0.0',
 
     description='A bot platform for automatic responses based on various triggers',
     long_description=LONG_DESCRIPTION,
@@ -16,9 +18,9 @@ setup(
     author='Or Bin, Meir Halachmi',
     author_email='orbin50@gmail.com, meir.halachmi@gmail.com',
     install_requires=[
-        'python_telegram_bot==11.1.0',
+        'python_telegram_bot==13.15',
         'boolean.py==3.6',
-        'ruamel_yaml~=0.15'
+        'ruamel_yaml~=0.17'
     ],
 
     license='MIT',
@@ -29,7 +31,7 @@ setup(
         'Intended Audience :: Other Audience',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Communications :: Chat',
     ],
 

@@ -23,10 +23,10 @@ If applicable, attach logs to help explain your problem.
 If applicable, attach your configuration to help solve your problem.
 
 **Desktop (please complete the following information):**
- - OS and version: [e.g. Ubuntu 18.04]
+ - OS and version: [e.g. Ubuntu 22.04]
  - Running environment:
   - If running gramhopper inside a Docker container, please specify it.
-  - Python version [e.g. 3.7.1]
+  - Python version [e.g. 3.10.1]
  - Version of gramhopper [e.g. 2.0.0]
 
 **Additional context**

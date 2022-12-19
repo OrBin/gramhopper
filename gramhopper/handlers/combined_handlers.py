@@ -1,5 +1,5 @@
-from telegram.ext import MessageHandler, Filters, ConversationHandler
-
+from telegram import Update
+from telegram.ext import MessageHandler, Filters, ConversationHandler, CallbackContext
 
 REGULAR_STATE = 0
 
@@ -11,9 +11,9 @@ class CombinedMessageHandler(MessageHandler):
         self.handlers = handlers
         super().__init__(Filters.all, self.handle_all)
 
-    def handle_all(self, bot, update):
+    def handle_all(self, update: Update, context: CallbackContext):
         for handler in self.handlers:
-            handler.handle(bot, update)
+            handler.handle(update, context)
         return REGULAR_STATE
 
 
