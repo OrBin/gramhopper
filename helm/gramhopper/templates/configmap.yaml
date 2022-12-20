@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMapName }}
+data:
+  token.txt: {{ required "Must provide gramhopper.botToken" .Values.gramhopper.botToken | quote }}
+  rules.yml: {{ required "Must provide gramhopper.rulesYaml" .Values.gramhopper.rulesYaml | quote }}
+  users.json: {{ .Values.gramhopper.usersJson | default "{}" | quote }}
