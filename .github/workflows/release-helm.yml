@@ -2,7 +2,8 @@ name: Release helm charts
 
 on:
   push:
-    tags: *
+    tags:
+      - *
     branches:
       - dev
 
