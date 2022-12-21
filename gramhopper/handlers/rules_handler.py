@@ -1,6 +1,6 @@
 import logging
 import random
-from telegram import Update, Bot
+from telegram import Update
 from telegram.ext import CallbackContext
 from ..responses.basic_responses import BaseResponse
 from ..triggers.basic_triggers import BaseTrigger

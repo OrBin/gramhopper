@@ -5,7 +5,6 @@ from telegram.ext import Filters, BaseFilter
 from ..dict_enum import DictEnum
 from .trigger_result import TriggerResult
 from .basic_triggers import BaseTrigger
-from ..users_helper import DEFAULT_USERS_HELPER
 
 
 class FilterBasedTrigger(BaseTrigger):
@@ -33,26 +32,16 @@ class _UserFilterBasedTrigger(FilterBasedTrigger):
     specific user.
     """
 
-    def __init__(
-            self,
-            nickname: Optional[str] = None,
-            user_id: Optional[int] = None,
-            username: Optional[str] = None,
-    ):
+    def __init__(self, user_id: Optional[int] = None, username: Optional[str] = None):
         """
         Constructs the trigger.
-        `nickname` can be used if such a nickname is defined in users.json file.
-        Otherwise, one of `user_id` and `username` should be specified.
+        One of `user_id` and `username` should be specified.
 
         :param message_filter: The filter to test if the message passes through
-        :param nickname: The nickname of the user to pass messages from.
         :param user_id: The Telegram user ID of the user to pass messages from.
         :param username: The Telegram username of the user to pass messages from.
         """
-        if nickname is not None:
-            super().__init__(Filters.user(DEFAULT_USERS_HELPER.get_user_id_by_nickname(nickname)))
-        else:
-            super().__init__(Filters.user(user_id, username))
+        super().__init__(Filters.user(user_id, username))
 
 
 class _ChatFilterBasedTrigger(FilterBasedTrigger):

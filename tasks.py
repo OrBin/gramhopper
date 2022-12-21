@@ -105,11 +105,12 @@ def test(context):
 
 
 @task
-def publish(context, docker_tag=None, docker_latest=False, production_pypi=False):
-    pypi_type = 'production' if production_pypi else 'test'
-    print(f'Uploading package to {pypi_type} PyPI...')
-    repo_url_flag = '' if production_pypi else '--repository-url https://test.pypi.org/legacy/'
-    context.run(f'twine upload {repo_url_flag} dist/*', echo=True)
+def publish(context, docker_tag=None, docker_latest=False, production_pypi=False, skip_pypi=False):
+    if not skip_pypi:
+        pypi_type = 'production' if production_pypi else 'test'
+        print(f'Uploading package to {pypi_type} PyPI...')
+        repo_url_flag = '' if production_pypi else '--repository-url https://test.pypi.org/legacy/'
+        context.run(f'twine upload {repo_url_flag} dist/*', echo=True)
 
     if docker_tag:
         publish_docker_image(context, f'{DEFAULT_DOCKER_IMAGE}:{docker_tag}')

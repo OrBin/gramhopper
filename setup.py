@@ -7,7 +7,7 @@ LONG_DESCRIPTION = Path("README.md").read_text(encoding='utf-8')
 
 setup(
     name='gramhopper',
-    version='3.0.0',
+    version='5.0.0',
 
     description='A bot platform for automatic responses based on various triggers',
     long_description=LONG_DESCRIPTION,
