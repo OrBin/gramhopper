@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  gramhopper:
+  - apiVersion: v2
+    appVersion: 3.0.1
+    created: "2022-12-21T00:11:58.494460502Z"
+    description: A rule-based Telegram bot engine, no coding required
+    digest: 59971f246cfea244ae7acda95f7480fa11a2ec2739c4799b43d78e086448fb6d
+    name: gramhopper
+    type: application
+    urls:
+    - https://github.com/OrBin/gramhopper/releases/download/gramhopper-0.1.1/gramhopper-0.1.1.tgz
+    version: 0.1.1
+generated: "2022-12-21T00:11:58.494472602Z"
