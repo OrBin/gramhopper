@@ -6,4 +6,4 @@ metadata:
 data:
   token.txt: {{ required "Must provide gramhopper.botToken" .Values.gramhopper.botToken | quote }}
   rules.yml: {{ required "Must provide gramhopper.rulesYaml" .Values.gramhopper.rulesYaml | quote }}
-  users.json: {{ .Values.gramhopper.usersJson | default "{}" | quote }}
+  users.yml: {{ required "Must provide gramhopper.usersYaml" .Values.gramhopper.usersYaml | quote }}
