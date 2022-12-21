@@ -17,13 +17,12 @@ Getting a Telegram user ID can be done using [@userinfobot](https://telegram.me/
 * To get the user ID of another user, just forward a message from this user and the bot will print their user ID. 
 
 ### Mapping nicknames to user IDs
-To use user nicknames, `~/.gramphopper/users.json` should contain an object in which the keys 
+To use user nicknames, `~/.gramphopper/users.yml` should contain an object in which the keys 
 are nicknames and the values are user IDs, for example:
-```json
-{
-  "nickname1": 123456789,
-  "nickname2": 987654321
-}
+```yaml
+users:
+  - { "nickname": "nickname1", "id":: 123456789 }
+  - { "nickname": "nickname2", "id":: 987654321 }
 ``` 
 
 ## Rules configuration

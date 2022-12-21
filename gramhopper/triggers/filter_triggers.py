@@ -41,7 +41,7 @@ class _UserFilterBasedTrigger(FilterBasedTrigger):
     ):
         """
         Constructs the trigger.
-        `nickname` can be used if such a nickname is defined in users.json file.
+        `nickname` can be used if such a nickname is defined in users.yml file.
         Otherwise, one of `user_id` and `username` should be specified.
 
         :param message_filter: The filter to test if the message passes through

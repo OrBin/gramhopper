@@ -1,6 +1,6 @@
 import logging
-from os import PathLike
-from typing import Union, List
+from pathlib import Path
+from typing import List
 from ruamel.yaml import YAML
 from ruamel.yaml import CommentedMap
 from .rules_parsing_helper import RulesParsingHelper
@@ -29,8 +29,8 @@ class RulesParser:
         logging.info('Parsed %s', handler.handler_repr)
         return handler
 
-    def parse_file(self, file_path: Union[PathLike, str, bytes]) -> List[RuleHandler]:
-        with open(file_path, 'r', encoding='utf-8') as stream:
+    def parse_file(self, file_path: Path) -> List[RuleHandler]:
+        with file_path.open('r', encoding='utf-8') as stream:
             config = self.yaml.load(stream)
 
         logging.info('Parsing globals from %s', file_path)
