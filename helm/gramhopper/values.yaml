@@ -46,4 +46,3 @@ affinity: {}
 gramhopper:
   botToken: ""
   rulesYaml: ""
-  usersYaml: ""
